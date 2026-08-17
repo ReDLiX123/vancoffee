@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useApp, Language, LocationId } from "@/context/AppContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { useApp, LocationId } from "@/context/AppContext";
 import { LOCATIONS } from "@/data/coffeeData";
 import {
-  MapPin,
   Heart,
   Globe,
   Menu as MenuIcon,
   X,
-  Sparkles,
   ChevronDown,
   Navigation,
   Palette,
+  ArrowRight,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
+import { BrushStroke } from "@/components/ui/BrushStroke";
 
 export const Header: React.FC = () => {
   const {
@@ -32,13 +33,8 @@ export const Header: React.FC = () => {
   const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [activeSection, setActiveSection] = useState<string>("#locations");
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const navLinks = [
     { label: { ru: "Локации", en: "Locations", zh: "门店" }, href: "#locations" },
@@ -49,6 +45,41 @@ export const Header: React.FC = () => {
     { label: { ru: "Новости", en: "Journal", zh: "动态" }, href: "#news" },
   ];
 
+  // Scroll detection & Scroll-Spy with IntersectionObserver
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    const sectionIds = ["locations", "menu", "nutrition", "loyalty", "feedback", "news"];
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(`#${id}`);
+            }
+          });
+        },
+        { rootMargin: "-25% 0px -55% 0px", threshold: 0.1 }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observers.forEach((obs) => obs.disconnect());
+    };
+  }, []);
+
   return (
     <>
       <header
@@ -58,8 +89,8 @@ export const Header: React.FC = () => {
         }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           isScrolled
-            ? "border-b backdrop-blur-xl shadow-md py-3.5"
-            : "bg-gradient-to-b from-[var(--theme-bg)]/90 via-[var(--theme-bg)]/40 to-transparent py-5"
+            ? "border-b backdrop-blur-xl shadow-md py-3"
+            : "bg-gradient-to-b from-[var(--theme-bg)]/90 via-[var(--theme-bg)]/40 to-transparent py-4 sm:py-5"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -76,7 +107,7 @@ export const Header: React.FC = () => {
               <span className="font-serif text-lg font-bold">V</span>
               <span
                 style={{ backgroundColor: "var(--theme-accent)" }}
-                className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-white/50"
+                className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-white/50 transition-colors duration-500"
               />
             </div>
             <div className="flex flex-col">
@@ -85,25 +116,44 @@ export const Header: React.FC = () => {
               </span>
               <span
                 style={{ color: "var(--theme-primary)" }}
-                className="text-[10px] tracking-widest uppercase font-semibold whitespace-nowrap"
+                className="text-[10px] tracking-widest uppercase font-semibold whitespace-nowrap transition-colors duration-500"
               >
                 Иркутск • {selectedLocation.shortName}
               </span>
             </div>
           </a>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with Animated Brush Strokes */}
           <nav className="hidden items-center gap-5 md:flex lg:gap-8 shrink-0">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="whitespace-nowrap text-xs font-semibold uppercase tracking-wider opacity-75 transition-all hover:opacity-100"
-                style={{ color: "var(--theme-text)" }}
-              >
-                {link.label[language]}
-              </a>
-            ))}
+            {navLinks.map((link, idx) => {
+              const isCurrent = activeSection === link.href;
+              const isHovered = hoveredLink === link.href;
+              const isHighlighted = isHovered || (!hoveredLink && isCurrent);
+
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onMouseEnter={() => setHoveredLink(link.href)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                  className={`relative py-1.5 text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-colors duration-300 ${
+                    isHighlighted ? "text-[var(--theme-text)] opacity-100" : "text-[var(--theme-muted)] hover:opacity-100"
+                  }`}
+                >
+                  <span className="relative z-10">{link.label[language]}</span>
+
+                  {/* Dynamic Brush Stroke Indicator */}
+                  <AnimatePresence>
+                    {isHighlighted && (
+                      <BrushStroke
+                        variant={(idx % 3) as 0 | 1 | 2}
+                        color="var(--theme-accent)"
+                      />
+                    )}
+                  </AnimatePresence>
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right Action Tools */}
@@ -124,7 +174,7 @@ export const Header: React.FC = () => {
               >
                 <div
                   style={{ backgroundColor: selectedLocation.theme.primaryColor }}
-                  className="h-2 w-2 rounded-full animate-pulse shrink-0"
+                  className="h-2 w-2 rounded-full animate-pulse shrink-0 transition-colors duration-500"
                 />
                 <span className="max-w-[130px] truncate font-semibold">{selectedLocation.shortName}</span>
                 <ChevronDown className="h-3 w-3 opacity-60 shrink-0" />
@@ -136,7 +186,7 @@ export const Header: React.FC = () => {
                     backgroundColor: "var(--theme-surface)",
                     borderColor: "var(--theme-surface-border)",
                   }}
-                  className="absolute right-0 top-full mt-2 w-72 rounded-2xl border p-2 shadow-2xl backdrop-blur-2xl z-50"
+                  className="absolute right-0 top-full mt-2 w-72 rounded-2xl border p-2 shadow-2xl backdrop-blur-2xl z-50 transition-colors duration-500"
                 >
                   <div
                     style={{ color: "var(--theme-muted)" }}
@@ -199,7 +249,7 @@ export const Header: React.FC = () => {
                     backgroundColor: "var(--theme-surface)",
                     borderColor: "var(--theme-surface-border)",
                   }}
-                  className="absolute right-0 top-full mt-2 w-28 rounded-2xl border p-1.5 shadow-2xl z-50"
+                  className="absolute right-0 top-full mt-2 w-28 rounded-2xl border p-1.5 shadow-2xl z-50 transition-colors duration-500"
                 >
                   {(
                     [
@@ -247,7 +297,7 @@ export const Header: React.FC = () => {
                 borderColor: "var(--theme-surface-border)",
                 color: "var(--theme-text)",
               }}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm transition-transform active:scale-95"
               aria-label="Открыть меню"
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
@@ -256,113 +306,174 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Drawer Navigation */}
-      {isMobileMenuOpen && (
-        <div
-          style={{ backgroundColor: "var(--theme-bg)" }}
-          className="fixed inset-0 z-30 flex flex-col pt-24 px-6 pb-8 backdrop-blur-2xl md:hidden overflow-y-auto"
-        >
-          {/* Language selector for mobile */}
-          <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-            <span className="text-xs font-medium opacity-70 uppercase tracking-wider">
-              Язык меню / Language
-            </span>
-            <div className="flex gap-1.5">
-              {(["ru", "en", "zh"] as const).map((l) => (
-                <button
-                  key={l}
-                  onClick={() => setLanguage(l)}
+      {/* Fullscreen Staggered Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              backgroundColor: "var(--theme-bg)",
+              color: "var(--theme-text)",
+            }}
+            className="fixed inset-0 z-50 flex flex-col justify-between p-6 sm:p-10 md:hidden backdrop-blur-3xl overflow-y-auto"
+          >
+            {/* Top Bar inside Overlay */}
+            <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-5">
+              <div className="flex items-center gap-2.5">
+                <div
                   style={{
-                    backgroundColor: language === l ? "var(--theme-primary)" : "var(--theme-surface)",
-                    color: language === l ? "#FFFFFF" : "var(--theme-text)",
+                    backgroundColor: "var(--theme-surface)",
+                    borderColor: "var(--theme-primary)",
+                    color: "var(--theme-primary)",
                   }}
-                  className="rounded-lg px-2.5 py-1 text-xs font-bold uppercase transition-colors"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border font-serif font-bold text-base"
                 >
-                  {l}
-                </button>
-              ))}
-            </div>
-          </div>
+                  V
+                </div>
+                <div>
+                  <div className="font-serif font-bold text-base leading-tight">Vincent Van Coffee</div>
+                  <div style={{ color: "var(--theme-primary)" }} className="text-[10px] uppercase tracking-wider font-semibold">
+                    {selectedLocation.shortName}
+                  </div>
+                </div>
+              </div>
 
-          {/* Location & Theme quick picker */}
-          <div className="mt-4 border-b border-black/10 dark:border-white/10 pb-4">
-            <span className="text-xs font-medium opacity-70 uppercase tracking-wider">
-              Локация и оформление
-            </span>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {LOCATIONS.map((loc) => {
-                const isSelected = loc.id === selectedLocationId;
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  backgroundColor: "var(--theme-surface)",
+                  borderColor: "var(--theme-surface-border)",
+                }}
+                className="flex h-10 w-10 items-center justify-center rounded-xl border"
+                aria-label="Закрыть меню"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Staggered Navigation Items with Brush Stroke on Active */}
+            <div className="my-auto py-8 space-y-4">
+              {navLinks.map((link, idx) => {
+                const isCurrent = activeSection === link.href;
                 return (
-                  <button
-                    key={loc.id}
-                    onClick={() => setSelectedLocationId(loc.id as LocationId)}
-                    style={{
-                      backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "var(--theme-surface)",
-                      borderColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-border)",
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.08 * idx,
+                      ease: [0.16, 1, 0.3, 1],
                     }}
-                    className="rounded-xl border p-2.5 text-left text-xs"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold truncate">{loc.shortName}</span>
+                    <a
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="group relative inline-flex items-baseline gap-3 text-3xl sm:text-4xl font-serif font-bold transition-colors"
+                    >
                       <span
-                        style={{ backgroundColor: loc.theme.primaryColor }}
-                        className="h-2 w-2 rounded-full shrink-0 ml-1"
-                      />
-                    </div>
-                    <div className="text-[10px] opacity-70 truncate mt-0.5">{loc.theme.styleName}</div>
-                  </button>
+                        style={{ color: "var(--theme-primary)" }}
+                        className="text-xs font-mono font-semibold tracking-wider opacity-60"
+                      >
+                        0{idx + 1}
+                      </span>
+                      <span className="group-hover:text-[var(--theme-primary)] transition-colors">
+                        {link.label[language]}
+                      </span>
+
+                      {isCurrent && (
+                        <BrushStroke
+                          variant={(idx % 3) as 0 | 1 | 2}
+                          color="var(--theme-accent)"
+                          className="-bottom-2"
+                        />
+                      )}
+                    </a>
+                  </motion.div>
                 );
               })}
             </div>
-          </div>
 
-          {/* Links */}
-          <div className="mt-6 flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="font-serif text-2xl font-semibold transition-colors hover:text-[var(--theme-primary)]"
-              >
-                {link.label[language]}
-              </a>
-            ))}
-          </div>
-
-          {/* Action buttons */}
-          <div className="mt-auto pt-8 flex flex-col gap-3">
-            <ShimmerButton
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                openTipsModal();
-              }}
-              className="w-full py-3 text-sm font-semibold"
+            {/* Bottom Controls: Language, Location Switcher & Actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.35 }}
+              className="space-y-4 border-t border-black/10 dark:border-white/10 pt-5"
             >
-              <div className="flex items-center justify-center gap-2">
-                <Heart className="h-4 w-4 fill-current" />
-                <span>Оставить чаевые бариста</span>
+              {/* Location Picker */}
+              <div>
+                <div style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider mb-2">
+                  Стиль атмосферы и локация:
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {LOCATIONS.map((loc) => {
+                    const isSelected = loc.id === selectedLocationId;
+                    return (
+                      <button
+                        key={loc.id}
+                        onClick={() => setSelectedLocationId(loc.id as LocationId)}
+                        style={{
+                          backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "var(--theme-surface)",
+                          borderColor: isSelected ? loc.theme.primaryColor : "var(--theme-surface-border)",
+                        }}
+                        className="rounded-xl border p-2 text-left text-xs transition-all"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold truncate">{loc.shortName}</span>
+                          <span
+                            style={{ backgroundColor: loc.theme.primaryColor }}
+                            className="h-2 w-2 rounded-full shrink-0 ml-1"
+                          />
+                        </div>
+                        <div style={{ color: "var(--theme-muted)" }} className="text-[10px] truncate mt-0.5">
+                          {loc.theme.styleName.split("&")[0]}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </ShimmerButton>
 
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                openRouteModal();
-              }}
-              style={{
-                backgroundColor: "var(--theme-surface)",
-                borderColor: "var(--theme-surface-border)",
-                color: "var(--theme-text)",
-              }}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border py-3 text-xs font-semibold"
-            >
-              <Navigation className="h-4 w-4 text-[var(--theme-primary)]" />
-              <span>Маршрут до {selectedLocation.shortName}</span>
-            </button>
-          </div>
-        </div>
-      )}
+              {/* Language + CTA */}
+              <div className="flex items-center justify-between gap-3 pt-2">
+                <div className="flex gap-1">
+                  {(["ru", "en", "zh"] as const).map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => setLanguage(l)}
+                      style={{
+                        backgroundColor: language === l ? "var(--theme-primary)" : "var(--theme-surface)",
+                        color: language === l ? "#FFFFFF" : "var(--theme-text)",
+                      }}
+                      className="rounded-lg px-2.5 py-1 text-xs font-bold uppercase transition-colors"
+                    >
+                      {l}
+                    </button>
+                  ))}
+                </div>
+
+                <ShimmerButton
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openTipsModal();
+                  }}
+                  className="py-2.5 px-4 text-xs font-bold"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <Heart className="h-3.5 w-3.5 fill-current" />
+                    <span>Чаевые</span>
+                  </div>
+                </ShimmerButton>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
