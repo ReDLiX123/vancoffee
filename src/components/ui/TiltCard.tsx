@@ -13,8 +13,8 @@ interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const TiltCard: React.FC<TiltCardProps> = ({
   children,
   className,
-  intensity = 15,
-  glowColor = "rgba(212, 155, 69, 0.15)",
+  intensity = 10,
+  glowColor,
   ...props
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   return (
     <div
       style={{ perspective: "1000px" }}
-      className="w-full"
+      className="w-full h-full"
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -66,9 +66,11 @@ export const TiltCard: React.FC<TiltCardProps> = ({
             : "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
           transition: isHovered ? "transform 0.1s ease-out" : "transform 0.5s ease-out",
           transformStyle: "preserve-3d",
+          backgroundColor: "var(--theme-surface)",
+          borderColor: "var(--theme-surface-border)",
         }}
         className={cn(
-          "relative overflow-hidden rounded-2xl border border-[#D49B45]/15 bg-[#181310] transition-colors duration-300 hover:border-[#D49B45]/40",
+          "relative h-full w-full overflow-hidden rounded-3xl border shadow-xl transition-colors duration-500",
           className
         )}
         {...props}
@@ -76,13 +78,15 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         {/* Dynamic Glow follower */}
         {isHovered && (
           <div
-            className="pointer-events-none absolute -inset-px opacity-100 transition-opacity duration-300"
+            className="pointer-events-none absolute -inset-px opacity-100 transition-opacity duration-300 z-0"
             style={{
-              background: `radial-gradient(450px circle at ${glowPos.x}% ${glowPos.y}%, ${glowColor}, transparent 70%)`,
+              background: `radial-gradient(450px circle at ${glowPos.x}% ${glowPos.y}%, ${
+                glowColor || "var(--theme-glow)"
+              }, transparent 70%)`,
             }}
           />
         )}
-        <div className="relative z-10">{children}</div>
+        <div className="relative z-10 h-full w-full flex flex-col">{children}</div>
       </div>
     </div>
   );

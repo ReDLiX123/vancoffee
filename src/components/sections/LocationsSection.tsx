@@ -126,75 +126,123 @@ export const LocationsSection: React.FC = () => {
 
         {/* Detailed Showcase Grid */}
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12 items-stretch">
-          {/* Left: 3D Photo Showcase Card with clean glassmorphic info panel */}
+          {/* Left: Magazine-style 3D Visual Showcase Card */}
           <div className="lg:col-span-7 flex flex-col">
-            <TiltCard className="h-full min-h-[520px] sm:min-h-[580px] p-0 flex flex-col justify-between relative group overflow-hidden shadow-2xl rounded-3xl border border-black/10 dark:border-white/10">
-              {/* Photo layer */}
-              <div className="absolute inset-0 z-0 overflow-hidden bg-stone-900">
+            <TiltCard className="h-full p-0 flex flex-col justify-between group overflow-hidden">
+              {/* 1. Large Unobstructed Photo Window */}
+              <div className="relative h-72 sm:h-80 md:h-[340px] w-full overflow-hidden bg-black/10 shrink-0">
                 <img
                   key={activeLoc.id}
                   src={getAssetPath(activeLoc.image)}
                   alt={activeLoc.name}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                {/* Multi-stage dark gradient scrim to ensure absolute text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30" />
-              </div>
+                {/* Subtle vignette scrim */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
 
-              {/* Top Bar with Status and Theme Badges */}
-              <div className="relative z-10 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-2.5">
-                <div className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-black/70 px-3.5 py-1.5 backdrop-blur-md shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs font-semibold text-emerald-300">{t.statusOpen}</span>
-                </div>
-
-                <div
-                  style={{
-                    borderColor: activeLoc.theme.primaryColor,
-                  }}
-                  className="flex items-center gap-2 rounded-full border bg-black/70 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md shadow-sm"
-                >
-                  <span
-                    style={{ backgroundColor: activeLoc.theme.primaryColor }}
-                    className="h-2 w-2 rounded-full ring-2 ring-white/30"
-                  />
-                  <span>{activeLoc.theme.styleName}</span>
-                </div>
-              </div>
-
-              {/* Bottom Content Card - Clean Glass Overlay with High Contrast */}
-              <div className="relative z-10 p-5 sm:p-6">
-                <div className="rounded-2xl border border-white/15 bg-black/75 p-5 sm:p-6 backdrop-blur-xl shadow-2xl text-white space-y-3">
-                  {/* Landmark Header */}
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
-                    <Sparkles className="h-4 w-4 shrink-0 text-amber-400" />
-                    <span className="truncate">{activeLoc.landmark}</span>
+                {/* Floating Top Header Badges */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-black/65 px-3 py-1.5 backdrop-blur-md shadow-md">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs font-semibold text-emerald-300">{t.statusOpen}</span>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
+                  <div
+                    style={{ borderColor: activeLoc.theme.primaryColor }}
+                    className="flex items-center gap-2 rounded-full border bg-black/65 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md shadow-md"
+                  >
+                    <span
+                      style={{ backgroundColor: activeLoc.theme.primaryColor }}
+                      className="h-2 w-2 rounded-full ring-2 ring-white/30"
+                    />
+                    <span>{activeLoc.theme.styleName}</span>
+                  </div>
+                </div>
+
+                {/* Floating Landmark Tag on Bottom of Photo */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300 drop-shadow-md">
+                  <div className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/65 px-3 py-1 backdrop-blur-md text-white">
+                    <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+                    <span className="truncate">{activeLoc.landmark}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Clear, Unobstructed Content Section below photo */}
+              <div
+                style={{
+                  backgroundColor: "var(--theme-surface)",
+                  color: "var(--theme-text)",
+                }}
+                className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4 transition-colors duration-500"
+              >
+                <div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold leading-tight group-hover:text-[var(--theme-primary)] transition-colors">
                     {activeLoc.name}
                   </h3>
 
-                  {/* Atmosphere Description */}
-                  <p className="text-xs sm:text-sm leading-relaxed text-stone-200">
+                  <p style={{ color: "var(--theme-muted)" }} className="mt-2.5 text-xs sm:text-sm leading-relaxed">
                     {activeLoc.atmosphere}
                   </p>
+                </div>
 
-                  {/* Interior Palette preview */}
-                  <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-stone-300">
-                    <span className="font-bold text-amber-300 text-xs">{t.paletteLabel}</span>
-                    <span className="text-xs text-stone-200">{activeLoc.theme.paletteDescription}</span>
+                <div className="space-y-3 pt-2 border-t border-black/5 dark:border-white/5">
+                  {/* Palette information with color dots */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span style={{ color: "var(--theme-primary)" }} className="font-bold text-xs">
+                        {t.paletteLabel}
+                      </span>
+                      <span style={{ color: "var(--theme-muted)" }} className="text-xs">
+                        {activeLoc.theme.paletteDescription}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span
+                        title="Primary Color"
+                        style={{ backgroundColor: activeLoc.theme.primaryColor }}
+                        className="h-3.5 w-3.5 rounded-full ring-1 ring-black/10 dark:ring-white/20 shadow-xs"
+                      />
+                      <span
+                        title="Accent Color"
+                        style={{ backgroundColor: activeLoc.theme.accentColor }}
+                        className="h-3.5 w-3.5 rounded-full ring-1 ring-black/10 dark:ring-white/20 shadow-xs"
+                      />
+                      {activeLoc.theme.accentColor2 && (
+                        <span
+                          title="Accent Color 2"
+                          style={{ backgroundColor: activeLoc.theme.accentColor2 }}
+                          className="h-3.5 w-3.5 rounded-full ring-1 ring-black/10 dark:ring-white/20 shadow-xs"
+                        />
+                      )}
+                    </div>
                   </div>
 
-                  {/* Popular Drink Pill */}
-                  <div className="mt-2 flex items-center gap-3 rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-md">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/15 text-amber-300">
+                  {/* Signature Drink Row */}
+                  <div
+                    style={{
+                      backgroundColor: "var(--theme-surface-elevated)",
+                      borderColor: "var(--theme-surface-border)",
+                    }}
+                    className="flex items-center gap-3 rounded-2xl border p-3 shadow-xs"
+                  >
+                    <div
+                      style={{
+                        backgroundColor: "var(--theme-badge-bg)",
+                        color: "var(--theme-primary)",
+                      }}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+                    >
                       <Coffee className="h-4 w-4" />
                     </div>
-                    <div className="min-w-0">
-                      <div className="text-[10px] uppercase tracking-wider text-stone-300">{t.popular}</div>
-                      <div className="text-xs font-bold text-white truncate">{activeLoc.popularDrink}</div>
+                    <div className="min-w-0 flex-1">
+                      <div style={{ color: "var(--theme-muted)" }} className="text-[10px] font-bold uppercase tracking-wider">
+                        {t.popular}
+                      </div>
+                      <div style={{ color: "var(--theme-text)" }} className="text-xs font-bold truncate mt-0.5">
+                        {activeLoc.popularDrink}
+                      </div>
                     </div>
                   </div>
                 </div>
