@@ -6,13 +6,9 @@ import { useApp } from "@/context/AppContext";
 import {
   Flame,
   Search,
-  Filter,
-  Check,
-  Zap,
-  Leaf,
-  ShieldCheck,
+  AlertTriangle,
   ArrowUpDown,
-  Coffee,
+  Info,
 } from "lucide-react";
 
 export const NutritionSection: React.FC = () => {
@@ -85,11 +81,13 @@ export const NutritionSection: React.FC = () => {
     ru: {
       tag: "Прозрачность & Здоровье",
       title: "Энергетическая ценность и КБЖУ",
-      desc: "Полные данные по калорийности, белкам, жирам и углеводам для каждого напитка и блюда в сети Vincent Van Coffee.",
+      desc: "Интерактивная таблица для расчета калорийности, белков, жиров и углеводов.",
+      disclaimerTitle: "ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ КБЖУ (ОЖИДАЮТ СОГЛАСОВАНИЯ)",
+      disclaimerDesc: "Представленные ниже цифры калорийности и БЖУ носят иллюстративный характер и предназначены для тестирования интерфейса. Официальные данные будут внесены после утверждения технологических карт клиентом.",
       searchPlaceholder: "Поиск по названию (например, «Раф», «Матча», «Круассан»)...",
       colName: "Позиция",
       colVolume: "Объем / Вес",
-      colCal: "Калории",
+      colCal: "Калории (демо)",
       colProt: "Белки",
       colFat: "Жиры",
       colCarbs: "Углеводы",
@@ -99,11 +97,13 @@ export const NutritionSection: React.FC = () => {
     en: {
       tag: "Transparency & Nutrition",
       title: "Nutritional Values & Macro Breakdown",
-      desc: "Full transparency on calories, proteins, fats, and carbohydrates for all drinks and culinary items.",
+      desc: "Interactive nutrition guide with filtering and search.",
+      disclaimerTitle: "DEMO NUTRITIONAL VALUES (PENDING FINAL CLIENT CERTIFICATION)",
+      disclaimerDesc: "The calorie and macro data displayed below are placeholders for interface validation. Certified laboratory lab-cards will be provided prior to official launch.",
       searchPlaceholder: "Search item (e.g., 'Raf', 'Matcha', 'Croissant')...",
       colName: "Item",
       colVolume: "Size",
-      colCal: "Calories",
+      colCal: "Calories (demo)",
       colProt: "Protein",
       colFat: "Fat",
       colCarbs: "Carbs",
@@ -113,47 +113,86 @@ export const NutritionSection: React.FC = () => {
     zh: {
       tag: "营养与热量透明公开",
       title: "能量与宏观营养素表 (КБЖУ)",
-      desc: "完整提供凡高咖啡全线饮品与餐食的热量、蛋白质、脂肪和碳水化合物数据，助您轻松管理健康生活。",
+      desc: "便捷的营养成分查询与健康筛选工具。",
+      disclaimerTitle: "营养数据测试展示（待客户最终审核确认）",
+      disclaimerDesc: "下表展示之卡路里及蛋白质/脂肪/碳水数据为演示参数，正式上线前将按客户经核准之标准配方表全面更新。",
       searchPlaceholder: "搜索单品（例如：拉夫、抹茶、可颂）...",
       colName: "出品名称",
       colVolume: "分量",
-      colCal: "热量 (kcal)",
-      colProt: "蛋白质 (g)",
-      colFat: "脂肪 (g)",
-      colCarbs: "碳水 (g)",
+      colCal: "热量 (测试值)",
+      colProt: "蛋白质",
+      colFat: "脂肪",
+      colCarbs: "碳水",
       colTags: "特色标签",
       noResults: "未找到符合条件的单品，请尝试其他关键词。",
     },
   }[language];
 
   return (
-    <section id="nutrition" className="relative py-24 bg-[#0C0A09]/95 canvas-texture border-t border-[#D49B45]/10">
+    <section id="nutrition" className="relative py-24 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D49B45]/30 bg-[#1A1410] px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#F3CA74]">
-            <Flame className="h-3.5 w-3.5 text-[#D49B45]" />
+          <div
+            style={{
+              backgroundColor: "var(--theme-badge-bg)",
+              color: "var(--theme-primary)",
+              borderColor: "var(--theme-surface-border)",
+            }}
+            className="inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider"
+          >
+            <Flame className="h-3.5 w-3.5" />
             <span>{t.tag}</span>
           </div>
-          <h2 className="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#FAF7F2]">
+          <h2 className="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight">
             {t.title}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#D4C8BC]">
+          <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-base sm:text-lg">
             {t.desc}
           </p>
+
+          {/* CRITICAL DISCLAIMER BANNER */}
+          <div
+            style={{
+              backgroundColor: "var(--theme-badge-bg)",
+              borderColor: "var(--theme-primary)",
+            }}
+            className="mt-6 rounded-2xl border p-4 text-left shadow-sm flex items-start gap-3"
+          >
+            <AlertTriangle className="h-5 w-5 shrink-0 text-[var(--theme-primary)] mt-0.5" />
+            <div>
+              <div style={{ color: "var(--theme-primary)" }} className="text-xs font-bold uppercase tracking-wider">
+                {t.disclaimerTitle}
+              </div>
+              <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs leading-relaxed">
+                {t.disclaimerDesc}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Search & Filter Bar */}
-        <div className="mt-12 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#16120F] p-4 sm:p-6 shadow-xl backdrop-blur-xl">
+        <div
+          style={{
+            backgroundColor: "var(--theme-surface)",
+            borderColor: "var(--theme-surface-border)",
+          }}
+          className="mt-10 flex flex-col gap-4 rounded-2xl border p-4 sm:p-6 shadow-md backdrop-blur-xl transition-all duration-500"
+        >
           {/* Search Input */}
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A89B8D]" />
+            <Search style={{ color: "var(--theme-muted)" }} className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full rounded-xl border border-white/10 bg-[#1D1714] pl-11 pr-4 py-3 text-sm text-[#FAF7F2] placeholder-[#70655B] outline-none transition-colors focus:border-[#D49B45]"
+              style={{
+                backgroundColor: "var(--theme-surface-elevated)",
+                borderColor: "var(--theme-surface-border)",
+                color: "var(--theme-text)",
+              }}
+              className="w-full rounded-xl border pl-11 pr-4 py-3 text-sm outline-none transition-colors focus:border-[var(--theme-primary)]"
             />
           </div>
 
@@ -167,11 +206,11 @@ export const NutritionSection: React.FC = () => {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-                      isActive
-                        ? "bg-[#D49B45] text-[#0C0A09] font-semibold shadow-sm"
-                        : "bg-[#1D1714] text-[#A89B8D] hover:text-white"
-                    }`}
+                    style={{
+                      backgroundColor: isActive ? "var(--theme-primary)" : "var(--theme-surface-elevated)",
+                      color: isActive ? "#FFFFFF" : "var(--theme-muted)",
+                    }}
+                    className="rounded-lg px-3 py-1.5 text-xs font-medium transition-all"
                   >
                     {cat.label[language]}
                   </button>
@@ -187,11 +226,12 @@ export const NutritionSection: React.FC = () => {
                   <button
                     key={qf.id}
                     onClick={() => setActiveQuickFilter(isChipActive ? null : qf.id)}
-                    className={`rounded-lg border px-2.5 py-1 text-xs transition-all ${
-                      isChipActive
-                        ? "border-[#F3CA74] bg-[#F3CA74]/20 text-[#F3CA74] font-semibold"
-                        : "border-white/10 bg-white/5 text-[#A89B8D] hover:border-white/20"
-                    }`}
+                    style={{
+                      backgroundColor: isChipActive ? "var(--theme-badge-bg)" : "transparent",
+                      borderColor: isChipActive ? "var(--theme-primary)" : "var(--theme-surface-border)",
+                      color: isChipActive ? "var(--theme-primary)" : "var(--theme-muted)",
+                    }}
+                    className="rounded-lg border px-2.5 py-1 text-xs transition-all font-medium"
                   >
                     {qf.label}
                   </button>
@@ -202,15 +242,27 @@ export const NutritionSection: React.FC = () => {
         </div>
 
         {/* Desktop Table View */}
-        <div className="mt-8 hidden lg:block overflow-hidden rounded-2xl border border-white/10 bg-[#16120F] shadow-2xl">
+        <div
+          style={{
+            backgroundColor: "var(--theme-surface)",
+            borderColor: "var(--theme-surface-border)",
+          }}
+          className="mt-8 hidden lg:block overflow-hidden rounded-2xl border shadow-xl transition-all duration-500"
+        >
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-[#1D1714] text-[#A89B8D] uppercase tracking-wider font-semibold">
+            <thead
+              style={{
+                backgroundColor: "var(--theme-surface-elevated)",
+                color: "var(--theme-muted)",
+              }}
+              className="border-b border-black/5 dark:border-white/5 uppercase tracking-wider font-semibold"
+            >
               <tr>
                 <th className="px-6 py-4">{t.colName}</th>
                 <th className="px-4 py-4">{t.colVolume}</th>
                 <th
                   onClick={() => toggleSort("calories")}
-                  className="px-4 py-4 cursor-pointer text-[#F3CA74] hover:text-white transition-colors"
+                  className="px-4 py-4 cursor-pointer text-[var(--theme-primary)] transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>{t.colCal}</span>
@@ -219,7 +271,7 @@ export const NutritionSection: React.FC = () => {
                 </th>
                 <th
                   onClick={() => toggleSort("protein")}
-                  className="px-4 py-4 cursor-pointer hover:text-white transition-colors"
+                  className="px-4 py-4 cursor-pointer hover:opacity-100 transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>{t.colProt}</span>
@@ -228,7 +280,7 @@ export const NutritionSection: React.FC = () => {
                 </th>
                 <th
                   onClick={() => toggleSort("fat")}
-                  className="px-4 py-4 cursor-pointer hover:text-white transition-colors"
+                  className="px-4 py-4 cursor-pointer hover:opacity-100 transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>{t.colFat}</span>
@@ -237,7 +289,7 @@ export const NutritionSection: React.FC = () => {
                 </th>
                 <th
                   onClick={() => toggleSort("carbs")}
-                  className="px-4 py-4 cursor-pointer hover:text-white transition-colors"
+                  className="px-4 py-4 cursor-pointer hover:opacity-100 transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>{t.colCarbs}</span>
@@ -247,41 +299,45 @@ export const NutritionSection: React.FC = () => {
                 <th className="px-6 py-4">{t.colTags}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-[#FAF7F2]">
+            <tbody className="divide-y divide-black/5 dark:divide-white/5">
               {filteredAndSortedItems.length > 0 ? (
                 filteredAndSortedItems.map((item) => (
                   <tr
                     key={item.id}
-                    className="transition-colors hover:bg-[#201A16]/60 group"
+                    className="transition-colors hover:bg-black/5 dark:hover:bg-white/5 group"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <img
                           src={item.image}
                           alt={item.name[language]}
-                          className="h-10 w-10 rounded-lg object-cover border border-white/10"
+                          className="h-10 w-10 rounded-lg object-cover border border-black/10 dark:border-white/10"
                         />
                         <div>
-                          <div className="font-semibold text-sm text-white group-hover:text-[#F3CA74] transition-colors">
+                          <div className="font-bold text-sm group-hover:text-[var(--theme-primary)] transition-colors">
                             {item.name[language]}
                           </div>
-                          <div className="text-[11px] text-[#A89B8D]">{item.price} ₽</div>
+                          <div style={{ color: "var(--theme-muted)" }} className="text-[11px]">{item.price} ₽</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 font-mono text-[#A89B8D]">{item.volume}</td>
-                    <td className="px-4 py-4 font-bold text-sm text-[#F3CA74]">
-                      {item.nutrition.calories} <span className="text-[10px] font-normal text-[#A89B8D]">ккал</span>
+                    <td style={{ color: "var(--theme-muted)" }} className="px-4 py-4 font-mono">{item.volume}</td>
+                    <td style={{ color: "var(--theme-primary)" }} className="px-4 py-4 font-bold text-sm">
+                      {item.nutrition.calories} <span style={{ color: "var(--theme-muted)" }} className="text-[10px] font-normal">ккал</span>
                     </td>
-                    <td className="px-4 py-4 font-mono">{item.nutrition.protein} г</td>
-                    <td className="px-4 py-4 font-mono">{item.nutrition.fat} г</td>
-                    <td className="px-4 py-4 font-mono">{item.nutrition.carbs} г</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.protein} г</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.fat} г</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.carbs} г</td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1">
                         {item.tags.map((tg, i) => (
                           <span
                             key={i}
-                            className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-[#A89B8D]"
+                            style={{
+                              backgroundColor: "var(--theme-surface-elevated)",
+                              color: "var(--theme-muted)",
+                            }}
+                            className="rounded-md px-2 py-0.5 text-[10px]"
                           >
                             {tg === "vegan"
                               ? "Vegan"
@@ -298,7 +354,7 @@ export const NutritionSection: React.FC = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-sm text-[#A89B8D]">
+                  <td colSpan={7} style={{ color: "var(--theme-muted)" }} className="px-6 py-12 text-center text-sm">
                     {t.noResults}
                   </td>
                 </tr>
@@ -307,53 +363,60 @@ export const NutritionSection: React.FC = () => {
           </table>
         </div>
 
-        {/* Mobile / Tablet Cards View */}
+        {/* Mobile Cards View */}
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
           {filteredAndSortedItems.length > 0 ? (
             filteredAndSortedItems.map((item) => (
               <div
                 key={item.id}
-                className="rounded-2xl border border-white/10 bg-[#16120F] p-4 text-xs"
+                style={{
+                  backgroundColor: "var(--theme-surface)",
+                  borderColor: "var(--theme-surface-border)",
+                }}
+                className="rounded-2xl border p-4 text-xs shadow-sm"
               >
                 <div className="flex items-start gap-3">
                   <img
                     src={item.image}
                     alt={item.name[language]}
-                    className="h-12 w-12 rounded-xl object-cover border border-white/10"
+                    className="h-12 w-12 rounded-xl object-cover border border-black/10 dark:border-white/10"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm text-white truncate">
+                    <div className="font-bold text-sm truncate">
                       {item.name[language]}
                     </div>
-                    <div className="flex justify-between items-center text-[11px] text-[#A89B8D] mt-0.5">
+                    <div style={{ color: "var(--theme-muted)" }} className="flex justify-between items-center text-[11px] mt-0.5">
                       <span>{item.volume}</span>
-                      <span className="font-bold text-[#F3CA74]">{item.price} ₽</span>
+                      <span style={{ color: "var(--theme-primary)" }} className="font-bold">{item.price} ₽</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-3 grid grid-cols-4 gap-1.5 rounded-xl bg-[#1D1714] p-2 text-center">
+                <div
+                  style={{ backgroundColor: "var(--theme-surface-elevated)" }}
+                  className="mt-3 grid grid-cols-4 gap-1.5 rounded-xl p-2 text-center"
+                >
                   <div>
-                    <div className="font-bold text-[#F3CA74]">{item.nutrition.calories}</div>
-                    <div className="text-[9px] text-[#A89B8D]">ккал</div>
+                    <div style={{ color: "var(--theme-primary)" }} className="font-bold">{item.nutrition.calories}</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">ккал (демо)</div>
                   </div>
                   <div>
-                    <div className="font-bold text-white">{item.nutrition.protein}г</div>
-                    <div className="text-[9px] text-[#A89B8D]">Белки</div>
+                    <div className="font-bold">{item.nutrition.protein}г</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">Белки</div>
                   </div>
                   <div>
-                    <div className="font-bold text-white">{item.nutrition.fat}г</div>
-                    <div className="text-[9px] text-[#A89B8D]">Жиры</div>
+                    <div className="font-bold">{item.nutrition.fat}г</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">Жиры</div>
                   </div>
                   <div>
-                    <div className="font-bold text-white">{item.nutrition.carbs}г</div>
-                    <div className="text-[9px] text-[#A89B8D]">Углев.</div>
+                    <div className="font-bold">{item.nutrition.carbs}г</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">Углев.</div>
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <div className="col-span-full py-10 text-center text-sm text-[#A89B8D]">
+            <div style={{ color: "var(--theme-muted)" }} className="col-span-full py-10 text-center text-sm">
               {t.noResults}
             </div>
           )}

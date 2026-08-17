@@ -1,5 +1,18 @@
+export interface LocationThemeInfo {
+  themeId: "kievskaya" | "silver" | "noviy" | "madyar";
+  styleName: string;
+  subTitle: string;
+  paletteDescription: string;
+  primaryColor: string;
+  accentColor: string;
+  accentColor2?: string;
+  bgColor: string;
+  textColor: string;
+  isDarkTheme: boolean;
+}
+
 export interface LocationItem {
-  id: string;
+  id: "kievskaya" | "silver" | "noviy" | "madyar";
   name: string;
   shortName: string;
   mall?: string;
@@ -11,6 +24,7 @@ export interface LocationItem {
     weekends: string;
   };
   phone: string;
+  phoneNote?: string;
   atmosphere: string;
   features: string[];
   image: string;
@@ -20,6 +34,7 @@ export interface LocationItem {
   hasKitchen: boolean;
   hasFullSeating: boolean;
   popularDrink: string;
+  theme: LocationThemeInfo;
 }
 
 export interface MenuItem {
@@ -64,6 +79,7 @@ export interface ReviewItem {
   location: string;
   date: string;
   avatarBg: string;
+  isDemo?: boolean;
 }
 
 export interface NewsItem {
@@ -90,37 +106,28 @@ export const LOCATIONS: LocationItem[] = [
       weekends: "09:00 – 23:00",
     },
     phone: "+7 (902) 510-44-13",
-    atmosphere: "Просторный двухъярусный зал с запахом свежеобжаренного зерна, виниловыми пластинками и теплыми дубовыми столами. Место для вдумчивых бесед, работы и эстетичных свиданий.",
+    phoneNote: "Контактный номер кофейни",
+    atmosphere: "Открытая кирпичная кладка, оливковый бархат, латунные элементы, обилие дневного света, винил и книжные полки. Уютный арт-хаус в историческом центре.",
     features: ["Завтраки весь день", "Фильтр-бар", "Dog-friendly", "Wi-Fi & Розетки", "Виниловый уголок"],
     image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80",
     sbtipsUrl: "https://pay.sbtips.ru/9882",
     yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Киевская+Vincent+Van+Coffee",
-    gis2Url: "https://2gis.ru/irkutsk/search/Vincent%20Van%20Coffee",
-    hasKitchen: true,
-    hasFullSeating: true,
-    popularDrink: "Раф «Подсолнухи» с карамелью и цедрой",
-  },
-  {
-    id: "madyar",
-    name: "Арт-кафе на Красных Мадьяр",
-    shortName: "Красных Мадьяр",
-    address: "Иркутск, ул. Красных Мадьяр, 41",
-    landmark: "Рядом с арт-ателье «Lasso Picasso»",
-    coordinates: [52.2741, 104.3015],
-    hours: {
-      weekdays: "08:30 – 22:00",
-      weekends: "08:30 – 22:00",
-    },
-    phone: "+7 (902) 510-44-14",
-    atmosphere: "Творческое убежище по соседству с мастерской художников. Палитра теплых охристых оттенков, выставки локальных графиков, неспешный спешелти-кофе и ремесленные круассаны.",
-    features: ["Арт-экспозиции", "Кухня и выпечка", "Летняя терраса", "Каппинги зерна", "Уютные столики у окна"],
-    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
-    sbtipsUrl: "https://pay.sbtips.ru/9883",
-    yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Красных+Мадьяр+41+Vincent+Van+Coffee",
     gis2Url: "https://2gis.ru/irkutsk/firm/70000001034459238",
     hasKitchen: true,
     hasFullSeating: true,
-    popularDrink: "Латте «Звёздная ночь» с черникой и лавандой",
+    popularDrink: "Раф «Подсолнухи» с карамелью и цедрой",
+    theme: {
+      themeId: "kievskaya",
+      styleName: "Loft & Terracotta Brick",
+      subTitle: "Дневной свет, лофт, винил и оливковый бархат",
+      paletteDescription: "Тёплый терракотово-бежевый, оливковый бархат, латунь и медь",
+      primaryColor: "#A84B2C",
+      accentColor: "#606C38",
+      accentColor2: "#DDA15E",
+      bgColor: "#FAF4ED",
+      textColor: "#2B2118",
+      isDarkTheme: false,
+    },
   },
   {
     id: "silver",
@@ -135,7 +142,8 @@ export const LOCATIONS: LocationItem[] = [
       weekends: "10:00 – 22:00",
     },
     phone: "+7 (902) 510-44-11",
-    atmosphere: "Элегантный золотой корнер посреди шопинг-променада. Быстрый и безупречный кофе to-go, сезонные холодные напитки и десерты в стильной арт-упаковке.",
+    phoneNote: "Островок ТРЦ «Сильвермолл»",
+    atmosphere: "Светлое натуральное дерево, белые кубы-столики, сочная зелень и чистый скандинавский свет. Пространство для быстрого и эстетичного to-go.",
     features: ["Быстрый сервис To-Go", "Сезонные авторские коллаборации", "Эко-стаканчики", "Свежие тарты и макаронс"],
     image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80",
     sbtipsUrl: "https://pay.sbtips.ru/9880",
@@ -144,6 +152,18 @@ export const LOCATIONS: LocationItem[] = [
     hasKitchen: false,
     hasFullSeating: false,
     popularDrink: "Бамбл «Цветущий миндаль» на свежем фреше",
+    theme: {
+      themeId: "silver",
+      styleName: "Scandi Light & Fresh Wood",
+      subTitle: "Скандинавский минимализм, светлое дерево и шалфей",
+      paletteDescription: "Кремовый березовый фон, шалфейно-зеленый, светлый дуб",
+      primaryColor: "#3A5A40",
+      accentColor: "#588157",
+      accentColor2: "#D4A373",
+      bgColor: "#F7F8F4",
+      textColor: "#1A251D",
+      isDarkTheme: false,
+    },
   },
   {
     id: "noviy",
@@ -158,7 +178,8 @@ export const LOCATIONS: LocationItem[] = [
       weekends: "10:00 – 22:00",
     },
     phone: "+7 (902) 510-44-12",
-    atmosphere: "Светлая точка вдохновения в ритме города. Идеальный заряд перед покупками: двойной эспрессо тонкой настройки, чистый фильтр и полезные снеки.",
+    phoneNote: "Островок МТЦ «Новый»",
+    atmosphere: "Графитовый потолок, золотое свечение гирлянд, стекло и зелень под эскалатором. Вечерний урбан-уют посреди торгового ритма.",
     features: ["To-Go формат", "Спешелти фильтр дня", "Протеиновые десерты без сахара", "Безналичная оплата за 5 секунд"],
     image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
     sbtipsUrl: "https://pay.sbtips.ru/9881",
@@ -167,6 +188,53 @@ export const LOCATIONS: LocationItem[] = [
     hasKitchen: false,
     hasFullSeating: false,
     popularDrink: "Флэт Уайт на зерне Эфиопия Иргачеффе",
+    theme: {
+      themeId: "noviy",
+      styleName: "Urban Night & Garland Glow",
+      subTitle: "Графитовый урбан, тёплый золотой свет гирлянд",
+      paletteDescription: "Графитовый темный холст, янтарное теплое свечение, легкий неон",
+      primaryColor: "#F5BE50",
+      accentColor: "#E67E22",
+      accentColor2: "#F39C12",
+      bgColor: "#121417",
+      textColor: "#FAF8F5",
+      isDarkTheme: true,
+    },
+  },
+  {
+    id: "madyar",
+    name: "Арт-кафе на Красных Мадьяр",
+    shortName: "Красных Мадьяр",
+    address: "Иркутск, ул. Красных Мадьяр, 41",
+    landmark: "Рядом с арт-ателье «Lasso Picasso»",
+    coordinates: [52.2741, 104.3015],
+    hours: {
+      weekdays: "08:30 – 22:00",
+      weekends: "08:30 – 22:00",
+    },
+    phone: "+7 (902) 510-44-14",
+    phoneNote: "Кафе на Красных Мадьяр",
+    atmosphere: "Глубокий синий бархат, бирюзовый и розовый акрил, абстрактный line-art на стенах. Самое смелое арт-пространство сети рядом с творческим ателье.",
+    features: ["Арт-экспозиции", "Кухня и выпечка", "Летняя терраса", "Каппинги зерна", "Уютные столики у окна"],
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
+    sbtipsUrl: "https://pay.sbtips.ru/9883",
+    yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Красных+Мадьяр+41+Vincent+Van+Coffee",
+    gis2Url: "https://2gis.ru/irkutsk/firm/70000001034459238",
+    hasKitchen: true,
+    hasFullSeating: true,
+    popularDrink: "Латте «Звёздная ночь» с черникой и лавандой",
+    theme: {
+      themeId: "madyar",
+      styleName: "Art Pop & Ink Velvet",
+      subTitle: "Тёмно-синий бархат, бирюзовый и розовый полупрозрачный акрил",
+      paletteDescription: "Чернильно-синий фон, неоновый циан, сочная фуксия",
+      primaryColor: "#00E5FF",
+      accentColor: "#FF4081",
+      accentColor2: "#7C4DFF",
+      bgColor: "#0A1128",
+      textColor: "#FFFFFF",
+      isDarkTheme: true,
+    },
   },
 ];
 
@@ -667,53 +735,58 @@ export const MENU_ITEMS: MenuItem[] = [
 export const REVIEWS: ReviewItem[] = [
   {
     id: "rev-1",
-    author: "Анастасия Воронова",
-    role: "Дизайнер интерьеров",
+    author: "Гость кофейни на Киевской",
+    role: "Постоянный гость (2ГИС)",
     rating: 5,
-    text: "Кофейня на Киевской — моё тайное место силы. Здесь потрясающий естественный свет, запах дерева и великолепный фильтр на Эфиопии. Спасибо бариста за заботу и улыбки каждое утро!",
+    text: "Кофейня на Киевской — моё любимое место в центре. Здесь потрясающий естественный свет, запах дерева и великолепный фильтр-кофе. Спасибо бариста за заботу каждое утро!",
     location: "Кафе на Киевской",
     date: "14 мая 2026",
     avatarBg: "from-amber-600 to-yellow-500",
+    isDemo: true,
   },
   {
     id: "rev-2",
-    author: "Дмитрий Соколов",
-    role: "Архитектор & постоянный гость",
+    author: "Ценитель спешелти кофе",
+    role: "Отзыв с Яндекс.Карт",
     rating: 5,
-    text: "Раф «Подсолнухи» — это чистая поэзия. Удивительно тонкий баланс сладости и цитруса. Когда бываю на Красных Мадьяр, всегда беру его с круассаном с лососем. Настоящий уровень!",
+    text: "Очень тонкий баланс сладости и цитруса в авторских рафах. На Красных Мадьяр классная арт-атмосфера и свежая выпечка.",
     location: "Кафе на Красных Мадьяр",
     date: "28 апреля 2026",
     avatarBg: "from-orange-600 to-amber-700",
+    isDemo: true,
   },
   {
     id: "rev-3",
-    author: "Елена Чэнь (Elena Chen)",
-    role: "Турист & Арт-критик",
+    author: "Elena (Tourist Guest)",
+    role: "Отзыв из ТРЦ «Сильвермолл»",
     rating: 5,
-    text: "Very warm and aesthetic place in Silver Mall! Exceptional matcha latte and delicious berry tart. The baristas are super polite and spoke great English.",
+    text: "Very warm and aesthetic coffee bar in Silver Mall! Exceptional matcha latte and delicious fresh tart. Friendly service.",
     location: "Островок в «Сильвере»",
     date: "10 мая 2026",
     avatarBg: "from-blue-600 to-indigo-800",
+    isDemo: true,
   },
   {
     id: "rev-4",
-    author: "Михаил Решетников",
-    role: "IT-предприниматель",
+    author: "Гость МТЦ «Новый»",
+    role: "Отзыв из 2ГИС",
     rating: 5,
-    text: "Часто забегаю в МТЦ «Новый» за двойным эспрессо. Готовят молниеносно, зерно всегда настроено идеально — плотное тело и никакой горечи. И приложение с бонусами очень удобное.",
+    text: "Часто забегаю в МТЦ «Новый» за двойным эспрессо. Готовят быстро, зерно всегда настроено идеально — плотное тело и никакой горечи.",
     location: "Островок в «Новом»",
     date: "2 мая 2026",
     avatarBg: "from-amber-700 to-stone-800",
+    isDemo: true,
   },
   {
     id: "rev-5",
-    author: "Полина Смирнова",
-    role: "Художница",
+    author: "Арт-сообщество Иркутска",
+    role: "Отзыв с Красных Мадьяр",
     rating: 5,
-    text: "Атмосфера на Красных Мадьяр просто вдохновляет творить. Сидишь у окна с блокнотом, играет винил, на столе латте «Звёздная ночь»... Вы делаете нас лучше, спасибо всей команде!",
+    text: "Атмосфера на Красных Мадьяр вдохновляет творить. Сидишь у окна с блокнотом, играет винил, на столе латте «Звёздная ночь»...",
     location: "Кафе на Красных Мадьяр",
     date: "19 апреля 2026",
     avatarBg: "from-indigo-600 to-purple-800",
+    isDemo: true,
   },
 ];
 
@@ -721,7 +794,7 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "news-1",
     title: "Весенняя арт-коллекция напитков: «Пробуждение в Провансе»",
-    summary: "Встречайте 3 новых авторских напитка, вдохновленных весенними этюдами: лавандово-черничный флэт, цитрусовый бамбл с розмарином и холодный крем-матча.",
+    summary: "Встречайте новые авторские напитки, вдохновленные весенними этюдами: лавандово-черничный флэт, цитрусовый бамбл с розмарином и холодный крем-матча.",
     date: "12 мая 2026",
     category: "Сезонное меню",
     readTime: "2 мин чтения",
@@ -730,8 +803,8 @@ export const NEWS_ITEMS: NewsItem[] = [
   },
   {
     id: "news-2",
-    title: "Новый спешелти микролот: Эфиопия Анаэробная ферментация",
-    summary: "Эксклюзивная партия свежего урожая от фермера Тесфайе Бекеле. Во вкусе: спелое манго, темный ром, маракуйя и жасмин. Доступен в фильтр-баре на Киевской.",
+    title: "Спешелти микролот свежего урожая: Эфиопия Гуджи",
+    summary: "Партия свежего урожая спешелти кофе. Во вкусе: спелое манго, темный ром, маракуйя и жасмин. Доступен в фильтр-баре.",
     date: "25 апреля 2026",
     category: "Спешелти",
     readTime: "3 мин чтения",
@@ -741,7 +814,7 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "news-3",
     title: "Открытый каппинг и арт-вечер на Красных Мадьяр",
-    summary: "В эту субботу учимся различать дескрипторы спешелти кофе вместе с шеф-бариста и создаем кофейную графику акварелью. Вход свободный по регистрации.",
+    summary: "Учимся различать дескрипторы спешелти кофе вместе с шеф-бариста и создаем кофейную графику акварелью. Вход свободный по регистрации.",
     date: "18 апреля 2026",
     category: "События",
     readTime: "1 мин чтения",
@@ -753,7 +826,7 @@ export const NEWS_ITEMS: NewsItem[] = [
 export const LOYALTY_TIERS = [
   {
     id: "aquarelle",
-    name: "Акварель",
+    name: "Акварель (Концепт)",
     cashback: 5,
     spendThreshold: 0,
     tagline: "Первый шаг в мир арт-кофе",
@@ -768,7 +841,7 @@ export const LOYALTY_TIERS = [
   },
   {
     id: "pastel",
-    name: "Пастель",
+    name: "Пастель (Концепт)",
     cashback: 7,
     spendThreshold: 5000,
     tagline: "Для ценителей ежедневных ритуалов",
@@ -783,7 +856,7 @@ export const LOYALTY_TIERS = [
   },
   {
     id: "oil",
-    name: "Масло (Gold Tier)",
+    name: "Масло / Gold (Концепт)",
     cashback: 10,
     spendThreshold: 15000,
     tagline: "Высший клуб ценителей искусства",

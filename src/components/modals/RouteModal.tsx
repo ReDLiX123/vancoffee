@@ -29,7 +29,7 @@ export const RouteModal: React.FC = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={closeRouteModal}
-          className="absolute inset-0 bg-black/80 backdrop-blur-md"
+          className="absolute inset-0 bg-black/75 backdrop-blur-md"
         />
 
         {/* Modal Window */}
@@ -37,15 +37,17 @@ export const RouteModal: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-[#D49B45]/30 bg-[#16120F] p-6 shadow-[0_25px_60px_rgba(0,0,0,0.8)] sm:p-8"
+          style={{
+            backgroundColor: "var(--theme-surface)",
+            borderColor: "var(--theme-surface-border)",
+            color: "var(--theme-text)",
+          }}
+          className="relative w-full max-w-lg overflow-hidden rounded-3xl border p-6 shadow-2xl sm:p-8 z-10"
         >
-          {/* Header subtle glow */}
-          <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[#D49B45]/15 blur-3xl" />
-
           {/* Close button */}
           <button
             onClick={closeRouteModal}
-            className="absolute right-5 top-5 rounded-full p-2 text-[#A89B8D] transition-colors hover:bg-white/5 hover:text-[#FAF7F2]"
+            className="absolute right-5 top-5 rounded-full p-2 opacity-60 transition-opacity hover:opacity-100"
           >
             <X className="h-5 w-5" />
           </button>
@@ -53,15 +55,21 @@ export const RouteModal: React.FC = () => {
           <div className="relative z-10">
             {/* Badge & Title */}
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#D49B45]/30 bg-[#D49B45]/10 text-[#F3CA74]">
+              <div
+                style={{
+                  backgroundColor: "var(--theme-badge-bg)",
+                  color: "var(--theme-primary)",
+                }}
+                className="flex h-9 w-9 items-center justify-center rounded-xl"
+              >
                 <Navigation className="h-5 w-5" />
               </div>
-              <span className="text-xs font-semibold tracking-wider uppercase text-[#D49B45]">
+              <span style={{ color: "var(--theme-primary)" }} className="text-xs font-bold tracking-wider uppercase">
                 Построить маршрут
               </span>
             </div>
 
-            <h3 className="mt-3 font-serif text-2xl sm:text-3xl font-semibold text-[#FAF7F2]">
+            <h3 className="mt-3 font-serif text-2xl sm:text-3xl font-bold">
               {activeLoc.name}
             </h3>
 
@@ -73,11 +81,12 @@ export const RouteModal: React.FC = () => {
                   <button
                     key={loc.id}
                     onClick={() => setSelectedLocationId(loc.id as any)}
-                    className={`whitespace-nowrap rounded-xl border px-3 py-1.5 text-xs font-medium transition-all ${
-                      isSelected
-                        ? "border-[#D49B45] bg-[#D49B45]/20 text-[#F3CA74]"
-                        : "border-white/10 bg-[#1D1714] text-[#A89B8D] hover:border-white/20"
-                    }`}
+                    style={{
+                      backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "transparent",
+                      borderColor: isSelected ? loc.theme.primaryColor : "var(--theme-surface-border)",
+                      color: isSelected ? "var(--theme-primary)" : "var(--theme-muted)",
+                    }}
+                    className="whitespace-nowrap rounded-xl border px-3 py-1.5 text-xs font-bold transition-all"
                   >
                     {loc.shortName}
                   </button>
@@ -86,24 +95,34 @@ export const RouteModal: React.FC = () => {
             </div>
 
             {/* Address & Meta */}
-            <div className="mt-5 space-y-3 rounded-2xl border border-white/10 bg-[#1D1714] p-4 text-sm">
+            <div
+              style={{
+                backgroundColor: "var(--theme-surface-elevated)",
+                borderColor: "var(--theme-surface-border)",
+              }}
+              className="mt-5 space-y-3 rounded-2xl border p-4 text-sm shadow-sm"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#D49B45]" />
+                  <MapPin style={{ color: "var(--theme-primary)" }} className="mt-0.5 h-4 w-4 shrink-0" />
                   <div>
-                    <p className="font-medium text-[#FAF7F2]">{activeLoc.address}</p>
-                    <p className="text-xs text-[#A89B8D]">{activeLoc.landmark}</p>
+                    <p className="font-bold">{activeLoc.address}</p>
+                    <p style={{ color: "var(--theme-muted)" }} className="text-xs">{activeLoc.landmark}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleCopyAddress}
-                  className="flex shrink-0 items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-[#A89B8D] transition-colors hover:text-white"
+                  style={{
+                    backgroundColor: "var(--theme-surface)",
+                    borderColor: "var(--theme-surface-border)",
+                  }}
+                  className="flex shrink-0 items-center gap-1 rounded-lg border px-2.5 py-1 text-xs transition-colors hover:shadow-xs"
                   title="Скопировать адрес"
                 >
                   {copied ? (
                     <>
-                      <Check className="h-3 w-3 text-emerald-400" />
-                      <span className="text-emerald-400">Скопировано</span>
+                      <Check className="h-3 w-3 text-emerald-500" />
+                      <span className="text-emerald-500 font-bold">Скопировано</span>
                     </>
                   ) : (
                     <>
@@ -114,17 +133,17 @@ export const RouteModal: React.FC = () => {
                 </button>
               </div>
 
-              <div className="flex items-center gap-2.5 border-t border-white/5 pt-3 text-xs text-[#A89B8D]">
-                <Clock className="h-4 w-4 text-[#D49B45]" />
+              <div className="flex items-center gap-2.5 border-t border-black/5 dark:border-white/5 pt-3 text-xs">
+                <Clock style={{ color: "var(--theme-primary)" }} className="h-4 w-4" />
                 <span>
-                  Будни: <strong className="text-white">{activeLoc.hours.weekdays}</strong> • Выходные:{" "}
-                  <strong className="text-white">{activeLoc.hours.weekends}</strong>
+                  Будни: <strong>{activeLoc.hours.weekdays}</strong> • Выходные:{" "}
+                  <strong>{activeLoc.hours.weekends}</strong>
                 </span>
               </div>
 
-              <div className="flex items-center gap-2.5 border-t border-white/5 pt-3 text-xs text-[#A89B8D]">
-                <Phone className="h-4 w-4 text-[#D49B45]" />
-                <a href={`tel:${activeLoc.phone}`} className="text-white hover:underline">
+              <div className="flex items-center gap-2.5 border-t border-black/5 dark:border-white/5 pt-3 text-xs">
+                <Phone style={{ color: "var(--theme-primary)" }} className="h-4 w-4" />
+                <a href={`tel:${activeLoc.phone}`} className="font-bold hover:underline">
                   {activeLoc.phone}
                 </a>
               </div>
@@ -136,7 +155,7 @@ export const RouteModal: React.FC = () => {
                 href={activeLoc.gis2Url}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 rounded-xl border border-[#2EB67D]/40 bg-[#2EB67D]/10 py-3 text-xs font-semibold text-[#82E7BA] transition-all hover:bg-[#2EB67D]/20 hover:scale-[1.02]"
+                className="flex items-center justify-center gap-2 rounded-xl border border-[#2EB67D]/40 bg-[#2EB67D]/10 py-3 text-xs font-bold text-[#2EB67D] transition-all hover:bg-[#2EB67D]/20 hover:scale-[1.02]"
               >
                 <span>Открыть в 2ГИС</span>
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -146,7 +165,7 @@ export const RouteModal: React.FC = () => {
                 href={activeLoc.yandexMapUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 rounded-xl border border-[#FC3F1D]/40 bg-[#FC3F1D]/10 py-3 text-xs font-semibold text-[#FF8566] transition-all hover:bg-[#FC3F1D]/20 hover:scale-[1.02]"
+                className="flex items-center justify-center gap-2 rounded-xl border border-[#FC3F1D]/40 bg-[#FC3F1D]/10 py-3 text-xs font-bold text-[#FC3F1D] transition-all hover:bg-[#FC3F1D]/20 hover:scale-[1.02]"
               >
                 <span>Яндекс.Карты</span>
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -156,7 +175,8 @@ export const RouteModal: React.FC = () => {
             <div className="mt-4 text-center">
               <button
                 onClick={closeRouteModal}
-                className="text-xs text-[#A89B8D] hover:text-white"
+                style={{ color: "var(--theme-muted)" }}
+                className="text-xs hover:underline"
               >
                 Закрыть окно
               </button>

@@ -1,38 +1,102 @@
 @import "tailwindcss";
 
 @layer base {
-  :root {
-    --bg-dark: #0C0A09;
-    --bg-surface: #171310;
-    --bg-surface-elevated: #211B17;
-    --border-subtle: rgba(212, 155, 69, 0.12);
-    --border-hover: rgba(212, 155, 69, 0.35);
-    --gold-primary: #D49B45;
-    --gold-light: #F3C775;
-    --gold-dim: #9E702D;
-    --blue-night: #0E1B2A;
-    --blue-glow: #1A3756;
-    --text-main: #FAF7F2;
-    --text-muted: #A89B8D;
-    --text-dim: #70655B;
+  :root,
+  [data-location="kievskaya"] {
+    --theme-bg: #FAF4ED;
+    --theme-bg-secondary: #F2E7DC;
+    --theme-surface: #FFFFFF;
+    --theme-surface-elevated: #F8EFE6;
+    --theme-surface-border: rgba(168, 75, 44, 0.18);
+    --theme-border-hover: rgba(168, 75, 44, 0.4);
+    --theme-text: #2B2118;
+    --theme-muted: #736254;
+    --theme-dim: #9E8C7E;
+    --theme-primary: #A84B2C;
+    --theme-accent: #606C38;
+    --theme-accent-2: #DDA15E;
+    --theme-badge-bg: rgba(168, 75, 44, 0.08);
+    --theme-card-bg: rgba(255, 255, 255, 0.9);
+    --theme-header-bg: rgba(250, 244, 237, 0.9);
+    --theme-glow: rgba(168, 75, 44, 0.14);
+    --is-dark: 0;
+  }
+
+  [data-location="silver"] {
+    --theme-bg: #F7F8F4;
+    --theme-bg-secondary: #EEF2E8;
+    --theme-surface: #FFFFFF;
+    --theme-surface-elevated: #F2F6ED;
+    --theme-surface-border: rgba(88, 129, 87, 0.18);
+    --theme-border-hover: rgba(88, 129, 87, 0.4);
+    --theme-text: #1A251D;
+    --theme-muted: #5C7061;
+    --theme-dim: #8E9F92;
+    --theme-primary: #3A5A40;
+    --theme-accent: #588157;
+    --theme-accent-2: #D4A373;
+    --theme-badge-bg: rgba(88, 129, 87, 0.1);
+    --theme-card-bg: rgba(255, 255, 255, 0.95);
+    --theme-header-bg: rgba(247, 248, 244, 0.92);
+    --theme-glow: rgba(88, 129, 87, 0.15);
+    --is-dark: 0;
+  }
+
+  [data-location="noviy"] {
+    --theme-bg: #121417;
+    --theme-bg-secondary: #1B1E24;
+    --theme-surface: #1E222A;
+    --theme-surface-elevated: #262B35;
+    --theme-surface-border: rgba(245, 190, 80, 0.2);
+    --theme-border-hover: rgba(245, 190, 80, 0.45);
+    --theme-text: #FAF8F5;
+    --theme-muted: #9AA5B4;
+    --theme-dim: #687382;
+    --theme-primary: #F5BE50;
+    --theme-accent: #E67E22;
+    --theme-accent-2: #F39C12;
+    --theme-badge-bg: rgba(245, 190, 80, 0.15);
+    --theme-card-bg: rgba(30, 34, 42, 0.88);
+    --theme-header-bg: rgba(18, 20, 23, 0.92);
+    --theme-glow: rgba(245, 190, 80, 0.2);
+    --is-dark: 1;
+  }
+
+  [data-location="madyar"] {
+    --theme-bg: #0A1128;
+    --theme-bg-secondary: #101A3D;
+    --theme-surface: #14214D;
+    --theme-surface-elevated: #1C2D66;
+    --theme-surface-border: rgba(0, 229, 255, 0.25);
+    --theme-border-hover: rgba(255, 64, 129, 0.45);
+    --theme-text: #FFFFFF;
+    --theme-muted: #95A9D6;
+    --theme-dim: #6074A4;
+    --theme-primary: #00E5FF;
+    --theme-accent: #FF4081;
+    --theme-accent-2: #7C4DFF;
+    --theme-badge-bg: rgba(0, 229, 255, 0.15);
+    --theme-card-bg: rgba(20, 33, 77, 0.88);
+    --theme-header-bg: rgba(10, 17, 40, 0.92);
+    --theme-glow: rgba(0, 229, 255, 0.25);
+    --is-dark: 1;
   }
 
   * {
-    border-color: var(--border-subtle);
+    border-color: var(--theme-surface-border);
   }
 
   body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     overflow-x: hidden;
-    selection-background-color: #D49B45;
-    selection-color: #0C0A09;
+    transition: background-color 500ms ease, color 500ms ease, border-color 500ms ease;
   }
 
   ::selection {
-    background: #D49B45;
-    color: #0C0A09;
+    background: var(--theme-primary);
+    color: var(--theme-bg);
   }
 }
 
@@ -42,37 +106,30 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0C0A09;
+  background: var(--theme-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2E2620;
+  background: var(--theme-muted);
   border-radius: 4px;
-  border: 2px solid #0C0A09;
+  border: 2px solid var(--theme-bg);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D49B45;
+  background: var(--theme-primary);
 }
 
 /* Artistic Canvas Noise Overlay */
 .canvas-texture {
-  background-image: radial-gradient(rgba(212, 155, 69, 0.04) 1px, transparent 0);
+  background-image: radial-gradient(rgba(120, 100, 80, 0.06) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
-.brush-gradient {
-  background: linear-gradient(135deg, rgba(212, 155, 69, 0.15) 0%, rgba(20, 40, 61, 0.25) 50%, rgba(12, 10, 9, 0.8) 100%);
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #FFFFFF 20%, #F5CE85 60%, #D49B45 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.night-gradient-text {
-  background: linear-gradient(135deg, #E2F1FF 20%, #7EAEF5 60%, #3B82F6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Smooth crossfade container */
+.theme-container {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background-color 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Animations */
@@ -124,17 +181,6 @@
   }
 }
 
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
 .animate-border-beam {
   animation: border-beam calc(var(--duration, 15) * 1s) infinite linear;
 }
@@ -159,22 +205,21 @@
   animation: float-gentle 6s ease-in-out infinite;
 }
 
-.animate-pulse-subtle {
-  animation: pulse-subtle 4s ease-in-out infinite;
-}
-
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(23, 19, 16, 0.75);
+/* Theme Adaptive Glass and Surface classes */
+.theme-surface {
+  background-color: var(--theme-card-bg);
+  border: 1px solid var(--theme-surface-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 155, 69, 0.14);
+  transition: all 450ms ease;
 }
 
-.glass-panel-gold {
-  background: linear-gradient(180deg, rgba(33, 27, 23, 0.85) 0%, rgba(20, 16, 13, 0.95) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(212, 155, 69, 0.22);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(212, 155, 69, 0.08);
+.theme-surface:hover {
+  border-color: var(--theme-border-hover);
+}
+
+.theme-badge {
+  background-color: var(--theme-badge-bg);
+  border: 1px solid var(--theme-surface-border);
+  color: var(--theme-primary);
 }

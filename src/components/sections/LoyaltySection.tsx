@@ -1,21 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { LOYALTY_TIERS } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { BorderBeam } from "@/components/ui/BorderBeam";
 import {
-  CreditCard,
   Gift,
-  Sparkles,
   CheckCircle2,
   Smartphone,
-  Send,
   Zap,
   Coffee,
-  Award,
+  Info,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -40,7 +36,7 @@ export const LoyaltySection: React.FC = () => {
       particleCount: 80,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ["#D49B45", "#F3CA74", "#FAF7F2"],
+      colors: ["#A84B2C", "#606C38", "#DDA15E"],
     });
 
     setIsJoined(true);
@@ -48,70 +44,89 @@ export const LoyaltySection: React.FC = () => {
 
   const t = {
     ru: {
-      tag: "Программа лояльности",
-      title: "Vincent Van Club",
-      desc: "Накапливайте кэшбэк с каждой чашки, получайте подарки в день рождения и дегустируйте закрытые микролоты зерна.",
-      calcTitle: "Калькулятор вашей выгоды",
+      tag: "Концепт программы лояльности",
+      title: "Vincent Van Club (Проект)",
+      desc: "Предварительная концепция цифровой карты лояльности для гостей сети кофеен в Иркутске.",
+      conceptBadge: "ℹ️ Проект концепта (на согласовании) — параметры кэшбэка и привилегии могут быть скорректированы клиентом",
+      calcTitle: "Калькулятор прогнозируемой выгоды",
       calcCups: "Сколько чашек кофе вы выпиваете в месяц?",
-      calcResultYear: "Экономия и бонусы в год:",
+      calcResultYear: "Прогнозируемая экономия в год:",
       calcFreeCups: "Бесплатных чашек авторского кофе в год",
-      joinTitle: "Получить электронную карту в 1 клик",
-      joinSub: "Без пластика. Карта сохраняется в Apple Wallet, Google Wallet или Telegram.",
+      joinTitle: "Тестирование выпуска карты",
+      joinSub: "Форма для проверки прототипа привязки карты в Apple / Google Wallet.",
       phonePlaceholder: "+7 (999) 000-00-00",
-      joinBtn: "Выпустить карту бесплатно",
-      congrats: "Карта лояльности успешно выпущена!",
-      congratsSub: "Мы начислили вам 100 приветственных бонусов. Ссылка отправлена по SMS.",
+      joinBtn: "Протестировать выпуск",
+      congrats: "Тестовая карта успешно сформирована!",
+      congratsSub: "Прототип подтвержден. Реальная интеграция будет подключена к CRM-системе кофейни.",
     },
     en: {
-      tag: "Loyalty Program",
-      title: "Vincent Van Club",
-      desc: "Earn cash back on every cup, receive gifts on your birthday, and taste exclusive private micro-lots.",
+      tag: "Loyalty Program Concept",
+      title: "Vincent Van Club (Concept Draft)",
+      desc: "Proposed digital loyalty pass framework for coffee lovers in Irkutsk.",
+      conceptBadge: "ℹ️ Concept Draft — cashback tiers and rewards are subject to final client approval",
       calcTitle: "Calculate Your Annual Perks",
       calcCups: "How many cups of coffee do you enjoy monthly?",
-      calcResultYear: "Annual cashback value:",
-      calcFreeCups: "Complimentary signature cups per year",
-      joinTitle: "Get Your Digital Pass in 1 Click",
-      joinSub: "Eco-friendly, 100% digital pass for Apple Wallet, Google Wallet or Telegram.",
+      calcResultYear: "Projected annual value:",
+      calcFreeCups: "Complimentary cups per year",
+      joinTitle: "Test Pass Generation",
+      joinSub: "Prototype demo for Apple / Google Wallet pass onboarding.",
       phonePlaceholder: "+7 (999) 000-00-00",
-      joinBtn: "Issue Digital Card Free",
-      congrats: "Welcome to Vincent Van Club!",
-      congratsSub: "100 welcome points have been added to your account.",
+      joinBtn: "Test Pass Issuing",
+      congrats: "Prototype Pass Generated!",
+      congratsSub: "Ready for client CRM webhook integration.",
     },
     zh: {
-      tag: "尊享会员计划",
-      title: "凡高艺术咖啡俱乐部 (Van Club)",
-      desc: "每杯消费皆享积分返现，生日尊享礼遇，并抢先品鉴未公开发售的珍稀原产地微批次豆单。",
+      tag: "会员体系提案概念",
+      title: "凡高艺术咖啡俱乐部 (概念草案)",
+      desc: "为伊尔库茨克咖啡常客量身定制的数字化会员方案雏形。",
+      conceptBadge: "ℹ️ 方案草案（待审核）— 积分返现比例与特权将在正式上线前由客户最终定稿",
       calcTitle: "会员收益模拟测算",
       calcCups: "您每月大约品饮多少杯咖啡？",
-      calcResultYear: "预计全年为您节省与返现：",
-      calcFreeCups: "相当于每年免费获赠精品咖啡杯数",
-      joinTitle: "1 秒免费领取电子会员卡",
-      joinSub: "无卡化环保设计，直接添加至 Apple 钱包、Google 钱包或 Telegram。",
+      calcResultYear: "预计全年为您节省：",
+      calcFreeCups: "相当于每年获赠咖啡杯数",
+      joinTitle: "测试电子卡申领流程",
+      joinSub: "用于测试添加至 Apple 钱包或 Google 钱包的交互原型。",
       phonePlaceholder: "+7 (999) 000-00-00",
-      joinBtn: "立即免费开通会员",
-      congrats: "恭喜您成为凡高俱乐部尊贵会员！",
-      congratsSub: "100 点迎新奖励积分已即刻存入您的账户。",
+      joinBtn: "体验测试开通",
+      congrats: "测试会员卡生成成功！",
+      congratsSub: "原型验证完毕，后续将对接真实 CRM 积分系统。",
     },
   }[language];
 
   return (
-    <section id="loyalty" className="relative py-24 bg-[#0C0A09] overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#D49B45]/10 blur-[140px]" />
-
+    <section id="loyalty" className="relative py-24 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D49B45]/30 bg-[#1A1410] px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#F3CA74]">
-            <Gift className="h-3.5 w-3.5 text-[#D49B45]" />
+          <div
+            style={{
+              backgroundColor: "var(--theme-badge-bg)",
+              color: "var(--theme-primary)",
+              borderColor: "var(--theme-surface-border)",
+            }}
+            className="inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider"
+          >
+            <Gift className="h-3.5 w-3.5" />
             <span>{t.tag}</span>
           </div>
-          <h2 className="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#FAF7F2]">
+          <h2 className="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight">
             {t.title}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#D4C8BC]">
+          <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-base sm:text-lg">
             {t.desc}
           </p>
+
+          <div
+            style={{
+              backgroundColor: "var(--theme-surface-elevated)",
+              borderColor: "var(--theme-surface-border)",
+              color: "var(--theme-muted)",
+            }}
+            className="mt-4 inline-flex items-center gap-2 rounded-xl border px-3.5 py-1.5 text-xs text-left shadow-sm"
+          >
+            <Info className="h-3.5 w-3.5 shrink-0 text-[var(--theme-primary)]" />
+            <span>{t.conceptBadge}</span>
+          </div>
         </div>
 
         {/* 3 Loyalty Tier Cards */}
@@ -122,78 +137,105 @@ export const LoyaltySection: React.FC = () => {
               <div
                 key={tier.id}
                 onClick={() => setActiveTier(idx)}
-                className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 sm:p-8 cursor-pointer transition-all duration-300 ${
-                  isSelected
-                    ? "border-[#D49B45] bg-gradient-to-b from-[#251A13] to-[#140F0C] shadow-[0_15px_40px_rgba(212,155,69,0.2)] scale-[1.02]"
-                    : "border-white/10 bg-[#16120F] hover:border-white/20 opacity-90"
+                style={{
+                  backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "var(--theme-surface)",
+                  borderColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-border)",
+                }}
+                className={`relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 sm:p-8 cursor-pointer transition-all duration-300 shadow-sm ${
+                  isSelected ? "shadow-xl scale-[1.02]" : "hover:opacity-100"
                 }`}
               >
                 <div>
                   {/* Top Bar */}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold uppercase tracking-widest text-[#D49B45]">
-                      Уровень {idx + 1}
+                    <span
+                      style={{ color: "var(--theme-primary)" }}
+                      className="text-xs font-bold uppercase tracking-widest"
+                    >
+                      Уровень {idx + 1} (Концепт)
                     </span>
-                    <div className="rounded-full border border-[#D49B45]/40 bg-[#D49B45]/15 px-3 py-1 text-xs font-bold text-[#F3CA74]">
+                    <div
+                      style={{
+                        backgroundColor: "var(--theme-badge-bg)",
+                        color: "var(--theme-primary)",
+                        borderColor: "var(--theme-surface-border)",
+                      }}
+                      className="rounded-full border px-3 py-1 text-xs font-bold"
+                    >
                       {tier.cashback}% Кэшбэк
                     </div>
                   </div>
 
-                  <h3 className="mt-4 font-serif text-2xl font-bold text-[#FAF7F2]">
+                  <h3 className="mt-4 font-serif text-2xl font-bold">
                     {tier.name}
                   </h3>
-                  <p className="mt-1 text-xs text-[#A89B8D]">{tier.tagline}</p>
+                  <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs">{tier.tagline}</p>
 
                   {/* Spend condition */}
-                  <div className="mt-4 rounded-xl bg-black/40 p-3 text-xs text-[#D4C8BC] border border-white/5">
+                  <div
+                    style={{
+                      backgroundColor: "var(--theme-surface)",
+                      borderColor: "var(--theme-surface-border)",
+                    }}
+                    className="mt-4 rounded-xl p-3 text-xs border"
+                  >
                     {tier.spendThreshold === 0 ? (
                       <span>Сразу после регистрации</span>
                     ) : (
-                      <span>Сумма покупок от <strong className="text-white">{tier.spendThreshold.toLocaleString()} ₽</strong></span>
+                      <span>Порог покупок от <strong>{tier.spendThreshold.toLocaleString()} ₽</strong></span>
                     )}
                   </div>
 
                   {/* Perks list */}
-                  <div className="mt-6 space-y-2.5 text-xs text-[#E5DCD3]">
+                  <div className="mt-6 space-y-2.5 text-xs">
                     {tier.perks.map((perk, pIdx) => (
                       <div key={pIdx} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="h-4 w-4 shrink-0 text-[#F3CA74] mt-0.5" />
+                        <CheckCircle2 style={{ color: "var(--theme-primary)" }} className="h-4 w-4 shrink-0 mt-0.5" />
                         <span>{perk}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
-                  <span className="text-[11px] text-[#A89B8D]">
+                <div className="mt-8 pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                  <span style={{ color: "var(--theme-muted)" }} className="text-[11px]">
                     {isSelected ? "Выбран для расчета" : "Нажмите для выбора"}
                   </span>
-                  <div className={`h-2.5 w-2.5 rounded-full ${isSelected ? "bg-[#D49B45] shadow-[0_0_8px_#D49B45]" : "bg-white/20"}`} />
+                  <div
+                    style={{ backgroundColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-border)" }}
+                    className="h-2.5 w-2.5 rounded-full"
+                  />
                 </div>
 
-                {isSelected && <BorderBeam size={200} duration={12} colorFrom="#F3CA74" colorTo="#D49B45" />}
+                {isSelected && <BorderBeam size={200} duration={12} colorFrom="var(--theme-primary)" colorTo="var(--theme-accent)" />}
               </div>
             );
           })}
         </div>
 
         {/* Interactive Cashback & Benefits Calculator */}
-        <div className="mt-12 rounded-3xl border border-[#D49B45]/20 bg-[#16120F]/90 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+        <div
+          style={{
+            backgroundColor: "var(--theme-surface)",
+            borderColor: "var(--theme-surface-border)",
+          }}
+          className="mt-12 rounded-3xl border p-6 sm:p-10 shadow-xl backdrop-blur-xl transition-all duration-500"
+        >
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-center">
             {/* Left: Slider */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-[#F3CA74]" />
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#FAF7F2]">
+                <Zap style={{ color: "var(--theme-primary)" }} className="h-5 w-5" />
+                <h3 className="font-serif text-xl sm:text-2xl font-bold">
                   {t.calcTitle}
                 </h3>
               </div>
 
               <div>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-xs sm:text-sm text-[#A89B8D]">{t.calcCups}</span>
-                  <span className="font-serif text-2xl font-bold text-[#F3CA74]">
-                    {monthlyCups} <span className="text-sm font-normal text-[#FAF7F2]">чашек/мес</span>
+                  <span style={{ color: "var(--theme-muted)" }} className="text-xs sm:text-sm">{t.calcCups}</span>
+                  <span style={{ color: "var(--theme-primary)" }} className="font-serif text-2xl font-bold">
+                    {monthlyCups} <span style={{ color: "var(--theme-text)" }} className="text-sm font-normal">чашек/мес</span>
                   </span>
                 </div>
 
@@ -204,10 +246,11 @@ export const LoyaltySection: React.FC = () => {
                   step={1}
                   value={monthlyCups}
                   onChange={(e) => setMonthlyCups(parseInt(e.target.value, 10))}
-                  className="mt-4 w-full accent-[#D49B45] cursor-pointer h-2 bg-[#261E19] rounded-lg"
+                  style={{ accentColor: "var(--theme-primary)" }}
+                  className="mt-4 w-full cursor-pointer h-2 rounded-lg"
                 />
 
-                <div className="mt-2 flex justify-between text-[11px] text-[#70655B]">
+                <div style={{ color: "var(--theme-muted)" }} className="mt-2 flex justify-between text-[11px]">
                   <span>5 чашек (редко)</span>
                   <span>20 чашек (стандарт)</span>
                   <span>60 чашек (кофеман)</span>
@@ -215,13 +258,13 @@ export const LoyaltySection: React.FC = () => {
               </div>
 
               {/* Form to issue card */}
-              <div className="border-t border-white/10 pt-6">
+              <div className="border-t border-black/5 dark:border-white/5 pt-6">
                 {!isJoined ? (
                   <form onSubmit={handleJoinClub} className="space-y-3">
-                    <div className="text-xs font-semibold text-[#FAF7F2] uppercase tracking-wider">
+                    <div className="text-xs font-bold uppercase tracking-wider">
                       {t.joinTitle}
                     </div>
-                    <p className="text-xs text-[#A89B8D]">{t.joinSub}</p>
+                    <p style={{ color: "var(--theme-muted)" }} className="text-xs">{t.joinSub}</p>
 
                     <div className="flex flex-col sm:flex-row gap-2.5">
                       <input
@@ -230,48 +273,71 @@ export const LoyaltySection: React.FC = () => {
                         placeholder={t.phonePlaceholder}
                         value={phoneInput}
                         onChange={(e) => setPhoneInput(e.target.value)}
-                        className="rounded-xl border border-white/10 bg-[#1D1714] px-4 py-3 text-sm text-[#FAF7F2] placeholder-[#70655B] outline-none transition-colors focus:border-[#D49B45] flex-1"
+                        style={{
+                          backgroundColor: "var(--theme-surface-elevated)",
+                          borderColor: "var(--theme-surface-border)",
+                          color: "var(--theme-text)",
+                        }}
+                        className="rounded-xl border px-4 py-3 text-sm outline-none transition-colors focus:border-[var(--theme-primary)] flex-1"
                       />
                       <ShimmerButton type="submit" className="py-3 px-6 text-xs font-bold whitespace-nowrap">
                         <div className="flex items-center gap-1.5">
-                          <Smartphone className="h-4 w-4 text-[#F3CA74]" />
+                          <Smartphone className="h-4 w-4" />
                           <span>{t.joinBtn}</span>
                         </div>
                       </ShimmerButton>
                     </div>
                   </form>
                 ) : (
-                  <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 text-center">
-                    <CheckCircle2 className="mx-auto h-6 w-6 text-emerald-400" />
-                    <div className="mt-2 text-sm font-bold text-emerald-300">{t.congrats}</div>
-                    <p className="text-xs text-[#A89B8D] mt-1">{t.congratsSub}</p>
+                  <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/10 p-4 text-center">
+                    <CheckCircle2 className="mx-auto h-6 w-6 text-emerald-500" />
+                    <div className="mt-2 text-sm font-bold text-emerald-600 dark:text-emerald-300">{t.congrats}</div>
+                    <p style={{ color: "var(--theme-muted)" }} className="text-xs mt-1">{t.congratsSub}</p>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Right: Calculated Outcome Card */}
-            <div className="lg:col-span-5 flex flex-col justify-center rounded-2xl border border-[#D49B45]/30 bg-gradient-to-br from-[#241A14] to-[#140F0D] p-6 sm:p-8 text-center shadow-xl">
-              <div className="text-xs font-semibold uppercase tracking-wider text-[#D49B45]">
-                Уровень «{currentTier.name}» ({currentTier.cashback}%)
+            <div
+              style={{
+                backgroundColor: "var(--theme-surface-elevated)",
+                borderColor: "var(--theme-surface-border)",
+              }}
+              className="lg:col-span-5 flex flex-col justify-center rounded-2xl border p-6 sm:p-8 text-center shadow-lg"
+            >
+              <div
+                style={{ color: "var(--theme-primary)" }}
+                className="text-xs font-bold uppercase tracking-wider"
+              >
+                Уровень «{currentTier.name.split("(")[0].trim()}» ({currentTier.cashback}%)
               </div>
 
-              <div className="mt-4 font-serif text-4xl sm:text-5xl font-bold text-[#F3CA74]">
-                {yearlyCashback.toLocaleString()} ₽
+              <div
+                style={{ color: "var(--theme-primary)" }}
+                className="mt-4 font-serif text-4xl sm:text-5xl font-bold"
+              >
+                ~{yearlyCashback.toLocaleString()} ₽
               </div>
-              <div className="text-xs text-[#A89B8D] mt-1">{t.calcResultYear}</div>
+              <div style={{ color: "var(--theme-muted)" }} className="text-xs mt-1">{t.calcResultYear}</div>
 
-              <div className="my-6 border-t border-white/10" />
+              <div className="my-6 border-t border-black/5 dark:border-white/5" />
 
               <div className="flex items-center justify-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D49B45]/15 text-[#F3CA74]">
+                <div
+                  style={{
+                    backgroundColor: "var(--theme-badge-bg)",
+                    color: "var(--theme-primary)",
+                  }}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl"
+                >
                   <Coffee className="h-5 w-5" />
                 </div>
                 <div className="text-left">
-                  <div className="font-serif text-2xl font-bold text-[#FAF7F2]">
+                  <div className="font-serif text-2xl font-bold">
                     + {freeCupsYear} чашек
                   </div>
-                  <div className="text-[11px] text-[#A89B8D]">{t.calcFreeCups}</div>
+                  <div style={{ color: "var(--theme-muted)" }} className="text-[11px]">{t.calcFreeCups}</div>
                 </div>
               </div>
             </div>

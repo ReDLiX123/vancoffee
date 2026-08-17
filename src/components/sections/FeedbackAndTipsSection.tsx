@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { REVIEWS, LOCATIONS } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { Marquee } from "@/components/ui/Marquee";
@@ -10,11 +9,8 @@ import {
   Heart,
   MessageSquare,
   Star,
-  Sparkles,
   ExternalLink,
-  MapPin,
-  CheckCircle2,
-  Quote,
+  Info,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -32,7 +28,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
       particleCount: 75,
       spread: 60,
       origin: { y: 0.7 },
-      colors: ["#D49B45", "#F3CA74", "#FAF7F2"],
+      colors: ["#A84B2C", "#606C38", "#DDA15E"],
     });
 
     setTimeout(() => {
@@ -44,73 +40,104 @@ export const FeedbackAndTipsSection: React.FC = () => {
     ru: {
       tag: "Вы делаете нас лучше",
       title: "Чаевые бариста и Гостевая книга",
-      desc: "Искренние отзывы наших гостей и прямая возможность поблагодарить бариста за улыбку, идеальную пенку и теплое утро.",
+      desc: "Возможность поблагодарить бариста за улыбку и идеальную чашку, а также оставить обратную связь команде.",
+      demoBadge: "ℹ️ Демо-отзывы для тестирования интерфейса — в релизной версии блок синхронизируется с API 2ГИС и Яндекс.Карт",
       tipsTitle: "Отправить чаевые бариста",
-      tipsSub: "Выберите точку и сумму перевода. Средства сразу поступят смене бариста через СБП / sbtips.",
+      tipsSub: "Выберите точку и сумму. Перевод поступит смене бариста через СБП / sbtips.",
       btnSendTip: "Поблагодарить",
       leaveReviewBtn: "Написать отзыв о кофейне",
     },
     en: {
       tag: "You Make Us Better",
       title: "Barista Appreciation & Guestbook",
-      desc: "Genuine stories from our community and instant cashless tips for the baristas who craft your day.",
+      desc: "Cashless tips for the team and guestbook testimonials.",
+      demoBadge: "ℹ️ Demo reviews for UI validation — will sync with live 2GIS & Yandex Maps API in production",
       tipsTitle: "Tip the Barista Directly",
-      tipsSub: "Select location and amount. Tips go directly to today's shift team via sbtips / Fast Payment System.",
+      tipsSub: "Select location and amount. Direct cashless transfer via sbtips gateway.",
       btnSendTip: "Send Appreciation",
       leaveReviewBtn: "Write a Guest Review",
     },
     zh: {
       tag: "因你而更美好",
       title: "咖啡师打赏与宾客心声",
-      desc: "倾听客人的真实评价，并可直接向用心调制每杯咖啡的咖啡师送上一份暖心打赏与感谢。",
+      desc: "直接向用心调制的咖啡师团队表达心意与建议。",
+      demoBadge: "ℹ️ 客评演示数据 — 正式版本将对接 2GIS 与 Yandex Maps 官方真实评分流",
       tipsTitle: "即时打赏咖啡师团队",
-      tipsSub: "选择消费门店及打赏金额，款项将直接实时打入当班咖啡师账户。",
+      tipsSub: "选择消费门店及打赏金额，款项将通过 sbtips 实时结算。",
       btnSendTip: "立即打赏送心意",
       leaveReviewBtn: "撰写您的咖啡体验",
     },
   }[language];
 
   return (
-    <section id="feedback" className="relative py-24 bg-[#0C0A09] canvas-texture overflow-hidden">
-      {/* Background glow */}
-      <div className="pointer-events-none absolute left-0 bottom-1/4 h-96 w-96 rounded-full bg-[#D49B45]/10 blur-[130px]" />
-
+    <section id="feedback" className="relative py-24 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D49B45]/30 bg-[#1A1410] px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#F3CA74]">
-            <Heart className="h-3.5 w-3.5 text-[#D49B45] fill-[#D49B45]/20" />
+          <div
+            style={{
+              backgroundColor: "var(--theme-badge-bg)",
+              color: "var(--theme-primary)",
+              borderColor: "var(--theme-surface-border)",
+            }}
+            className="inline-flex items-center gap-2 rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider"
+          >
+            <Heart className="h-3.5 w-3.5 fill-current" />
             <span>{t.tag}</span>
           </div>
-          <h2 className="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight text-[#FAF7F2]">
+          <h2 className="mt-4 font-serif text-3xl sm:text-5xl font-bold tracking-tight">
             {t.title}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#D4C8BC]">
+          <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-base sm:text-lg">
             {t.desc}
           </p>
+
+          <div
+            style={{
+              backgroundColor: "var(--theme-surface-elevated)",
+              borderColor: "var(--theme-surface-border)",
+              color: "var(--theme-muted)",
+            }}
+            className="mt-4 inline-flex items-center gap-2 rounded-xl border px-3.5 py-1.5 text-xs text-left shadow-sm"
+          >
+            <Info className="h-3.5 w-3.5 shrink-0 text-[var(--theme-primary)]" />
+            <span>{t.demoBadge}</span>
+          </div>
         </div>
 
         {/* 2-Column: Left Direct Tips Widget | Right Review Actions */}
         <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-12 items-stretch">
           {/* Left: Interactive Tip Widget */}
-          <div className="lg:col-span-6 rounded-3xl border border-[#D49B45]/30 bg-[#16120F] p-6 sm:p-8 shadow-2xl backdrop-blur-xl flex flex-col justify-between">
+          <div
+            style={{
+              backgroundColor: "var(--theme-surface)",
+              borderColor: "var(--theme-surface-border)",
+            }}
+            className="lg:col-span-6 rounded-3xl border p-6 sm:p-8 shadow-xl backdrop-blur-xl flex flex-col justify-between transition-all duration-500"
+          >
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#D49B45]/15 text-[#F3CA74] border border-[#D49B45]/30">
-                  <Heart className="h-6 w-6 fill-[#F3CA74]/20" />
+                <div
+                  style={{
+                    backgroundColor: "var(--theme-badge-bg)",
+                    color: "var(--theme-primary)",
+                  }}
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl"
+                >
+                  <Heart className="h-6 w-6 fill-current" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#FAF7F2]">
+                  <h3 className="font-serif text-xl sm:text-2xl font-bold">
                     {t.tipsTitle}
                   </h3>
-                  <p className="text-xs text-[#A89B8D]">{t.tipsSub}</p>
+                  <p style={{ color: "var(--theme-muted)" }} className="text-xs">{t.tipsSub}</p>
                 </div>
               </div>
 
               {/* Location Select for Tips */}
               <div className="mt-6">
-                <label className="text-[11px] font-semibold uppercase tracking-wider text-[#A89B8D]">
-                  Локация бариста
+                <label style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider">
+                  Локация смены
                 </label>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   {LOCATIONS.map((loc) => {
@@ -120,14 +147,20 @@ export const FeedbackAndTipsSection: React.FC = () => {
                         key={loc.id}
                         type="button"
                         onClick={() => setTipLocation(loc.id)}
-                        className={`flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all ${
-                          isSelected
-                            ? "border-[#D49B45] bg-[#291F18] text-[#F3CA74]"
-                            : "border-white/10 bg-[#1D1714] text-[#A89B8D] hover:border-white/20"
-                        }`}
+                        style={{
+                          backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "transparent",
+                          borderColor: isSelected ? loc.theme.primaryColor : "var(--theme-surface-border)",
+                        }}
+                        className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all"
                       >
-                        <span className="font-semibold text-white">{loc.shortName}</span>
-                        <span className="truncate text-[10px] text-[#A89B8D]">{loc.landmark}</span>
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-bold">{loc.shortName}</span>
+                          <span
+                            style={{ backgroundColor: loc.theme.primaryColor }}
+                            className="h-2 w-2 rounded-full"
+                          />
+                        </div>
+                        <span style={{ color: "var(--theme-muted)" }} className="truncate text-[10px]">{loc.landmark}</span>
                       </button>
                     );
                   })}
@@ -136,7 +169,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
 
               {/* Amount buttons */}
               <div className="mt-5">
-                <label className="text-[11px] font-semibold uppercase tracking-wider text-[#A89B8D]">
+                <label style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider">
                   Сумма чаевых
                 </label>
                 <div className="mt-2 grid grid-cols-4 gap-2">
@@ -150,11 +183,12 @@ export const FeedbackAndTipsSection: React.FC = () => {
                           setTipAmount(amt);
                           setCustomTip("");
                         }}
-                        className={`rounded-xl border py-3 text-sm font-bold transition-all ${
-                          isSelected
-                            ? "border-[#D49B45] bg-[#D49B45] text-[#0C0A09] shadow-[0_0_15px_rgba(212,155,69,0.3)]"
-                            : "border-white/10 bg-[#1D1714] text-[#FAF7F2] hover:border-[#D49B45]/40"
-                        }`}
+                        style={{
+                          backgroundColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-elevated)",
+                          color: isSelected ? "#FFFFFF" : "var(--theme-text)",
+                          borderColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-border)",
+                        }}
+                        className="rounded-xl border py-3 text-sm font-bold transition-all"
                       >
                         {amt} ₽
                       </button>
@@ -164,10 +198,15 @@ export const FeedbackAndTipsSection: React.FC = () => {
 
                 <input
                   type="number"
-                  placeholder="Или своя сумма (₽)"
+                  placeholder="Или введите свою сумму (₽)"
                   value={customTip}
                   onChange={(e) => setCustomTip(e.target.value)}
-                  className="mt-2.5 w-full rounded-xl border border-white/10 bg-[#1D1714] px-4 py-2.5 text-sm text-[#FAF7F2] placeholder-[#70655B] outline-none transition-colors focus:border-[#D49B45]"
+                  style={{
+                    backgroundColor: "var(--theme-surface-elevated)",
+                    borderColor: "var(--theme-surface-border)",
+                    color: "var(--theme-text)",
+                  }}
+                  className="mt-2.5 w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors focus:border-[var(--theme-primary)]"
                 />
               </div>
             </div>
@@ -181,43 +220,61 @@ export const FeedbackAndTipsSection: React.FC = () => {
                   <span>
                     {t.btnSendTip} ({customTip ? `${customTip} ₽` : `${tipAmount} ₽`})
                   </span>
-                  <ExternalLink className="h-4 w-4 text-[#F3CA74]" />
+                  <ExternalLink className="h-4 w-4" />
                 </div>
               </ShimmerButton>
-              <div className="text-center text-[10px] text-[#70655B]">
-                Переход на безопасный шлюз sbtips.ru для точки «{activeLoc.shortName}»
+              <div style={{ color: "var(--theme-muted)" }} className="text-center text-[10px]">
+                Переход на защищенный шлюз sbtips.ru (Точка: «{activeLoc.shortName}»)
               </div>
             </div>
           </div>
 
           {/* Right: Write Review Box + CTA */}
-          <div className="lg:col-span-6 rounded-3xl border border-white/10 bg-[#16120F] p-6 sm:p-8 flex flex-col justify-between">
+          <div
+            style={{
+              backgroundColor: "var(--theme-surface)",
+              borderColor: "var(--theme-surface-border)",
+            }}
+            className="lg:col-span-6 rounded-3xl border p-6 sm:p-8 flex flex-col justify-between shadow-md transition-all duration-500"
+          >
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#1A3756]/40 text-[#7EAEF5] border border-[#1A3756]">
+                <div
+                  style={{
+                    backgroundColor: "var(--theme-badge-bg)",
+                    color: "var(--theme-primary)",
+                  }}
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl"
+                >
                   <MessageSquare className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#FAF7F2]">
-                    Поделитесь впечатлением
+                  <h3 className="font-serif text-xl sm:text-2xl font-bold">
+                    Поделитесь мнением
                   </h3>
-                  <p className="text-xs text-[#A89B8D]">
-                    Мы бережно сохраняем каждый отзыв и постоянно совершенствуем рецепты.
+                  <p style={{ color: "var(--theme-muted)" }} className="text-xs">
+                    Ваш отзыв помогает делать каждую чашку и пространство еще уютнее.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 rounded-2xl border border-white/10 bg-[#1D1714] p-5">
-                <div className="flex items-center gap-1 text-[#F3CA74]">
+              <div
+                style={{
+                  backgroundColor: "var(--theme-surface-elevated)",
+                  borderColor: "var(--theme-surface-border)",
+                }}
+                className="mt-6 rounded-2xl border p-5 shadow-sm"
+              >
+                <div className="flex items-center gap-1 text-[var(--theme-primary)]">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="h-5 w-5 fill-[#F3CA74]" />
+                    <Star key={i} className="h-5 w-5 fill-current" />
                   ))}
-                  <span className="ml-2 font-bold text-sm text-white">5.0 / 5.0</span>
+                  <span className="ml-2 font-bold text-sm">5.0 / 5.0</span>
                 </div>
-                <p className="mt-3 text-xs leading-relaxed text-[#D4C8BC]">
-                  «Благодарим наших гостей за доверие в Иркутске. Отзывы вдохновляют бариста создавать новые шедевры каждый день!»
+                <p style={{ color: "var(--theme-muted)" }} className="mt-3 text-xs leading-relaxed">
+                  «Мы читаем каждое пожелание гостей во всех 4 кофейнях Иркутска. Оставляйте ваши впечатления!»
                 </p>
-                <div className="mt-3 text-[11px] font-semibold text-[#D49B45]">
+                <div style={{ color: "var(--theme-primary)" }} className="mt-3 text-[11px] font-bold">
                   — Команда Vincent Van Coffee
                 </div>
               </div>
@@ -226,7 +283,12 @@ export const FeedbackAndTipsSection: React.FC = () => {
             <div className="mt-8">
               <button
                 onClick={() => openFeedbackModal()}
-                className="w-full flex items-center justify-center gap-2 rounded-2xl border border-[#D49B45]/40 bg-[#D49B45]/10 py-4 text-sm font-semibold text-[#F3CA74] transition-all hover:bg-[#D49B45]/20 hover:scale-[1.01]"
+                style={{
+                  backgroundColor: "var(--theme-badge-bg)",
+                  borderColor: "var(--theme-primary)",
+                  color: "var(--theme-primary)",
+                }}
+                className="w-full flex items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-bold transition-all hover:scale-[1.01]"
               >
                 <MessageSquare className="h-4 w-4" />
                 <span>{t.leaveReviewBtn}</span>
@@ -237,15 +299,19 @@ export const FeedbackAndTipsSection: React.FC = () => {
 
         {/* Marquee with guest quotes */}
         <div className="mt-14">
-          <div className="mb-4 text-center text-xs font-semibold uppercase tracking-wider text-[#A89B8D]">
-            Что говорят гости о наших кофейнях
+          <div style={{ color: "var(--theme-muted)" }} className="mb-4 text-center text-xs font-bold uppercase tracking-wider">
+            Отзывы гостей (Демо-выгрузка)
           </div>
 
-          <Marquee duration="45s" pauseOnHover={true}>
+          <Marquee duration="40s" pauseOnHover={true}>
             {REVIEWS.map((rev) => (
               <div
                 key={rev.id}
-                className="w-80 sm:w-96 shrink-0 rounded-2xl border border-white/10 bg-[#16120F] p-5 shadow-lg"
+                style={{
+                  backgroundColor: "var(--theme-surface)",
+                  borderColor: "var(--theme-surface-border)",
+                }}
+                className="w-80 sm:w-96 shrink-0 rounded-2xl border p-5 shadow-sm"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -253,22 +319,22 @@ export const FeedbackAndTipsSection: React.FC = () => {
                       {rev.author.charAt(0)}
                     </div>
                     <div>
-                      <div className="font-semibold text-xs text-white">{rev.author}</div>
-                      <div className="text-[10px] text-[#A89B8D]">{rev.role}</div>
+                      <div className="font-bold text-xs">{rev.author}</div>
+                      <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{rev.role}</div>
                     </div>
                   </div>
-                  <div className="flex text-[#F3CA74]">
+                  <div className="flex text-[var(--theme-primary)]">
                     {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-[#F3CA74]" />
+                      <Star key={i} className="h-3.5 w-3.5 fill-current" />
                     ))}
                   </div>
                 </div>
 
-                <p className="mt-3 text-xs leading-relaxed text-[#D4C8BC] italic">
+                <p style={{ color: "var(--theme-muted)" }} className="mt-3 text-xs leading-relaxed italic">
                   "{rev.text}"
                 </p>
 
-                <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-2 text-[10px] text-[#70655B]">
+                <div className="mt-3 flex items-center justify-between border-t border-black/5 dark:border-white/5 pt-2 text-[10px] opacity-70">
                   <span>{rev.location}</span>
                   <span>{rev.date}</span>
                 </div>

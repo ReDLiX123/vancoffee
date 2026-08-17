@@ -14,11 +14,17 @@ import { Footer } from "@/components/layout/Footer";
 import { TipsModal } from "@/components/modals/TipsModal";
 import { FeedbackModal } from "@/components/modals/FeedbackModal";
 import { RouteModal } from "@/components/modals/RouteModal";
+import { useApp } from "@/context/AppContext";
 
 export default function HomePage() {
+  const { selectedLocationId } = useApp();
+
   return (
-    <main className="relative min-h-screen bg-[#0C0A09] text-[#FAF7F2] overflow-x-hidden selection:bg-[#D49B45] selection:text-[#0C0A09]">
-      {/* Fixed Header */}
+    <main
+      data-location={selectedLocationId}
+      className="theme-container relative min-h-screen overflow-x-hidden selection:bg-[var(--theme-primary)] selection:text-white"
+    >
+      {/* Fixed Dynamic Header */}
       <Header />
 
       {/* Main Content Sections */}
