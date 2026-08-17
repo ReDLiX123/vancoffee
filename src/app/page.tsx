@@ -18,6 +18,11 @@ import { useApp } from "@/context/AppContext";
 
 export default function HomePage() {
   const { selectedLocationId } = useApp();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <main
@@ -39,10 +44,14 @@ export default function HomePage() {
       {/* Footer */}
       <Footer />
 
-      {/* Global Interactive Modals */}
-      <TipsModal />
-      <FeedbackModal />
-      <RouteModal />
+      {/* Global Interactive Modals (mounted client-only) */}
+      {mounted && (
+        <>
+          <TipsModal />
+          <FeedbackModal />
+          <RouteModal />
+        </>
+      )}
     </main>
   );
 }
