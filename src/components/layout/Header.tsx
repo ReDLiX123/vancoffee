@@ -14,7 +14,6 @@ import {
   Navigation,
   Palette,
 } from "lucide-react";
-import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 
 export const Header: React.FC = () => {
@@ -227,9 +226,6 @@ export const Header: React.FC = () => {
               )}
             </div>
 
-            {/* Sound Ambiance Toggle */}
-            <SoundToggle />
-
             {/* CTA Tips Button */}
             <ShimmerButton
               onClick={() => openTipsModal()}
@@ -244,7 +240,6 @@ export const Header: React.FC = () => {
 
           {/* Mobile hamburger button */}
           <div className="flex items-center gap-2 md:hidden">
-            <SoundToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               style={{

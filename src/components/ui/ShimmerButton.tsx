@@ -20,13 +20,14 @@ export const ShimmerButton = React.forwardRef<
 >(
   (
     {
-      shimmerColor = "#F3CA74",
+      shimmerColor = "rgba(255, 255, 255, 0.4)",
       shimmerSize = "0.08em",
       shimmerDuration = "3s",
-      borderRadius = "12px",
-      background = "linear-gradient(180deg, #2B211A 0%, #17120F 100%)",
+      borderRadius = "14px",
+      background = "var(--theme-primary)",
       className,
       children,
+      style,
       ...props
     },
     ref
@@ -41,11 +42,15 @@ export const ShimmerButton = React.forwardRef<
             "--speed": shimmerDuration,
             "--cut": shimmerSize,
             "--bg": background,
+            backgroundColor: background,
+            color: "#FFFFFF",
+            boxShadow: "0 8px 24px var(--theme-glow)",
+            ...style,
           } as CSSProperties
         }
         className={cn(
-          "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-[#D49B45]/30 px-6 py-3.5 text-[#FAF7F2] font-medium tracking-wide shadow-[0_4px_20px_rgba(0,0,0,0.4)] [background:var(--bg)] [border-radius:var(--radius)]",
-          "transform-gpu transition-all duration-300 ease-out hover:border-[#D49B45]/70 hover:shadow-[0_0_25px_rgba(212,155,69,0.25)] active:scale-[0.98]",
+          "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-white/20 px-6 py-3.5 font-bold tracking-wide [border-radius:var(--radius)]",
+          "transform-gpu transition-all duration-500 ease-out hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]",
           className
         )}
         ref={ref}

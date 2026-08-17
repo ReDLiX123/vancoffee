@@ -140,9 +140,9 @@ export const HeroSection: React.FC = () => {
           <a href="#menu">
             <ShimmerButton className="px-7 py-4 text-sm font-semibold tracking-wide shadow-lg">
               <div className="flex items-center gap-2.5">
-                <Coffee className="h-4 w-4 text-[var(--theme-primary)]" />
+                <Coffee className="h-4 w-4 text-white" />
                 <span>{t.menuBtn}</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 text-white/80" />
               </div>
             </ShimmerButton>
           </a>
