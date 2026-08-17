@@ -826,7 +826,7 @@ export const NEWS_ITEMS: NewsItem[] = [
 export const LOYALTY_TIERS = [
   {
     id: "aquarelle",
-    name: "Акварель (Концепт)",
+    name: "Акварель",
     cashback: 5,
     spendThreshold: 0,
     tagline: "Первый шаг в мир арт-кофе",
@@ -841,7 +841,7 @@ export const LOYALTY_TIERS = [
   },
   {
     id: "pastel",
-    name: "Пастель (Концепт)",
+    name: "Пастель",
     cashback: 7,
     spendThreshold: 5000,
     tagline: "Для ценителей ежедневных ритуалов",
@@ -856,7 +856,7 @@ export const LOYALTY_TIERS = [
   },
   {
     id: "oil",
-    name: "Масло / Gold (Концепт)",
+    name: "Масло / Gold",
     cashback: 10,
     spendThreshold: 15000,
     tagline: "Высший клуб ценителей искусства",

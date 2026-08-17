@@ -12,7 +12,6 @@ import {
   ChevronDown,
   Navigation,
   Palette,
-  ArrowRight,
 } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { BrushStroke } from "@/components/ui/BrushStroke";
@@ -80,6 +79,8 @@ export const Header: React.FC = () => {
     };
   }, []);
 
+  const strokeColor = selectedLocation.theme.primaryColor;
+
   return (
     <>
       <header
@@ -106,7 +107,7 @@ export const Header: React.FC = () => {
             >
               <span className="font-serif text-lg font-bold">V</span>
               <span
-                style={{ backgroundColor: "var(--theme-accent)" }}
+                style={{ backgroundColor: "var(--theme-primary)" }}
                 className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-white/50 transition-colors duration-500"
               />
             </div>
@@ -142,12 +143,12 @@ export const Header: React.FC = () => {
                 >
                   <span className="relative z-10">{link.label[language]}</span>
 
-                  {/* Dynamic Brush Stroke Indicator */}
+                  {/* Dynamic Brush Stroke Indicator using active location primary color */}
                   <AnimatePresence>
                     {isHighlighted && (
                       <BrushStroke
                         variant={(idx % 3) as 0 | 1 | 2}
-                        color="var(--theme-accent)"
+                        color={strokeColor}
                       />
                     )}
                   </AnimatePresence>
@@ -388,7 +389,7 @@ export const Header: React.FC = () => {
                       {isCurrent && (
                         <BrushStroke
                           variant={(idx % 3) as 0 | 1 | 2}
-                          color="var(--theme-accent)"
+                          color={strokeColor}
                           className="-bottom-2"
                         />
                       )}

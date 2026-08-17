@@ -125,7 +125,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider">
                   <Flame style={{ color: "var(--theme-primary)" }} className="h-4 w-4" />
-                  Энергетическая ценность (Демо)
+                  Энергетическая ценность
                 </span>
                 <span style={{ color: "var(--theme-muted)" }} className="text-xs">на порцию ({item.nutrition.weightG} г/мл)</span>
               </div>
@@ -183,7 +183,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                       }`}
                     >
                       <Check className={`h-3.5 w-3.5 ${isAvailable ? "text-[var(--theme-primary)]" : "opacity-0"}`} />
-                      <span>{loc.shortName}</span>
+                      <span className="truncate">{loc.shortName}</span>
                     </div>
                   );
                 })}

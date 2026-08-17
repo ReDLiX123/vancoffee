@@ -21,12 +21,15 @@ const BRUSH_PATHS = [
 export const BrushStroke: React.FC<BrushStrokeProps> = ({
   variant = 0,
   className = "",
-  color = "var(--theme-accent)",
+  color = "currentColor",
 }) => {
   const pathData = BRUSH_PATHS[variant % BRUSH_PATHS.length];
 
   return (
-    <div className={`pointer-events-none absolute -bottom-1 left-0 right-0 h-2.5 overflow-visible ${className}`}>
+    <div
+      style={{ color: color }}
+      className={`pointer-events-none absolute -bottom-1.5 left-0 right-0 h-3 overflow-visible transition-colors duration-500 ${className}`}
+    >
       <svg
         viewBox="0 0 130 12"
         fill="none"
@@ -37,7 +40,7 @@ export const BrushStroke: React.FC<BrushStrokeProps> = ({
         {/* Soft shadow / atmospheric ink blur */}
         <motion.path
           d={pathData}
-          stroke={color}
+          stroke="currentColor"
           strokeWidth="4"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -51,7 +54,7 @@ export const BrushStroke: React.FC<BrushStrokeProps> = ({
         {/* Crisp core stroke */}
         <motion.path
           d={pathData}
-          stroke={color}
+          stroke="currentColor"
           strokeWidth="2.8"
           strokeLinecap="round"
           strokeLinejoin="round"

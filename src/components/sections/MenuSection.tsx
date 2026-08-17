@@ -10,7 +10,6 @@ import {
   Sparkles,
   Flame,
   ChevronRight,
-  Info,
 } from "lucide-react";
 
 export const MenuSection: React.FC = () => {
@@ -57,7 +56,6 @@ export const MenuSection: React.FC = () => {
       priceCurrency: "₽",
       detailsBtn: "Состав и КБЖУ",
       notInLocation: "Только в кафе с кухней",
-      disclaimer: "ℹ️ Концепт-меню — иллюстративные фото и предварительные рецептуры. Актуальный прейскурант и сезонные позиции уточняйте у бариста.",
     },
     en: {
       tag: "Bar & Culinary Menu",
@@ -68,7 +66,6 @@ export const MenuSection: React.FC = () => {
       priceCurrency: "RUB",
       detailsBtn: "Nutrition & Details",
       notInLocation: "Available at full café only",
-      disclaimer: "ℹ️ Concept menu showcase. Real prices and seasonal items will be finalized with live bar inventory.",
     },
     zh: {
       tag: "精品咖啡与烘焙菜单",
@@ -79,7 +76,6 @@ export const MenuSection: React.FC = () => {
       priceCurrency: "卢布",
       detailsBtn: "配方与营养成分",
       notInLocation: "仅限带厨房全日餐厅供应",
-      disclaimer: "ℹ️ 概念菜单展示 — 实际出品价格与季节特调以店内当季收银系统为准。",
     },
   };
 
@@ -122,19 +118,6 @@ export const MenuSection: React.FC = () => {
             <a href="#locations" style={{ color: "var(--theme-primary)" }} className="text-xs hover:underline font-semibold">
               {t.switchLoc}
             </a>
-          </div>
-
-          {/* Disclaimer badge */}
-          <div
-            style={{
-              backgroundColor: "var(--theme-surface-elevated)",
-              borderColor: "var(--theme-surface-border)",
-              color: "var(--theme-muted)",
-            }}
-            className="mt-3 inline-flex items-center gap-2 rounded-xl border px-3.5 py-1.5 text-[11px]"
-          >
-            <Info className="h-3.5 w-3.5 shrink-0 text-[var(--theme-primary)]" />
-            <span>{t.disclaimer}</span>
           </div>
         </div>
 
@@ -300,7 +283,7 @@ export const MenuSection: React.FC = () => {
             className="inline-flex items-center gap-2 rounded-xl border px-6 py-3 text-xs font-bold transition-all hover:scale-105 shadow-sm"
           >
             <Flame className="h-4 w-4" />
-            <span>Смотреть таблицу КБЖУ (Демо-значения)</span>
+            <span>Смотреть полную таблицу КБЖУ</span>
           </a>
         </div>
       </div>

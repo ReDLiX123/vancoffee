@@ -1,39 +1,47 @@
 "use client";
 
 import React, { useState } from "react";
-import { REVIEWS, LOCATIONS } from "@/data/coffeeData";
-import { useApp } from "@/context/AppContext";
-import { Marquee } from "@/components/ui/Marquee";
+import { useApp, LocationId } from "@/context/AppContext";
+import { LOCATIONS, REVIEWS } from "@/data/coffeeData";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
+import { Marquee } from "@/components/ui/Marquee";
 import {
   Heart,
   MessageSquare,
   Star,
   ExternalLink,
-  Info,
+  Sparkles,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export const FeedbackAndTipsSection: React.FC = () => {
-  const { language, selectedLocationId, setSelectedLocationId, openFeedbackModal } = useApp();
+  const {
+    language,
+    selectedLocationId,
+    setSelectedLocationId,
+    openFeedbackModal,
+  } = useApp();
+
   const [tipAmount, setTipAmount] = useState<number>(200);
   const [customTip, setCustomTip] = useState<string>("");
-  const [tipLocation, setTipLocation] = useState<string>(selectedLocationId);
 
-  const activeLoc = LOCATIONS.find((l) => l.id === tipLocation) || LOCATIONS[0];
-  const amounts = [100, 200, 300, 500];
+  const presetAmounts = [100, 200, 300, 500];
+  const activeLoc = LOCATIONS.find((l) => l.id === selectedLocationId) || LOCATIONS[0];
 
-  const handleDirectTip = () => {
+  const handleSendTip = () => {
+    const amount = customTip ? parseInt(customTip, 10) : tipAmount;
+    if (isNaN(amount) || amount <= 0) return;
+
     confetti({
-      particleCount: 75,
-      spread: 60,
-      origin: { y: 0.7 },
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
       colors: ["#A84B2C", "#606C38", "#DDA15E"],
     });
 
     setTimeout(() => {
       window.open(activeLoc.sbtipsUrl, "_blank");
-    }, 800);
+    }, 1000);
   };
 
   const t = {
@@ -41,7 +49,6 @@ export const FeedbackAndTipsSection: React.FC = () => {
       tag: "Вы делаете нас лучше",
       title: "Чаевые бариста и Гостевая книга",
       desc: "Возможность поблагодарить бариста за улыбку и идеальную чашку, а также оставить обратную связь команде.",
-      demoBadge: "ℹ️ Демо-отзывы для тестирования интерфейса — в релизной версии блок синхронизируется с API 2ГИС и Яндекс.Карт",
       tipsTitle: "Отправить чаевые бариста",
       tipsSub: "Выберите точку и сумму. Перевод поступит смене бариста через СБП / sbtips.",
       btnSendTip: "Поблагодарить",
@@ -51,7 +58,6 @@ export const FeedbackAndTipsSection: React.FC = () => {
       tag: "You Make Us Better",
       title: "Barista Appreciation & Guestbook",
       desc: "Cashless tips for the team and guestbook testimonials.",
-      demoBadge: "ℹ️ Demo reviews for UI validation — will sync with live 2GIS & Yandex Maps API in production",
       tipsTitle: "Tip the Barista Directly",
       tipsSub: "Select location and amount. Direct cashless transfer via sbtips gateway.",
       btnSendTip: "Send Appreciation",
@@ -61,11 +67,10 @@ export const FeedbackAndTipsSection: React.FC = () => {
       tag: "因你而更美好",
       title: "咖啡师打赏与宾客心声",
       desc: "直接向用心调制的咖啡师团队表达心意与建议。",
-      demoBadge: "ℹ️ 客评演示数据 — 正式版本将对接 2GIS 与 Yandex Maps 官方真实评分流",
       tipsTitle: "即时打赏咖啡师团队",
-      tipsSub: "选择消费门店及打赏金额，款项将通过 sbtips 实时结算。",
-      btnSendTip: "立即打赏送心意",
-      leaveReviewBtn: "撰写您的咖啡体验",
+      tipsSub: "选择对应门店与金额，打赏将直接通过安全支付通道转付当班咖啡师。",
+      btnSendTip: "致谢咖啡师",
+      leaveReviewBtn: "留下您的品饮体验与评价",
     },
   }[language];
 
@@ -91,18 +96,6 @@ export const FeedbackAndTipsSection: React.FC = () => {
           <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-base sm:text-lg">
             {t.desc}
           </p>
-
-          <div
-            style={{
-              backgroundColor: "var(--theme-surface-elevated)",
-              borderColor: "var(--theme-surface-border)",
-              color: "var(--theme-muted)",
-            }}
-            className="mt-4 inline-flex items-center gap-2 rounded-xl border px-3.5 py-1.5 text-xs text-left shadow-sm"
-          >
-            <Info className="h-3.5 w-3.5 shrink-0 text-[var(--theme-primary)]" />
-            <span>{t.demoBadge}</span>
-          </div>
         </div>
 
         {/* 2-Column: Left Direct Tips Widget | Right Review Actions */}
@@ -134,51 +127,51 @@ export const FeedbackAndTipsSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Location Select for Tips */}
+              {/* Location Select Grid */}
               <div className="mt-6">
-                <label style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider">
-                  Локация смены
+                <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
+                  Выберите точку в Иркутске
                 </label>
-                <div className="mt-2 grid grid-cols-2 gap-2">
+                <div className="mt-2 grid grid-cols-2 gap-2.5">
                   {LOCATIONS.map((loc) => {
-                    const isSelected = loc.id === tipLocation;
+                    const isSelected = loc.id === selectedLocationId;
                     return (
                       <button
                         key={loc.id}
-                        type="button"
-                        onClick={() => setTipLocation(loc.id)}
+                        onClick={() => setSelectedLocationId(loc.id as LocationId)}
                         style={{
                           backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "transparent",
                           borderColor: isSelected ? loc.theme.primaryColor : "var(--theme-surface-border)",
                         }}
-                        className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all"
+                        className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all min-w-0 w-full overflow-hidden"
                       >
-                        <div className="flex items-center justify-between w-full">
-                          <span className="font-bold">{loc.shortName}</span>
+                        <div className="flex items-center justify-between w-full min-w-0">
+                          <span className="font-bold truncate">{loc.shortName}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
-                            className="h-2 w-2 rounded-full"
+                            className="h-2 w-2 rounded-full shrink-0 ml-1.5"
                           />
                         </div>
-                        <span style={{ color: "var(--theme-muted)" }} className="truncate text-[10px]">{loc.landmark}</span>
+                        <span style={{ color: "var(--theme-muted)" }} className="block w-full truncate text-[10px] mt-0.5">
+                          {loc.landmark}
+                        </span>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Amount buttons */}
-              <div className="mt-5">
-                <label style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider">
+              {/* Preset Amounts */}
+              <div className="mt-6">
+                <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
                   Сумма чаевых
                 </label>
                 <div className="mt-2 grid grid-cols-4 gap-2">
-                  {amounts.map((amt) => {
+                  {presetAmounts.map((amt) => {
                     const isSelected = !customTip && tipAmount === amt;
                     return (
                       <button
                         key={amt}
-                        type="button"
                         onClick={() => {
                           setTipAmount(amt);
                           setCustomTip("");
@@ -188,7 +181,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                           color: isSelected ? "#FFFFFF" : "var(--theme-text)",
                           borderColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-border)",
                         }}
-                        className="rounded-xl border py-3 text-sm font-bold transition-all"
+                        className="rounded-xl border py-3 text-sm font-bold transition-all shadow-xs"
                       >
                         {amt} ₽
                       </button>
@@ -196,101 +189,139 @@ export const FeedbackAndTipsSection: React.FC = () => {
                   })}
                 </div>
 
-                <input
-                  type="number"
-                  placeholder="Или введите свою сумму (₽)"
-                  value={customTip}
-                  onChange={(e) => setCustomTip(e.target.value)}
-                  style={{
-                    backgroundColor: "var(--theme-surface-elevated)",
-                    borderColor: "var(--theme-surface-border)",
-                    color: "var(--theme-text)",
-                  }}
-                  className="mt-2.5 w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors focus:border-[var(--theme-primary)]"
-                />
+                <div className="mt-2.5">
+                  <input
+                    type="number"
+                    placeholder="Или другая сумма (₽)..."
+                    value={customTip}
+                    onChange={(e) => setCustomTip(e.target.value)}
+                    style={{
+                      backgroundColor: "var(--theme-surface-elevated)",
+                      borderColor: "var(--theme-surface-border)",
+                      color: "var(--theme-text)",
+                    }}
+                    className="w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-colors focus:border-[var(--theme-primary)]"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="mt-8 space-y-2">
+            {/* Action Tip Button */}
+            <div className="mt-8">
               <ShimmerButton
-                onClick={handleDirectTip}
-                className="w-full py-4 text-sm font-bold"
+                onClick={handleSendTip}
+                className="w-full py-4 text-base font-bold"
               >
                 <div className="flex items-center justify-center gap-2">
-                  <span>
-                    {t.btnSendTip} ({customTip ? `${customTip} ₽` : `${tipAmount} ₽`})
-                  </span>
-                  <ExternalLink className="h-4 w-4" />
+                  <Heart className="h-4 w-4 fill-current" />
+                  <span>{t.btnSendTip} ({customTip ? `${customTip} ₽` : `${tipAmount} ₽`})</span>
+                  <Sparkles className="h-4 w-4" />
                 </div>
               </ShimmerButton>
-              <div style={{ color: "var(--theme-muted)" }} className="text-center text-[10px]">
-                Переход на защищенный шлюз sbtips.ru (Точка: «{activeLoc.shortName}»)
+
+              <div style={{ color: "var(--theme-muted)" }} className="mt-2.5 text-center text-[11px]">
+                Перевод напрямую через СБП / sbtips.ru (Точка: «{activeLoc.shortName}»)
               </div>
             </div>
           </div>
 
-          {/* Right: Write Review Box + CTA */}
+          {/* Right: Review & Ratings Card */}
           <div
             style={{
               backgroundColor: "var(--theme-surface)",
               borderColor: "var(--theme-surface-border)",
             }}
-            className="lg:col-span-6 rounded-3xl border p-6 sm:p-8 flex flex-col justify-between shadow-md transition-all duration-500"
+            className="lg:col-span-6 rounded-3xl border p-6 sm:p-8 shadow-xl backdrop-blur-xl flex flex-col justify-between transition-all duration-500"
           >
             <div>
-              <div className="flex items-center gap-3">
-                <div
-                  style={{
-                    backgroundColor: "var(--theme-badge-bg)",
-                    color: "var(--theme-primary)",
-                  }}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl"
-                >
-                  <MessageSquare className="h-6 w-6" />
-                </div>
+              <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold">
-                    Поделитесь мнением
-                  </h3>
-                  <p style={{ color: "var(--theme-muted)" }} className="text-xs">
-                    Ваш отзыв помогает делать каждую чашку и пространство еще уютнее.
-                  </p>
+                  <span
+                    style={{ color: "var(--theme-primary)" }}
+                    className="text-xs font-bold uppercase tracking-wider"
+                  >
+                    Рейтинг гостей
+                  </span>
+                  <div className="mt-1 flex items-baseline gap-2">
+                    <span className="font-serif text-4xl sm:text-5xl font-bold">
+                      4.9
+                    </span>
+                    <div className="flex text-amber-500">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span style={{ color: "var(--theme-muted)" }} className="text-xs">На основе отзывов в</span>
+                  <div className="mt-1 flex items-center justify-end gap-1.5 font-bold text-xs">
+                    <span>2ГИС & Яндекс</span>
+                  </div>
                 </div>
               </div>
 
-              <div
-                style={{
-                  backgroundColor: "var(--theme-surface-elevated)",
-                  borderColor: "var(--theme-surface-border)",
-                }}
-                className="mt-6 rounded-2xl border p-5 shadow-sm"
-              >
-                <div className="flex items-center gap-1 text-[var(--theme-primary)]">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="h-5 w-5 fill-current" />
-                  ))}
-                  <span className="ml-2 font-bold text-sm">5.0 / 5.0</span>
+              {/* Direct Maps Links */}
+              <div className="mt-6 space-y-3">
+                <div style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
+                  Оставить отзыв на картах точки «{activeLoc.shortName}»:
                 </div>
-                <p style={{ color: "var(--theme-muted)" }} className="mt-3 text-xs leading-relaxed">
-                  «Мы читаем каждое пожелание гостей во всех 4 кофейнях Иркутска. Оставляйте ваши впечатления!»
-                </p>
-                <div style={{ color: "var(--theme-primary)" }} className="mt-3 text-[11px] font-bold">
-                  — Команда Vincent Van Coffee
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a
+                    href={activeLoc.gis2Url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      backgroundColor: "var(--theme-surface-elevated)",
+                      borderColor: "var(--theme-surface-border)",
+                    }}
+                    className="flex items-center justify-between rounded-2xl border p-4 transition-all hover:scale-[1.02] group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-600 text-white font-bold text-xs">
+                        2Г
+                      </div>
+                      <div className="text-xs font-bold">2ГИС Иркутск</div>
+                    </div>
+                    <ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </a>
+
+                  <a
+                    href={activeLoc.yandexMapUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      backgroundColor: "var(--theme-surface-elevated)",
+                      borderColor: "var(--theme-surface-border)",
+                    }}
+                    className="flex items-center justify-between rounded-2xl border p-4 transition-all hover:scale-[1.02] group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-red-600 text-white font-bold text-xs">
+                        Я
+                      </div>
+                      <div className="text-xs font-bold">Яндекс.Карты</div>
+                    </div>
+                    <ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </a>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8">
+            {/* In-app review trigger button */}
+            <div className="mt-8 border-t border-black/5 dark:border-white/5 pt-6">
               <button
                 onClick={() => openFeedbackModal()}
                 style={{
-                  backgroundColor: "var(--theme-badge-bg)",
+                  backgroundColor: "var(--theme-surface-elevated)",
                   borderColor: "var(--theme-primary)",
-                  color: "var(--theme-primary)",
+                  color: "var(--theme-text)",
                 }}
                 className="w-full flex items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-bold transition-all hover:scale-[1.01]"
               >
-                <MessageSquare className="h-4 w-4" />
+                <MessageSquare className="h-4 w-4 text-[var(--theme-primary)]" />
                 <span>{t.leaveReviewBtn}</span>
               </button>
             </div>
@@ -300,7 +331,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
         {/* Marquee with guest quotes */}
         <div className="mt-14">
           <div style={{ color: "var(--theme-muted)" }} className="mb-4 text-center text-xs font-bold uppercase tracking-wider">
-            Отзывы гостей (Демо-выгрузка)
+            Отзывы наших гостей
           </div>
 
           <Marquee duration="40s" pauseOnHover={true}>

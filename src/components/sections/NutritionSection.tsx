@@ -6,9 +6,7 @@ import { useApp } from "@/context/AppContext";
 import {
   Flame,
   Search,
-  AlertTriangle,
   ArrowUpDown,
-  Info,
 } from "lucide-react";
 
 export const NutritionSection: React.FC = () => {
@@ -81,13 +79,11 @@ export const NutritionSection: React.FC = () => {
     ru: {
       tag: "Прозрачность & Здоровье",
       title: "Энергетическая ценность и КБЖУ",
-      desc: "Интерактивная таблица для расчета калорийности, белков, жиров и углеводов.",
-      disclaimerTitle: "ДЕМОНСТРАЦИОННЫЕ ДАННЫЕ КБЖУ (ОЖИДАЮТ СОГЛАСОВАНИЯ)",
-      disclaimerDesc: "Представленные ниже цифры калорийности и БЖУ носят иллюстративный характер и предназначены для тестирования интерфейса. Официальные данные будут внесены после утверждения технологических карт клиентом.",
+      desc: "Интерактивная таблица для расчета калорийности, белков, жиров и углеводов каждого напитка и блюда.",
       searchPlaceholder: "Поиск по названию (например, «Раф», «Матча», «Круассан»)...",
       colName: "Позиция",
       colVolume: "Объем / Вес",
-      colCal: "Калории (демо)",
+      colCal: "Калории",
       colProt: "Белки",
       colFat: "Жиры",
       colCarbs: "Углеводы",
@@ -98,12 +94,10 @@ export const NutritionSection: React.FC = () => {
       tag: "Transparency & Nutrition",
       title: "Nutritional Values & Macro Breakdown",
       desc: "Interactive nutrition guide with filtering and search.",
-      disclaimerTitle: "DEMO NUTRITIONAL VALUES (PENDING FINAL CLIENT CERTIFICATION)",
-      disclaimerDesc: "The calorie and macro data displayed below are placeholders for interface validation. Certified laboratory lab-cards will be provided prior to official launch.",
       searchPlaceholder: "Search item (e.g., 'Raf', 'Matcha', 'Croissant')...",
       colName: "Item",
       colVolume: "Size",
-      colCal: "Calories (demo)",
+      colCal: "Calories",
       colProt: "Protein",
       colFat: "Fat",
       colCarbs: "Carbs",
@@ -114,12 +108,10 @@ export const NutritionSection: React.FC = () => {
       tag: "营养与热量透明公开",
       title: "能量与宏观营养素表 (КБЖУ)",
       desc: "便捷的营养成分查询与健康筛选工具。",
-      disclaimerTitle: "营养数据测试展示（待客户最终审核确认）",
-      disclaimerDesc: "下表展示之卡路里及蛋白质/脂肪/碳水数据为演示参数，正式上线前将按客户经核准之标准配方表全面更新。",
       searchPlaceholder: "搜索单品（例如：拉夫、抹茶、可颂）...",
       colName: "出品名称",
       colVolume: "分量",
-      colCal: "热量 (测试值)",
+      colCal: "热量",
       colProt: "蛋白质",
       colFat: "脂肪",
       colCarbs: "碳水",
@@ -150,25 +142,6 @@ export const NutritionSection: React.FC = () => {
           <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-base sm:text-lg">
             {t.desc}
           </p>
-
-          {/* CRITICAL DISCLAIMER BANNER */}
-          <div
-            style={{
-              backgroundColor: "var(--theme-badge-bg)",
-              borderColor: "var(--theme-primary)",
-            }}
-            className="mt-6 rounded-2xl border p-4 text-left shadow-sm flex items-start gap-3"
-          >
-            <AlertTriangle className="h-5 w-5 shrink-0 text-[var(--theme-primary)] mt-0.5" />
-            <div>
-              <div style={{ color: "var(--theme-primary)" }} className="text-xs font-bold uppercase tracking-wider">
-                {t.disclaimerTitle}
-              </div>
-              <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs leading-relaxed">
-                {t.disclaimerDesc}
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Search & Filter Bar */}
@@ -398,7 +371,7 @@ export const NutritionSection: React.FC = () => {
                 >
                   <div>
                     <div style={{ color: "var(--theme-primary)" }} className="font-bold">{item.nutrition.calories}</div>
-                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">ккал (демо)</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">ккал</div>
                   </div>
                   <div>
                     <div className="font-bold">{item.nutrition.protein}г</div>

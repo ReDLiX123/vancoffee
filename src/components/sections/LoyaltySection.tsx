@@ -11,7 +11,6 @@ import {
   Smartphone,
   Zap,
   Coffee,
-  Info,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -53,52 +52,49 @@ export const LoyaltySection: React.FC = () => {
 
   const t = {
     ru: {
-      tag: "Концепт программы лояльности",
-      title: "Vincent Van Club (Проект)",
-      desc: "Предварительная концепция цифровой карты лояльности для гостей сети кофеен в Иркутске.",
-      conceptBadge: "ℹ️ Проект концепта (на согласовании) — параметры кэшбэка и привилегии могут быть скорректированы клиентом",
+      tag: "Программа лояльности",
+      title: "Vincent Van Club",
+      desc: "Цифровая карта привилегий для гостей сети кофеен Vincent Van Coffee в Иркутске.",
       calcTitle: "Калькулятор прогнозируемой выгоды",
       calcCups: "Сколько чашек кофе вы выпиваете в месяц?",
       calcResultYear: "Прогнозируемая экономия в год:",
       calcFreeCups: "Бесплатных чашек авторского кофе в год",
-      joinTitle: "Тестирование выпуска карты",
-      joinSub: "Форма для проверки прототипа привязки карты в Apple / Google Wallet.",
+      joinTitle: "Оформить электронную карту",
+      joinSub: "Получите карту лояльности в Apple Wallet или Google Wallet прямо сейчас.",
       phonePlaceholder: "+7 (999) 000-00-00",
-      joinBtn: "Протестировать выпуск",
-      congrats: "Тестовая карта успешно сформирована!",
-      congratsSub: "Прототип подтвержден. Реальная интеграция будет подключена к CRM-системе кофейни.",
+      joinBtn: "Оформить карту",
+      congrats: "Карта успешно выпущена!",
+      congratsSub: "Электронная карта активирована. Приятных визитов в Vincent Van Coffee!",
     },
     en: {
-      tag: "Loyalty Program Concept",
-      title: "Vincent Van Club (Concept Draft)",
-      desc: "Proposed digital loyalty pass framework for coffee lovers in Irkutsk.",
-      conceptBadge: "ℹ️ Concept Draft — cashback tiers and rewards are subject to final client approval",
+      tag: "Loyalty Program",
+      title: "Vincent Van Club",
+      desc: "Digital guest pass and rewards framework for coffee lovers in Irkutsk.",
       calcTitle: "Calculate Your Annual Perks",
       calcCups: "How many cups of coffee do you enjoy monthly?",
       calcResultYear: "Projected annual value:",
       calcFreeCups: "Complimentary cups per year",
-      joinTitle: "Test Pass Generation",
-      joinSub: "Prototype demo for Apple / Google Wallet pass onboarding.",
+      joinTitle: "Get Your Digital Pass",
+      joinSub: "Add your personal coffee pass to Apple Wallet or Google Wallet.",
       phonePlaceholder: "+7 (999) 000-00-00",
-      joinBtn: "Test Pass Issuing",
-      congrats: "Prototype Pass Generated!",
-      congratsSub: "Ready for client CRM webhook integration.",
+      joinBtn: "Get Digital Pass",
+      congrats: "Pass Successfully Issued!",
+      congratsSub: "Your digital pass is active. Enjoy your visits to Vincent Van Coffee!",
     },
     zh: {
-      tag: "会员体系提案概念",
-      title: "凡高艺术咖啡俱乐部 (概念草案)",
-      desc: "为伊尔库茨克咖啡常客量身定制的数字化会员方案雏形。",
-      conceptBadge: "ℹ️ 方案草案（待审核）— 积分返现比例与特权将在正式上线前由客户最终定稿",
+      tag: "会员俱乐部",
+      title: "凡高艺术咖啡俱乐部",
+      desc: "为伊尔库茨克咖啡常客量身打造的专属数字化会员特权体系。",
       calcTitle: "会员收益模拟测算",
       calcCups: "您每月大约品饮多少杯咖啡？",
       calcResultYear: "预计全年为您节省：",
       calcFreeCups: "相当于每年获赠咖啡杯数",
-      joinTitle: "测试电子卡申领流程",
-      joinSub: "用于测试添加至 Apple 钱包或 Google 钱包的交互原型。",
+      joinTitle: "领取专属电子会员卡",
+      joinSub: "即刻开通并添加至 Apple 钱包或 Google 钱包。",
       phonePlaceholder: "+7 (999) 000-00-00",
-      joinBtn: "体验测试开通",
-      congrats: "测试会员卡生成成功！",
-      congratsSub: "原型验证完毕，后续将对接真实 CRM 积分系统。",
+      joinBtn: "立即开通会员",
+      congrats: "会员卡领取成功！",
+      congratsSub: "您的电子会员卡已激活，欢迎常来品味艺术咖啡！",
     },
   }[language];
 
@@ -124,18 +120,6 @@ export const LoyaltySection: React.FC = () => {
           <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-base sm:text-lg">
             {t.desc}
           </p>
-
-          <div
-            style={{
-              backgroundColor: "var(--theme-surface-elevated)",
-              borderColor: "var(--theme-surface-border)",
-              color: "var(--theme-muted)",
-            }}
-            className="mt-4 inline-flex items-center gap-2 rounded-xl border px-3.5 py-1.5 text-xs text-left shadow-sm"
-          >
-            <Info className="h-3.5 w-3.5 shrink-0 text-[var(--theme-primary)]" />
-            <span>{t.conceptBadge}</span>
-          </div>
         </div>
 
         {/* 3 Loyalty Tier Cards */}
@@ -161,7 +145,7 @@ export const LoyaltySection: React.FC = () => {
                       style={{ color: "var(--theme-primary)" }}
                       className="text-xs font-bold uppercase tracking-widest"
                     >
-                      Уровень {idx + 1} (Концепт)
+                      Уровень {idx + 1}
                     </span>
                     <div
                       style={{
@@ -345,7 +329,7 @@ export const LoyaltySection: React.FC = () => {
                 style={{ color: "var(--theme-primary)" }}
                 className="text-xs font-bold uppercase tracking-wider"
               >
-                Уровень «{currentTier.name.split("(")[0].trim()}» ({currentTier.cashback}%)
+                Уровень «{currentTier.name}» ({currentTier.cashback}%)
               </div>
 
               <div

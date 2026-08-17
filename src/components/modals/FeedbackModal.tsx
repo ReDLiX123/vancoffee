@@ -120,7 +120,7 @@ export const FeedbackModal: React.FC = () => {
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
                   Кофейня
                 </label>
-                <div className="mt-2 grid grid-cols-2 gap-2">
+                <div className="mt-2 grid grid-cols-2 gap-2.5">
                   {LOCATIONS.map((loc) => {
                     const isSelected = loc.id === selectedLocationId;
                     return (
@@ -132,16 +132,18 @@ export const FeedbackModal: React.FC = () => {
                           backgroundColor: isSelected ? "var(--theme-surface-elevated)" : "transparent",
                           borderColor: isSelected ? loc.theme.primaryColor : "var(--theme-surface-border)",
                         }}
-                        className="flex flex-col items-start rounded-xl border p-2 text-left text-xs transition-all"
+                        className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all min-w-0 w-full overflow-hidden"
                       >
-                        <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center justify-between w-full min-w-0">
                           <span className="font-bold truncate">{loc.shortName}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
-                            className="h-2 w-2 rounded-full"
+                            className="h-2 w-2 rounded-full shrink-0 ml-1.5"
                           />
                         </div>
-                        <span style={{ color: "var(--theme-muted)" }} className="truncate text-[10px]">{loc.landmark}</span>
+                        <span style={{ color: "var(--theme-muted)" }} className="block w-full truncate text-[10px] mt-0.5">
+                          {loc.landmark}
+                        </span>
                       </button>
                     );
                   })}
