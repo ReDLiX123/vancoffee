@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Flame, Check, Leaf, ShieldCheck, Award, ChefHat } from "lucide-react";
 import { MenuItem, LOCATIONS, getLocalizedTasteNote, formatVolume } from "@/data/coffeeData";
 import { Language } from "@/context/AppContext";
+import { getAssetPath } from "@/lib/utils";
 
 interface DrinkDetailModalProps {
   item: MenuItem | null;
@@ -107,7 +108,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
           {/* Header Image */}
           <div className="relative h-64 w-full overflow-hidden sm:h-72 bg-black/20">
             <img
-              src={item.image}
+              src={getAssetPath(item.image)}
               alt={item.name[language]}
               className="h-full w-full object-cover"
             />

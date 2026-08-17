@@ -497,7 +497,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Сливочная нуга", "Теплая цедра", "Обжаренные семечки", "Карамель"],
     volume: "350 мл",
     price: 360,
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/sunflower-raf.webp",
     badge: {
       ru: "Бестселлер",
       en: "Bestseller",
@@ -529,7 +529,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Лесные ягоды", "Лаванда", "Горький шоколад", "Черничный конфитюр"],
     volume: "350 мл",
     price: 380,
-    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/starry-night.webp",
     badge: {
       ru: "Арт-хит",
       en: "Art Favorite",
@@ -561,7 +561,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Тёмный шоколад 72%", "Пряный кардамон", "Миндаль", "Морская соль"],
     volume: "300 мл",
     price: 370,
-    image: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/night-terrace.webp",
     badge: {
       ru: "Зимнее тепло",
       en: "Winter Warmth",
@@ -593,7 +593,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Марципан", "Флёрдоранж", "Нежная пена", "Спелое яблоко"],
     volume: "250 мл",
     price: 340,
-    image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/almond-blossom.webp",
     availableLocations: ["silver", "noviy", "kievskaya", "madyar"],
     nutrition: {
       calories: 145,
@@ -622,7 +622,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Жасмин", "Красный персик", "Бергамот", "Мёд"],
     volume: "250 мл",
     price: 240,
-    image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/filter.webp",
     badge: {
       ru: "Выбор бариста",
       en: "Barista's Choice",
@@ -654,7 +654,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Красная смородина", "Карамель", "Грецкий орех"],
     volume: "200 мл",
     price: 290,
-    image: "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/flat-white.webp",
     availableLocations: ["silver", "noviy", "kievskaya", "madyar"],
     nutrition: {
       calories: 130,
@@ -681,7 +681,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Молочный шоколад", "Фундук", "Тростниковый сахар"],
     volume: "300 мл",
     price: 280,
-    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/cappuccino.webp",
     availableLocations: ["silver", "noviy", "kievskaya", "madyar"],
     nutrition: {
       calories: 165,
@@ -708,7 +708,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Темный трюфель", "Сушеная вишня", "Какао"],
     volume: "40 мл",
     price: 180,
-    image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/espresso.webp",
     availableLocations: ["silver", "noviy", "kievskaya", "madyar"],
     nutrition: {
       calories: 3,
@@ -737,7 +737,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Свежая зелень", "Умами", "Сладкие сливки", "Фисташка"],
     volume: "300 мл",
     price: 350,
-    image: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/matcha.webp",
     badge: {
       ru: "Киото Премиум",
       en: "Kyoto Premium",
@@ -769,7 +769,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Хвоя и можжевельник", "Сочная облепиха", "Травяная свежесть", "Мёд"],
     volume: "450 мл",
     price: 320,
-    image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/baikal-tea.webp",
     badge: {
       ru: "Сибирь",
       en: "Siberian Soul",
@@ -803,7 +803,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Сливочное масло", "Нежный лосось", "Свежий огурец", "Крем-чиз"],
     volume: "230 г",
     price: 490,
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/croissant-salmon.webp",
     badge: {
       ru: "Шеф-завтрак",
       en: "Chef Breakfast",
@@ -835,7 +835,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Нежный творог", "Соленая карамель", "Лесные ягоды", "Ваниль"],
     volume: "210 г",
     price: 390,
-    image: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/syrniki.webp",
     badge: {
       ru: "Любимое гостями",
       en: "Guest Favorite",
@@ -867,7 +867,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Сливочная бриошь", "Жидкий желток", "Хрустящий бекон", "Лимонный соус"],
     volume: "240 г",
     price: 440,
-    image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/brioche-benedict.webp",
     availableLocations: ["kievskaya", "madyar"],
     nutrition: {
       calories: 520,
@@ -896,7 +896,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Яркий лимон", "Пряный базилик", "Хрустящее тесто", "Сладкая меренга"],
     volume: "110 г",
     price: 290,
-    image: "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/tart-lemon.webp",
     badge: {
       ru: "Ремесло",
       en: "Handmade",
@@ -928,7 +928,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Жареная фисташка", "Ягодная кислинка", "Заварное тесто"],
     volume: "95 г",
     price: 280,
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/eclair.webp",
     availableLocations: ["silver", "noviy", "kievskaya", "madyar"],
     nutrition: {
       calories: 270,
@@ -955,7 +955,7 @@ export const MENU_ITEMS: MenuItem[] = [
     tasteNotes: ["Тёмное какао", "Лесной орех", "Бархатистая текстура"],
     volume: "50 г",
     price: 160,
-    image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/truffle.webp",
     badge: {
       ru: "Sugar Free",
       en: "Sugar Free",
@@ -1184,7 +1184,7 @@ export const NEWS_ITEMS: NewsItem[] = [
       en: "2 min read",
       zh: "2 分钟阅读",
     },
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/news-spring.webp",
     linkText: "Попробовать в кофейнях",
     linkTextI18n: {
       ru: "Попробовать в кофейнях",
@@ -1219,7 +1219,7 @@ export const NEWS_ITEMS: NewsItem[] = [
       en: "3 min read",
       zh: "3 分钟阅读",
     },
-    image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/news-beans.webp",
     linkText: "Подробнее о зерне",
     linkTextI18n: {
       ru: "Подробнее о зерне",
@@ -1254,7 +1254,7 @@ export const NEWS_ITEMS: NewsItem[] = [
       en: "1 min read",
       zh: "1 分钟阅读",
     },
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    image: "/images/menu/news-cupping.webp",
     linkText: "Записаться на встречу",
     linkTextI18n: {
       ru: "Записаться на встречу",

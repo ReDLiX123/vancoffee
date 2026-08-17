@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { MENU_ITEMS, MenuItem, formatVolume } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
+import { getAssetPath } from "@/lib/utils";
 import {
   Flame,
   Search,
@@ -326,7 +327,7 @@ export const NutritionSection: React.FC = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <img
-                          src={item.image}
+                          src={getAssetPath(item.image)}
                           alt={item.name[language]}
                           className="h-10 w-10 rounded-xl object-cover border border-black/5 dark:border-white/5"
                         />
@@ -407,7 +408,7 @@ export const NutritionSection: React.FC = () => {
               >
                 <div className="flex items-start gap-3">
                   <img
-                    src={item.image}
+                    src={getAssetPath(item.image)}
                     alt={item.name[language]}
                     className="h-12 w-12 rounded-xl object-cover border border-black/10 dark:border-white/10"
                   />

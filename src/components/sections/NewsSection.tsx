@@ -4,6 +4,7 @@ import React from "react";
 import { NEWS_ITEMS } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { Newspaper, ArrowRight, Calendar, Clock } from "lucide-react";
+import { getAssetPath } from "@/lib/utils";
 
 export const NewsSection: React.FC = () => {
   const { language } = useApp();
@@ -88,7 +89,7 @@ export const NewsSection: React.FC = () => {
                   {/* Image */}
                   <div className="relative h-52 w-full overflow-hidden bg-black/5">
                     <img
-                      src={item.image}
+                      src={getAssetPath(item.image)}
                       alt={title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />

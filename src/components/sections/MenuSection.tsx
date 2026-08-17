@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MENU_ITEMS, MenuItem, LOCATIONS, getLocalizedTasteNote, formatVolume } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { DrinkDetailModal } from "@/components/modals/DrinkDetailModal";
+import { getAssetPath } from "@/lib/utils";
 import {
   Coffee,
   Flame,
@@ -215,7 +216,7 @@ export const MenuSection: React.FC = () => {
                     {/* Item Image */}
                     <div className="relative h-48 w-full overflow-hidden bg-black/5">
                       <img
-                        src={item.image}
+                        src={getAssetPath(item.image)}
                         alt={item.name[language]}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
