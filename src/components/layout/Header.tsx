@@ -41,10 +41,10 @@ export const Header: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { label: { ru: "Локации & Темы", en: "Locations", zh: "门店与主题" }, href: "#locations" },
+    { label: { ru: "Локации", en: "Locations", zh: "门店" }, href: "#locations" },
     { label: { ru: "Меню", en: "Menu", zh: "菜单" }, href: "#menu" },
     { label: { ru: "КБЖУ", en: "Nutrition", zh: "热量与营养" }, href: "#nutrition" },
-    { label: { ru: "Клуб (Концепт)", en: "Club", zh: "会员俱乐部" }, href: "#loyalty" },
+    { label: { ru: "Клуб", en: "Club", zh: "会员俱乐部" }, href: "#loyalty" },
     { label: { ru: "Отзывы", en: "Reviews", zh: "客评" }, href: "#feedback" },
     { label: { ru: "Новости", en: "Journal", zh: "动态" }, href: "#news" },
   ];
@@ -64,14 +64,14 @@ export const Header: React.FC = () => {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Brand Monogram & Name */}
-          <a href="#" className="group flex items-center gap-3">
+          <a href="#" className="group flex items-center gap-3 shrink-0">
             <div
               style={{
                 borderColor: "var(--theme-primary)",
                 backgroundColor: "var(--theme-surface)",
                 color: "var(--theme-primary)",
               }}
-              className="relative flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm transition-transform group-hover:scale-105"
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border shadow-sm transition-transform group-hover:scale-105"
             >
               <span className="font-serif text-lg font-bold">V</span>
               <span
@@ -80,25 +80,25 @@ export const Header: React.FC = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif text-lg sm:text-xl font-bold tracking-tight leading-tight">
+              <span className="font-serif text-lg sm:text-xl font-bold tracking-tight leading-tight whitespace-nowrap">
                 Vincent Van Coffee
               </span>
               <span
                 style={{ color: "var(--theme-primary)" }}
-                className="text-[10px] tracking-widest uppercase font-semibold"
+                className="text-[10px] tracking-widest uppercase font-semibold whitespace-nowrap"
               >
-                Иркутск • {selectedLocation.theme.styleName}
+                Иркутск • {selectedLocation.shortName}
               </span>
             </div>
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-6 md:flex lg:gap-8">
+          <nav className="hidden items-center gap-5 md:flex lg:gap-8 shrink-0">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-xs font-semibold uppercase tracking-wider opacity-75 transition-all hover:opacity-100"
+                className="whitespace-nowrap text-xs font-semibold uppercase tracking-wider opacity-75 transition-all hover:opacity-100"
                 style={{ color: "var(--theme-text)" }}
               >
                 {link.label[language]}
@@ -107,7 +107,7 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Right Action Tools */}
-          <div className="hidden items-center gap-3 sm:flex">
+          <div className="hidden items-center gap-3 sm:flex shrink-0">
             {/* Location & Dynamic Theme Selector Dropdown */}
             <div className="relative">
               <button
@@ -120,14 +120,14 @@ export const Header: React.FC = () => {
                   borderColor: "var(--theme-surface-border)",
                   color: "var(--theme-text)",
                 }}
-                className="flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium backdrop-blur-md transition-all hover:shadow-md"
+                className="flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium backdrop-blur-md transition-all hover:shadow-md whitespace-nowrap"
               >
                 <div
                   style={{ backgroundColor: selectedLocation.theme.primaryColor }}
-                  className="h-2 w-2 rounded-full animate-pulse"
+                  className="h-2 w-2 rounded-full animate-pulse shrink-0"
                 />
                 <span className="max-w-[130px] truncate font-semibold">{selectedLocation.shortName}</span>
-                <ChevronDown className="h-3 w-3 opacity-60" />
+                <ChevronDown className="h-3 w-3 opacity-60 shrink-0" />
               </button>
 
               {isLocationDropdownOpen && (
