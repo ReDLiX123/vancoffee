@@ -7,9 +7,16 @@ import { useApp } from "@/context/AppContext";
 import { DrinkDetailModal } from "@/components/modals/DrinkDetailModal";
 import {
   Coffee,
-  Sparkles,
   Flame,
   ChevronRight,
+  Palette,
+  Layers,
+  Leaf,
+  Utensils,
+  Croissant,
+  Award,
+  ShieldCheck,
+  ChefHat,
 } from "lucide-react";
 
 export const MenuSection: React.FC = () => {
@@ -19,20 +26,20 @@ export const MenuSection: React.FC = () => {
   const [selectedItemForModal, setSelectedItemForModal] = useState<MenuItem | null>(null);
 
   const categories = [
-    { id: "all", label: { ru: "Все позиции", en: "All Items", zh: "全出品" } },
-    { id: "signature", label: { ru: "Авторские напитки", en: "Signature Art", zh: "艺术特调" } },
-    { id: "classic", label: { ru: "Классика спешелти", en: "Specialty Classic", zh: "经典单品" } },
-    { id: "tea_matcha", label: { ru: "Чай & Матча", en: "Tea & Matcha", zh: "特级茶饮" } },
-    { id: "kitchen", label: { ru: "Завтраки & Еда", en: "Kitchen & Breakfast", zh: "全天早午餐" } },
-    { id: "desserts", label: { ru: "Десерты", en: "Art Desserts", zh: "手作法甜" } },
+    { id: "all", label: { ru: "Все позиции", en: "All Items", zh: "全出品" }, icon: Layers },
+    { id: "signature", label: { ru: "Авторские напитки", en: "Signature Art", zh: "艺术特调" }, icon: Palette },
+    { id: "classic", label: { ru: "Классика спешелти", en: "Specialty Classic", zh: "经典单品" }, icon: Coffee },
+    { id: "tea_matcha", label: { ru: "Чай & Матча", en: "Tea & Matcha", zh: "特级茶饮" }, icon: Leaf },
+    { id: "kitchen", label: { ru: "Завтраки & Еда", en: "Kitchen & Breakfast", zh: "全天早午餐" }, icon: Utensils },
+    { id: "desserts", label: { ru: "Десерты", en: "Art Desserts", zh: "手作法甜" }, icon: Croissant },
   ];
 
   const tags = [
-    { id: "all", label: { ru: "Все вкусы", en: "All", zh: "全部" } },
-    { id: "specialty", label: { ru: "Спешелти 100%", en: "Specialty", zh: "精品豆" } },
-    { id: "vegan", label: { ru: "Vegan / На растительном", en: "Plant-based", zh: "植物基" } },
-    { id: "sugar_free", label: { ru: "Без сахара", en: "Sugar-Free", zh: "无添加糖" } },
-    { id: "chef_pick", label: { ru: "Выбор шефа", en: "Chef's Pick", zh: "主厨推荐" } },
+    { id: "all", label: { ru: "Все вкусы", en: "All", zh: "全部" }, icon: Layers },
+    { id: "specialty", label: { ru: "Спешелти 100%", en: "Specialty", zh: "精品豆" }, icon: Award },
+    { id: "vegan", label: { ru: "Vegan / Растительное", en: "Plant-based", zh: "植物基" }, icon: Leaf },
+    { id: "sugar_free", label: { ru: "Без сахара", en: "Sugar-Free", zh: "无添加糖" }, icon: ShieldCheck },
+    { id: "chef_pick", label: { ru: "Выбор шефа", en: "Chef's Pick", zh: "主厨推荐" }, icon: ChefHat },
   ];
 
   // Filter items by category, tag, and whether available at selected location
@@ -125,20 +132,22 @@ export const MenuSection: React.FC = () => {
         <div className="mt-12 flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           {categories.map((cat) => {
             const isActive = cat.id === activeCategory;
+            const CatIcon = cat.icon;
             return (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 style={{
-                  backgroundColor: isActive ? "var(--theme-primary)" : "var(--theme-surface)",
-                  color: isActive ? "#FFFFFF" : "var(--theme-muted)",
+                  backgroundColor: isActive ? "var(--theme-btn-bg, var(--theme-primary))" : "var(--theme-surface)",
+                  color: isActive ? "var(--theme-btn-text, #FFFFFF)" : "var(--theme-muted)",
                   borderColor: isActive ? "var(--theme-primary)" : "var(--theme-surface-border)",
                 }}
-                className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all border ${
+                className={`inline-flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all border ${
                   isActive ? "shadow-md scale-105" : "hover:opacity-100 shadow-sm"
                 }`}
               >
-                {cat.label[language]}
+                <CatIcon className="h-3.5 w-3.5" />
+                <span>{cat.label[language]}</span>
               </button>
             );
           })}
@@ -148,6 +157,7 @@ export const MenuSection: React.FC = () => {
         <div className="mt-4 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto pb-2">
           {tags.map((tag) => {
             const isTagActive = tag.id === activeTag;
+            const TagIcon = tag.icon;
             return (
               <button
                 key={tag.id}
@@ -157,9 +167,10 @@ export const MenuSection: React.FC = () => {
                   color: isTagActive ? "var(--theme-primary)" : "var(--theme-muted)",
                   borderColor: isTagActive ? "var(--theme-primary)" : "var(--theme-surface-border)",
                 }}
-                className="whitespace-nowrap rounded-full border px-3 py-1 text-xs transition-all font-medium"
+                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1 text-xs transition-all font-medium"
               >
-                {tag.label[language]}
+                <TagIcon className="h-3 w-3" />
+                <span>{tag.label[language]}</span>
               </button>
             );
           })}
@@ -235,10 +246,22 @@ export const MenuSection: React.FC = () => {
                         {item.description[language]}
                       </p>
 
-                      {/* Taste notes */}
-                      {item.tasteNotes && (
-                        <div className="mt-3 flex flex-wrap gap-1">
-                          {item.tasteNotes.slice(0, 3).map((note, i) => (
+                      {/* Taste notes and tags */}
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {item.tags.includes("vegan") && (
+                          <span className="inline-flex items-center gap-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 text-[10px] font-medium">
+                            <Leaf className="h-2.5 w-2.5" />
+                            Vegan
+                          </span>
+                        )}
+                        {item.tags.includes("sugar_free") && (
+                          <span className="inline-flex items-center gap-1 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 px-1.5 py-0.5 text-[10px] font-medium">
+                            <ShieldCheck className="h-2.5 w-2.5" />
+                            Без сахара
+                          </span>
+                        )}
+                        {item.tasteNotes &&
+                          item.tasteNotes.slice(0, 2).map((note, i) => (
                             <span
                               key={i}
                               style={{
@@ -250,8 +273,7 @@ export const MenuSection: React.FC = () => {
                               {note}
                             </span>
                           ))}
-                        </div>
-                      )}
+                      </div>
                     </div>
                   </div>
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Flame, Check, Info } from "lucide-react";
+import { X, Flame, Check, Info, Leaf, ShieldCheck, Award, ChefHat } from "lucide-react";
 import { MenuItem, LOCATIONS } from "@/data/coffeeData";
 import { Language } from "@/context/AppContext";
 
@@ -88,31 +88,75 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
               {item.description[language]}
             </p>
 
-            {/* Taste Notes */}
-            {item.tasteNotes && item.tasteNotes.length > 0 && (
-              <div className="mt-5">
-                <span
-                  style={{ color: "var(--theme-primary)" }}
-                  className="text-xs font-bold uppercase tracking-wider"
-                >
-                  Дескрипторы вкуса
-                </span>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {item.tasteNotes.map((note, idx) => (
+            {/* Tags & Taste Notes */}
+            <div className="mt-5 space-y-3">
+              {item.tags && item.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {item.tags.map((tg, idx) => (
                     <span
                       key={idx}
                       style={{
-                        backgroundColor: "var(--theme-badge-bg)",
-                        color: "var(--theme-primary)",
+                        backgroundColor: "var(--theme-surface-elevated)",
+                        borderColor: "var(--theme-surface-border)",
                       }}
-                      className="rounded-lg px-2.5 py-1 text-xs font-medium"
+                      className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium"
                     >
-                      {note}
+                      {tg === "vegan" ? (
+                        <>
+                          <Leaf className="h-3 w-3 text-emerald-500" />
+                          <span>Vegan / Растительное</span>
+                        </>
+                      ) : tg === "sugar_free" ? (
+                        <>
+                          <ShieldCheck className="h-3 w-3 text-sky-500" />
+                          <span>Без сахара</span>
+                        </>
+                      ) : tg === "specialty" ? (
+                        <>
+                          <Award className="h-3 w-3 text-amber-500" />
+                          <span>Спешелти 100%</span>
+                        </>
+                      ) : tg === "chef_pick" ? (
+                        <>
+                          <ChefHat className="h-3 w-3 text-rose-500" />
+                          <span>Выбор шефа</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShieldCheck className="h-3 w-3 text-indigo-500" />
+                          <span>Без аллергенов</span>
+                        </>
+                      )}
                     </span>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+
+              {item.tasteNotes && item.tasteNotes.length > 0 && (
+                <div>
+                  <span
+                    style={{ color: "var(--theme-primary)" }}
+                    className="text-xs font-bold uppercase tracking-wider"
+                  >
+                    Дескрипторы вкуса
+                  </span>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {item.tasteNotes.map((note, idx) => (
+                      <span
+                        key={idx}
+                        style={{
+                          backgroundColor: "var(--theme-badge-bg)",
+                          color: "var(--theme-primary)",
+                        }}
+                        className="rounded-lg px-2.5 py-1 text-xs font-medium"
+                      >
+                        {note}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* KBJU Breakdown */}
             <div
@@ -195,10 +239,10 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
               <button
                 onClick={onClose}
                 style={{
-                  backgroundColor: "var(--theme-primary)",
-                  color: "#FFFFFF",
+                  backgroundColor: "var(--theme-btn-bg, var(--theme-primary))",
+                  color: "var(--theme-btn-text, #FFFFFF)",
                 }}
-                className="rounded-xl px-5 py-2 text-xs font-bold hover:scale-105 shadow-md"
+                className="rounded-xl px-5 py-2 text-xs font-bold hover:scale-105 shadow-md transition-transform"
               >
                 Закрыть
               </button>

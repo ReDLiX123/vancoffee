@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Heart, Sparkles, ExternalLink, CheckCircle2 } from "lucide-react";
+import { X, Heart, ArrowRight, ExternalLink, CheckCircle2 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { LOCATIONS } from "@/data/coffeeData";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
@@ -187,8 +187,9 @@ export const TipsModal: React.FC = () => {
                   className="w-full py-3.5 text-base font-bold"
                 >
                   <div className="flex items-center justify-center gap-2">
+                    <Heart className="h-4 w-4 fill-current" />
                     <span>Отправить {customAmount ? `${customAmount} ₽` : `${selectedAmount} ₽`}</span>
-                    <Sparkles className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" />
                   </div>
                 </ShimmerButton>
 

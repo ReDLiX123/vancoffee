@@ -19,6 +19,8 @@
     --theme-card-bg: rgba(255, 255, 255, 0.9);
     --theme-header-bg: rgba(250, 244, 237, 0.9);
     --theme-glow: rgba(168, 75, 44, 0.14);
+    --theme-btn-bg: #A84B2C;
+    --theme-btn-text: #FFFFFF;
     --is-dark: 0;
   }
 
@@ -39,6 +41,8 @@
     --theme-card-bg: rgba(255, 255, 255, 0.95);
     --theme-header-bg: rgba(247, 248, 244, 0.92);
     --theme-glow: rgba(88, 129, 87, 0.15);
+    --theme-btn-bg: #3A5A40;
+    --theme-btn-text: #FFFFFF;
     --is-dark: 0;
   }
 
@@ -47,18 +51,20 @@
     --theme-bg-secondary: #1B1E24;
     --theme-surface: #1E222A;
     --theme-surface-elevated: #262B35;
-    --theme-surface-border: rgba(245, 190, 80, 0.2);
-    --theme-border-hover: rgba(245, 190, 80, 0.45);
+    --theme-surface-border: rgba(200, 112, 16, 0.25);
+    --theme-border-hover: rgba(200, 112, 16, 0.5);
     --theme-text: #FAF8F5;
     --theme-muted: #9AA5B4;
     --theme-dim: #687382;
-    --theme-primary: #F5BE50;
+    --theme-primary: #C87010;
     --theme-accent: #E67E22;
     --theme-accent-2: #F39C12;
-    --theme-badge-bg: rgba(245, 190, 80, 0.15);
+    --theme-badge-bg: rgba(200, 112, 16, 0.15);
     --theme-card-bg: rgba(30, 34, 42, 0.88);
     --theme-header-bg: rgba(18, 20, 23, 0.92);
-    --theme-glow: rgba(245, 190, 80, 0.2);
+    --theme-glow: rgba(200, 112, 16, 0.22);
+    --theme-btn-bg: #C87010;
+    --theme-btn-text: #FFFFFF;
     --is-dark: 1;
   }
 
@@ -67,18 +73,20 @@
     --theme-bg-secondary: #101A3D;
     --theme-surface: #14214D;
     --theme-surface-elevated: #1C2D66;
-    --theme-surface-border: rgba(0, 229, 255, 0.25);
+    --theme-surface-border: rgba(2, 132, 199, 0.25);
     --theme-border-hover: rgba(255, 64, 129, 0.45);
     --theme-text: #FFFFFF;
     --theme-muted: #95A9D6;
     --theme-dim: #6074A4;
-    --theme-primary: #00E5FF;
+    --theme-primary: #0284C7;
     --theme-accent: #FF4081;
     --theme-accent-2: #7C4DFF;
-    --theme-badge-bg: rgba(0, 229, 255, 0.15);
+    --theme-badge-bg: rgba(2, 132, 199, 0.15);
     --theme-card-bg: rgba(20, 33, 77, 0.88);
     --theme-header-bg: rgba(10, 17, 40, 0.92);
-    --theme-glow: rgba(0, 229, 255, 0.25);
+    --theme-glow: rgba(2, 132, 199, 0.25);
+    --theme-btn-bg: #0284C7;
+    --theme-btn-text: #FFFFFF;
     --is-dark: 1;
   }
 

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Star, MessageSquare, Sparkles, CheckCircle2 } from "lucide-react";
+import { X, Star, MessageSquare, Send, CheckCircle2 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { LOCATIONS } from "@/data/coffeeData";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
@@ -254,7 +254,7 @@ export const FeedbackModal: React.FC = () => {
                 <ShimmerButton type="submit" className="w-full py-3.5 text-base font-bold">
                   <div className="flex items-center justify-center gap-2">
                     <span>Отправить отзыв</span>
-                    <Sparkles className="h-4 w-4" />
+                    <Send className="h-4 w-4" />
                   </div>
                 </ShimmerButton>
               </div>

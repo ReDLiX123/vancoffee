@@ -10,7 +10,7 @@ import {
   MessageSquare,
   Star,
   ExternalLink,
-  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -215,7 +215,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                 <div className="flex items-center justify-center gap-2">
                   <Heart className="h-4 w-4 fill-current" />
                   <span>{t.btnSendTip} ({customTip ? `${customTip} ₽` : `${tipAmount} ₽`})</span>
-                  <Sparkles className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4" />
                 </div>
               </ShimmerButton>
 

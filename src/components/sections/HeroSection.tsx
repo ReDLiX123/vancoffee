@@ -6,7 +6,7 @@ import { StarryCanvas } from "@/components/ui/StarryCanvas";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { useApp } from "@/context/AppContext";
 import { LOCATIONS } from "@/data/coffeeData";
-import { Sparkles, MapPin, Coffee, ArrowRight, Heart, Award, Compass, Palette } from "lucide-react";
+import { MapPin, Coffee, ArrowRight, Heart, Award, Compass, Palette } from "lucide-react";
 
 export const HeroSection: React.FC = () => {
   const { language, selectedLocationId, setSelectedLocationId, selectedLocation, openTipsModal } = useApp();
@@ -140,9 +140,9 @@ export const HeroSection: React.FC = () => {
           <a href="#menu">
             <ShimmerButton className="px-7 py-4 text-sm font-semibold tracking-wide shadow-lg">
               <div className="flex items-center gap-2.5">
-                <Coffee className="h-4 w-4 text-white" />
+                <Coffee className="h-4 w-4" />
                 <span>{t.menuBtn}</span>
-                <ArrowRight className="h-4 w-4 text-white/80" />
+                <ArrowRight className="h-4 w-4 opacity-80" />
               </div>
             </ShimmerButton>
           </a>
@@ -203,22 +203,22 @@ export const HeroSection: React.FC = () => {
                   key={loc.id}
                   onClick={() => setSelectedLocationId(loc.id as any)}
                   style={{
-                    backgroundColor: isSelected ? "var(--theme-badge-bg)" : "var(--theme-surface-elevated)",
-                    borderColor: isSelected ? loc.theme.primaryColor : "transparent",
-                    color: isSelected ? "var(--theme-text)" : "var(--theme-muted)",
+                    backgroundColor: isSelected ? "var(--theme-badge-bg)" : "transparent",
+                    borderColor: isSelected ? "var(--theme-primary)" : "transparent",
+                    color: isSelected ? "var(--theme-primary)" : "var(--theme-text)",
                   }}
-                  className={`relative flex flex-col items-start rounded-xl p-2.5 text-left text-xs transition-all border ${
-                    isSelected ? "shadow-md scale-[1.02] font-bold" : "hover:opacity-100"
+                  className={`flex flex-col items-center justify-center rounded-xl border p-2.5 text-center transition-all ${
+                    isSelected ? "font-bold shadow-xs" : "opacity-75 hover:opacity-100"
                   }`}
                 >
-                  <div className="flex w-full items-center justify-between">
-                    <span className="text-xs">{loc.shortName}</span>
+                  <div className="flex items-center gap-1.5">
                     <span
                       style={{ backgroundColor: loc.theme.primaryColor }}
-                      className="h-2 w-2 rounded-full ring-2 ring-white/20"
+                      className="h-2 w-2 rounded-full"
                     />
+                    <span className="text-xs">{loc.shortName}</span>
                   </div>
-                  <span className="mt-0.5 text-[10px] opacity-80 truncate w-full">
+                  <span style={{ color: "var(--theme-muted)" }} className="text-[10px] truncate max-w-full">
                     {loc.theme.styleName.split("&")[0]}
                   </span>
                 </button>
@@ -297,7 +297,7 @@ export const HeroSection: React.FC = () => {
                 }}
                 className="flex h-10 w-10 items-center justify-center rounded-xl"
               >
-                <Sparkles className="h-5 w-5" />
+                <Palette className="h-5 w-5" />
               </div>
               <div>
                 <h4 className="font-semibold text-sm">{t.stat3}</h4>

@@ -20,11 +20,11 @@ export const ShimmerButton = React.forwardRef<
 >(
   (
     {
-      shimmerColor = "rgba(255, 255, 255, 0.4)",
+      shimmerColor = "rgba(255, 255, 255, 0.35)",
       shimmerSize = "0.08em",
       shimmerDuration = "3s",
       borderRadius = "14px",
-      background = "var(--theme-primary)",
+      background = "var(--theme-btn-bg, var(--theme-primary))",
       className,
       children,
       style,
@@ -43,7 +43,7 @@ export const ShimmerButton = React.forwardRef<
             "--cut": shimmerSize,
             "--bg": background,
             backgroundColor: background,
-            color: "#FFFFFF",
+            color: "var(--theme-btn-text, #FFFFFF)",
             boxShadow: "0 8px 24px var(--theme-glow)",
             ...style,
           } as CSSProperties

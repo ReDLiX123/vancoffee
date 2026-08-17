@@ -13,10 +13,58 @@ import {
   Navigation,
   Heart,
   ExternalLink,
-  Sparkles,
+  Compass,
   Coffee,
   Palette,
+  Wifi,
+  PawPrint,
+  Utensils,
+  Croissant,
+  Disc,
+  Zap,
+  Leaf,
+  CreditCard,
+  Sun,
+  Check,
 } from "lucide-react";
+
+export const getFeatureIcon = (feature: string) => {
+  const f = feature.toLowerCase();
+  if (f.includes("wi-fi") || f.includes("wifi") || f.includes("розетк")) {
+    return <Wifi className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("dog") || f.includes("собак") || f.includes("питомц") || f.includes("животн")) {
+    return <PawPrint className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("vegan") || f.includes("эко") || f.includes("растительн") || f.includes("сахар")) {
+    return <Leaf className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("завтрак") || f.includes("кухн") || f.includes("еда")) {
+    return <Utensils className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("выпечк") || f.includes("тарт") || f.includes("макарон") || f.includes("десерт")) {
+    return <Croissant className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("винил") || f.includes("музык")) {
+    return <Disc className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("to-go") || f.includes("быстр")) {
+    return <Zap className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("оплат") || f.includes("карт") || f.includes("безналич")) {
+    return <CreditCard className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("арт") || f.includes("экспозиц") || f.includes("коллаборац")) {
+    return <Palette className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("террас") || f.includes("окн") || f.includes("столик")) {
+    return <Sun className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  if (f.includes("фильтр") || f.includes("каппинг") || f.includes("кофе") || f.includes("зерн")) {
+    return <Coffee className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+  }
+  return <Check className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
+};
 
 export const LocationsSection: React.FC = () => {
   const { selectedLocationId, setSelectedLocationId, openTipsModal, openRouteModal, language } = useApp();
@@ -162,7 +210,7 @@ export const LocationsSection: React.FC = () => {
                 {/* Floating Landmark Tag on Bottom of Photo */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300 drop-shadow-md">
                   <div className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/65 px-3 py-1 backdrop-blur-md text-white">
-                    <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+                    <Compass className="h-3.5 w-3.5 text-amber-300" />
                     <span className="truncate">{activeLoc.landmark}</span>
                   </div>
                 </div>
@@ -330,7 +378,7 @@ export const LocationsSection: React.FC = () => {
                 <span style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider">
                   Особенности пространства
                 </span>
-                <div className="mt-3 flex flex-wrap gap-1.5">
+                <div className="mt-3 flex flex-wrap gap-2">
                   {activeLoc.features.map((feature, i) => (
                     <span
                       key={i}
@@ -338,9 +386,10 @@ export const LocationsSection: React.FC = () => {
                         backgroundColor: "var(--theme-surface-elevated)",
                         borderColor: "var(--theme-surface-border)",
                       }}
-                      className="rounded-lg border px-3 py-1 text-xs font-medium"
+                      className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium shadow-2xs"
                     >
-                      {feature}
+                      {getFeatureIcon(feature)}
+                      <span>{feature}</span>
                     </span>
                   ))}
                 </div>
@@ -388,8 +437,8 @@ export const LocationsSection: React.FC = () => {
                 <button
                   onClick={() => openTipsModal(activeLoc.id as any)}
                   style={{
-                    backgroundColor: "var(--theme-primary)",
-                    color: "#FFFFFF",
+                    backgroundColor: "var(--theme-btn-bg, var(--theme-primary))",
+                    color: "var(--theme-btn-text, #FFFFFF)",
                   }}
                   className="flex items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold transition-transform hover:scale-[1.02] shadow-md"
                 >
