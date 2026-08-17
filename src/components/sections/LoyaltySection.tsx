@@ -28,6 +28,15 @@ export const LoyaltySection: React.FC = () => {
   const yearlyCashback = Math.round(monthlySpend * 12 * (currentTier.cashback / 100));
   const freeCupsYear = Math.floor(yearlyCashback / averageCupPrice);
 
+  const presets = [10, 20, 30, 45, 60];
+
+  const getConsumptionStatus = (cups: number) => {
+    if (cups <= 12) return "Редкий гость (~1-2 чашки в неделю)";
+    if (cups <= 24) return "Стандартный ритм (~1 чашка в день)";
+    if (cups <= 39) return "Любитель кофе (~1-2 чашки в день)";
+    return "Кофейный гурман (2+ чашки каждый день)";
+  };
+
   const handleJoinClub = (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneInput || phoneInput.length < 10) return;
@@ -222,7 +231,7 @@ export const LoyaltySection: React.FC = () => {
           className="mt-12 rounded-3xl border p-6 sm:p-10 shadow-xl backdrop-blur-xl transition-all duration-500"
         >
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-center">
-            {/* Left: Slider */}
+            {/* Left: Slider & Dynamic presets */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center gap-2">
                 <Zap style={{ color: "var(--theme-primary)" }} className="h-5 w-5" />
@@ -234,11 +243,12 @@ export const LoyaltySection: React.FC = () => {
               <div>
                 <div className="flex justify-between items-baseline">
                   <span style={{ color: "var(--theme-muted)" }} className="text-xs sm:text-sm">{t.calcCups}</span>
-                  <span style={{ color: "var(--theme-primary)" }} className="font-serif text-2xl font-bold">
+                  <span style={{ color: "var(--theme-primary)" }} className="font-serif text-3xl font-bold">
                     {monthlyCups} <span style={{ color: "var(--theme-text)" }} className="text-sm font-normal">чашек/мес</span>
                   </span>
                 </div>
 
+                {/* Range Slider */}
                 <input
                   type="range"
                   min={5}
@@ -247,13 +257,38 @@ export const LoyaltySection: React.FC = () => {
                   value={monthlyCups}
                   onChange={(e) => setMonthlyCups(parseInt(e.target.value, 10))}
                   style={{ accentColor: "var(--theme-primary)" }}
-                  className="mt-4 w-full cursor-pointer h-2 rounded-lg"
+                  className="mt-4 w-full cursor-pointer h-2.5 rounded-lg"
                 />
 
-                <div style={{ color: "var(--theme-muted)" }} className="mt-2 flex justify-between text-[11px]">
-                  <span>5 чашек (редко)</span>
-                  <span>20 чашек (стандарт)</span>
-                  <span>60 чашек (кофеман)</span>
+                {/* Quick Presets Buttons */}
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span style={{ color: "var(--theme-muted)" }} className="text-[11px] font-semibold mr-1">
+                      Пресеты:
+                    </span>
+                    {presets.map((count) => {
+                      const isPresetActive = monthlyCups === count;
+                      return (
+                        <button
+                          key={count}
+                          type="button"
+                          onClick={() => setMonthlyCups(count)}
+                          style={{
+                            backgroundColor: isPresetActive ? "var(--theme-primary)" : "var(--theme-surface-elevated)",
+                            borderColor: isPresetActive ? "var(--theme-primary)" : "var(--theme-surface-border)",
+                            color: isPresetActive ? "#FFFFFF" : "var(--theme-text)",
+                          }}
+                          className="rounded-lg border px-2.5 py-1 text-xs font-semibold transition-all hover:scale-105"
+                        >
+                          {count} чашек
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <span style={{ color: "var(--theme-primary)" }} className="text-[11px] font-bold">
+                    {getConsumptionStatus(monthlyCups)}
+                  </span>
                 </div>
               </div>
 
