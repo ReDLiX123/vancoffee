@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { LOCATIONS, LocationItem } from "@/data/coffeeData";
+import React from "react";
+import { LOCATIONS } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { BorderBeam } from "@/components/ui/BorderBeam";
+import { getAssetPath } from "@/lib/utils";
 import {
   MapPin,
   Clock,
@@ -126,71 +126,86 @@ export const LocationsSection: React.FC = () => {
 
         {/* Detailed Showcase Grid */}
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12 items-stretch">
-          {/* Left: 3D Image & Visual presentation */}
+          {/* Left: 3D Photo Showcase Card with clean glassmorphic info panel */}
           <div className="lg:col-span-7 flex flex-col">
-            <TiltCard className="h-full min-h-[380px] sm:min-h-[480px] p-0 flex flex-col justify-end relative group shadow-2xl">
-              <img
-                src={activeLoc.image}
-                alt={activeLoc.name}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A09]/95 via-[#0C0A09]/60 to-transparent" />
+            <TiltCard className="h-full min-h-[520px] sm:min-h-[580px] p-0 flex flex-col justify-between relative group overflow-hidden shadow-2xl rounded-3xl border border-black/10 dark:border-white/10">
+              {/* Photo layer */}
+              <div className="absolute inset-0 z-0 overflow-hidden bg-stone-900">
+                <img
+                  key={activeLoc.id}
+                  src={getAssetPath(activeLoc.image)}
+                  alt={activeLoc.name}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* Multi-stage dark gradient scrim to ensure absolute text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30" />
+              </div>
 
-              {/* Status Badge & Style Pill */}
-              <div className="absolute top-6 left-6 right-6 flex items-center justify-between">
-                <div className="flex items-center gap-2 rounded-full border border-emerald-500/40 bg-black/60 px-3.5 py-1.5 backdrop-blur-md">
+              {/* Top Bar with Status and Theme Badges */}
+              <div className="relative z-10 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-2.5">
+                <div className="flex items-center gap-2 rounded-full border border-emerald-400/40 bg-black/70 px-3.5 py-1.5 backdrop-blur-md shadow-sm">
                   <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                   <span className="text-xs font-semibold text-emerald-300">{t.statusOpen}</span>
                 </div>
 
                 <div
                   style={{
-                    backgroundColor: "rgba(0,0,0,0.65)",
                     borderColor: activeLoc.theme.primaryColor,
-                    color: "#FFFFFF",
                   }}
-                  className="flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold backdrop-blur-md"
+                  className="flex items-center gap-2 rounded-full border bg-black/70 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md shadow-sm"
                 >
                   <span
                     style={{ backgroundColor: activeLoc.theme.primaryColor }}
-                    className="h-2 w-2 rounded-full"
+                    className="h-2 w-2 rounded-full ring-2 ring-white/30"
                   />
                   <span>{activeLoc.theme.styleName}</span>
                 </div>
               </div>
 
-              {/* Bottom overlay content */}
-              <div className="relative z-10 p-6 sm:p-8 text-white">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F3CA74]">
-                  <Sparkles className="h-4 w-4" />
-                  <span>{activeLoc.landmark}</span>
-                </div>
-                <h3 className="mt-2 font-serif text-2xl sm:text-4xl font-bold text-white">
-                  {activeLoc.name}
-                </h3>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-[#E5DCD3]">
-                  {activeLoc.atmosphere}
-                </p>
-
-                {/* Interior Palette preview */}
-                <div className="mt-4 flex items-center gap-2 text-xs text-[#E5DCD3]">
-                  <span className="font-semibold text-xs text-[#F3CA74]">{t.paletteLabel}</span>
-                  <span className="text-xs opacity-90">{activeLoc.theme.paletteDescription}</span>
-                </div>
-
-                {/* Popular Drink */}
-                <div className="mt-4 flex items-center gap-3 rounded-xl border border-white/10 bg-black/60 p-3 backdrop-blur-md">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[#F3CA74]">
-                    <Coffee className="h-4 w-4" />
+              {/* Bottom Content Card - Clean Glass Overlay with High Contrast */}
+              <div className="relative z-10 p-5 sm:p-6">
+                <div className="rounded-2xl border border-white/15 bg-black/75 p-5 sm:p-6 backdrop-blur-xl shadow-2xl text-white space-y-3">
+                  {/* Landmark Header */}
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
+                    <Sparkles className="h-4 w-4 shrink-0 text-amber-400" />
+                    <span className="truncate">{activeLoc.landmark}</span>
                   </div>
-                  <div>
-                    <div className="text-[11px] uppercase tracking-wider text-[#A89B8D]">{t.popular}</div>
-                    <div className="text-xs font-bold text-white">{activeLoc.popularDrink}</div>
+
+                  {/* Title */}
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
+                    {activeLoc.name}
+                  </h3>
+
+                  {/* Atmosphere Description */}
+                  <p className="text-xs sm:text-sm leading-relaxed text-stone-200">
+                    {activeLoc.atmosphere}
+                  </p>
+
+                  {/* Interior Palette preview */}
+                  <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-stone-300">
+                    <span className="font-bold text-amber-300 text-xs">{t.paletteLabel}</span>
+                    <span className="text-xs text-stone-200">{activeLoc.theme.paletteDescription}</span>
+                  </div>
+
+                  {/* Popular Drink Pill */}
+                  <div className="mt-2 flex items-center gap-3 rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-md">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/15 text-amber-300">
+                      <Coffee className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-[10px] uppercase tracking-wider text-stone-300">{t.popular}</div>
+                      <div className="text-xs font-bold text-white truncate">{activeLoc.popularDrink}</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <BorderBeam size={250} duration={14} colorFrom={activeLoc.theme.primaryColor} colorTo={activeLoc.theme.accentColor} />
+              <BorderBeam
+                size={280}
+                duration={12}
+                colorFrom={activeLoc.theme.primaryColor}
+                colorTo={activeLoc.theme.accentColor}
+              />
             </TiltCard>
           </div>
 
