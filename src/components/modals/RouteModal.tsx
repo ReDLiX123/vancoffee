@@ -7,15 +7,51 @@ import { useApp } from "@/context/AppContext";
 import { LOCATIONS } from "@/data/coffeeData";
 
 export const RouteModal: React.FC = () => {
-  const { isRouteModalOpen, closeRouteModal, selectedLocationId, setSelectedLocationId } = useApp();
+  const { isRouteModalOpen, closeRouteModal, selectedLocationId, setSelectedLocationId, language } = useApp();
   const [copied, setCopied] = useState(false);
 
   if (!isRouteModalOpen) return null;
 
   const activeLoc = LOCATIONS.find((l) => l.id === selectedLocationId) || LOCATIONS[0];
+  const activeLocName = activeLoc.nameI18n?.[language] || activeLoc.name;
+  const activeLocAddress = activeLoc.addressI18n?.[language] || activeLoc.address;
+  const activeLocLandmark = activeLoc.landmarkI18n?.[language] || activeLoc.landmark;
+
+  const t = {
+    ru: {
+      tag: "Построить маршрут",
+      copyBtn: "Копировать",
+      copiedBtn: "Скопировано",
+      weekdays: "Будни:",
+      weekends: "Выходные:",
+      open2gis: "Открыть в 2ГИС",
+      openYandex: "Яндекс.Карты",
+      closeBtn: "Закрыть окно",
+    },
+    en: {
+      tag: "Get Directions",
+      copyBtn: "Copy",
+      copiedBtn: "Copied",
+      weekdays: "Weekdays:",
+      weekends: "Weekends:",
+      open2gis: "Open in 2GIS",
+      openYandex: "Yandex Maps",
+      closeBtn: "Close Window",
+    },
+    zh: {
+      tag: "路线规划导航",
+      copyBtn: "复制",
+      copiedBtn: "已复制",
+      weekdays: "工作日：",
+      weekends: "周末：",
+      open2gis: "在 2GIS 中打开",
+      openYandex: "Yandex 地图",
+      closeBtn: "关闭窗口",
+    },
+  }[language];
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(activeLoc.address);
+    navigator.clipboard.writeText(activeLocAddress);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -65,18 +101,19 @@ export const RouteModal: React.FC = () => {
                 <Navigation className="h-5 w-5" />
               </div>
               <span style={{ color: "var(--theme-primary)" }} className="text-xs font-bold tracking-wider uppercase">
-                Построить маршрут
+                {t.tag}
               </span>
             </div>
 
             <h3 className="mt-3 font-serif text-2xl sm:text-3xl font-bold">
-              {activeLoc.name}
+              {activeLocName}
             </h3>
 
             {/* Location Switcher */}
             <div className="mt-4 flex gap-1.5 overflow-x-auto pb-1">
               {LOCATIONS.map((loc) => {
                 const isSelected = loc.id === selectedLocationId;
+                const locShort = loc.shortNameI18n?.[language] || loc.shortName;
                 return (
                   <button
                     key={loc.id}
@@ -88,7 +125,7 @@ export const RouteModal: React.FC = () => {
                     }}
                     className="whitespace-nowrap rounded-xl border px-3 py-1.5 text-xs font-bold transition-all"
                   >
-                    {loc.shortName}
+                    {locShort}
                   </button>
                 );
               })}
@@ -106,8 +143,8 @@ export const RouteModal: React.FC = () => {
                 <div className="flex items-start gap-2.5">
                   <MapPin style={{ color: "var(--theme-primary)" }} className="mt-0.5 h-4 w-4 shrink-0" />
                   <div>
-                    <p className="font-bold">{activeLoc.address}</p>
-                    <p style={{ color: "var(--theme-muted)" }} className="text-xs">{activeLoc.landmark}</p>
+                    <p className="font-bold">{activeLocAddress}</p>
+                    <p style={{ color: "var(--theme-muted)" }} className="text-xs">{activeLocLandmark}</p>
                   </div>
                 </div>
                 <button
@@ -117,17 +154,17 @@ export const RouteModal: React.FC = () => {
                     borderColor: "var(--theme-surface-border)",
                   }}
                   className="flex shrink-0 items-center gap-1 rounded-lg border px-2.5 py-1 text-xs transition-colors hover:shadow-xs"
-                  title="Скопировать адрес"
+                  title={t.copyBtn}
                 >
                   {copied ? (
                     <>
                       <Check className="h-3 w-3 text-emerald-500" />
-                      <span className="text-emerald-500 font-bold">Скопировано</span>
+                      <span className="text-emerald-500 font-bold">{t.copiedBtn}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="h-3 w-3" />
-                      <span>Копировать</span>
+                      <span>{t.copyBtn}</span>
                     </>
                   )}
                 </button>
@@ -136,7 +173,7 @@ export const RouteModal: React.FC = () => {
               <div className="flex items-center gap-2.5 border-t border-black/5 dark:border-white/5 pt-3 text-xs">
                 <Clock style={{ color: "var(--theme-primary)" }} className="h-4 w-4" />
                 <span>
-                  Будни: <strong>{activeLoc.hours.weekdays}</strong> • Выходные:{" "}
+                  {t.weekdays} <strong>{activeLoc.hours.weekdays}</strong> • {t.weekends}{" "}
                   <strong>{activeLoc.hours.weekends}</strong>
                 </span>
               </div>
@@ -157,7 +194,7 @@ export const RouteModal: React.FC = () => {
                 rel="noreferrer"
                 className="flex items-center justify-center gap-2 rounded-xl border border-[#2EB67D]/40 bg-[#2EB67D]/10 py-3 text-xs font-bold text-[#2EB67D] transition-all hover:bg-[#2EB67D]/20 hover:scale-[1.02]"
               >
-                <span>Открыть в 2ГИС</span>
+                <span>{t.open2gis}</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
 
@@ -167,7 +204,7 @@ export const RouteModal: React.FC = () => {
                 rel="noreferrer"
                 className="flex items-center justify-center gap-2 rounded-xl border border-[#FC3F1D]/40 bg-[#FC3F1D]/10 py-3 text-xs font-bold text-[#FC3F1D] transition-all hover:bg-[#FC3F1D]/20 hover:scale-[1.02]"
               >
-                <span>Яндекс.Карты</span>
+                <span>{t.openYandex}</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>
@@ -178,7 +215,7 @@ export const RouteModal: React.FC = () => {
                 style={{ color: "var(--theme-muted)" }}
                 className="text-xs hover:underline"
               >
-                Закрыть окно
+                {t.closeBtn}
               </button>
             </div>
           </div>

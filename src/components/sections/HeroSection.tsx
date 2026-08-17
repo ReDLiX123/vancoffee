@@ -14,12 +14,15 @@ export const HeroSection: React.FC = () => {
   const titles = {
     ru: {
       tag: "Сеть кофеен в Иркутске",
+      themePrefix: "Тема:",
       titleMain: "Искусство в каждой чашке",
       titleSub: "Спешелти кофе, вдохновленный живописью",
       desc: "Четыре особенных пространства в сердце Иркутска. Чистый вкус свежей обжарки, авторские рафы, ремесленная выпечка и индивидуальный характер каждой локации.",
       menuBtn: "Исследовать меню",
       mapBtn: "Стили & Локации",
       tipsBtn: "Чаевые бариста",
+      selectPrompt: "Выберите точку и стиль атмосферы:",
+      cityCount: "Иркутск (4 локации)",
       stat1: "100% Арабика",
       stat1Sub: "Микролоты свежей обжарки",
       stat2: "4 Локации",
@@ -29,27 +32,33 @@ export const HeroSection: React.FC = () => {
     },
     en: {
       tag: "Specialty Coffee Chain in Irkutsk",
+      themePrefix: "Theme:",
       titleMain: "Art in Every Single Cup",
       titleSub: "Specialty Coffee Inspired by Painting",
       desc: "Four distinctive coffee spaces in the heart of Irkutsk. Fresh roast clarity, signature botanical rafs, artisanal bakeries, and unique interior aesthetics.",
       menuBtn: "Explore Menu",
       mapBtn: "Spaces & Styles",
-      tipsBtn: "Tip the Barista",
+      tipsBtn: "Tip Barista",
+      selectPrompt: "Select location & aesthetic style:",
+      cityCount: "Irkutsk (4 spaces)",
       stat1: "100% Arabica",
       stat1Sub: "Single-origin micro-lots",
-      stat2: "4 Locations",
+      stat2: "4 Spaces",
       stat2Sub: "4 distinct interior aesthetics",
       stat3: "Signature Menu",
       stat3Sub: "Crafted with painter's soul",
     },
     zh: {
       tag: "伊尔库茨克精品艺术咖啡连锁",
+      themePrefix: "主题：",
       titleMain: "每一杯皆是艺术",
       titleSub: "以绘画为灵感的精品咖啡空间",
       desc: "坐落于伊尔库茨克核心区域的四家特色门店。新鲜自烘豆单、招牌特调咖啡、手作烘焙与各具特色的空间美学。",
       menuBtn: "浏览精选菜单",
       mapBtn: "门店空间与风格",
       tipsBtn: "打赏咖啡师",
+      selectPrompt: "选择门店与专属空间美学：",
+      cityCount: "伊尔库茨克（4 家门店）",
       stat1: "100% 精品豆",
       stat1Sub: "原产地微批次新鲜现烘",
       stat2: "4 家门店",
@@ -60,6 +69,7 @@ export const HeroSection: React.FC = () => {
   };
 
   const t = titles[language];
+  const currentStyleName = selectedLocation.theme.styleNameI18n?.[language] || selectedLocation.theme.styleName;
 
   return (
     <section className="relative min-h-[92vh] sm:min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16 transition-colors duration-500">
@@ -83,7 +93,7 @@ export const HeroSection: React.FC = () => {
             borderColor: "var(--theme-surface-border)",
             color: "var(--theme-text)",
           }}
-          className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-md shadow-sm"
+          className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 shadow-sm backdrop-blur-md transition-colors duration-500"
         >
           <span
             style={{ backgroundColor: "var(--theme-primary)" }}
@@ -97,7 +107,7 @@ export const HeroSection: React.FC = () => {
             style={{ color: "var(--theme-primary)" }}
             className="text-xs font-semibold"
           >
-            Тема: {selectedLocation.theme.styleName}
+            {t.themePrefix} {currentStyleName}
           </span>
         </motion.div>
 
@@ -191,13 +201,15 @@ export const HeroSection: React.FC = () => {
           >
             <span className="flex items-center gap-1.5">
               <Palette className="h-3.5 w-3.5 text-[var(--theme-primary)]" />
-              Выберите точку и стиль атмосферы:
+              {t.selectPrompt}
             </span>
-            <span className="text-[var(--theme-primary)] font-semibold">Иркутск (4 локации)</span>
+            <span className="text-[var(--theme-primary)] font-semibold">{t.cityCount}</span>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {LOCATIONS.map((loc) => {
               const isSelected = loc.id === selectedLocationId;
+              const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+              const locStyle = loc.theme.styleNameI18n?.[language] || loc.theme.styleName;
               return (
                 <button
                   key={loc.id}
@@ -216,10 +228,10 @@ export const HeroSection: React.FC = () => {
                       style={{ backgroundColor: loc.theme.primaryColor }}
                       className="h-2 w-2 rounded-full"
                     />
-                    <span className="text-xs">{loc.shortName}</span>
+                    <span className="text-xs">{locShort}</span>
                   </div>
                   <span style={{ color: "var(--theme-muted)" }} className="text-[10px] truncate max-w-full">
-                    {loc.theme.styleName.split("&")[0]}
+                    {locStyle.split("&")[0]}
                   </span>
                 </button>
               );

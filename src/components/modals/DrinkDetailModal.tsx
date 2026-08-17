@@ -2,8 +2,8 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Flame, Check, Info, Leaf, ShieldCheck, Award, ChefHat } from "lucide-react";
-import { MenuItem, LOCATIONS } from "@/data/coffeeData";
+import { X, Flame, Check, Leaf, ShieldCheck, Award, ChefHat } from "lucide-react";
+import { MenuItem, LOCATIONS, getLocalizedTasteNote } from "@/data/coffeeData";
 import { Language } from "@/context/AppContext";
 
 interface DrinkDetailModalProps {
@@ -17,9 +17,68 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
   item,
   onClose,
   language,
-  onViewInNutrition,
 }) => {
   if (!item) return null;
+
+  const t = {
+    ru: {
+      priceCurrency: "₽",
+      tagVegan: "Vegan / Растительное",
+      tagSugarFree: "Без сахара",
+      tagSpecialty: "Спешелти 100%",
+      tagChefPick: "Выбор шефа",
+      tagNoAllergens: "Без аллергенов",
+      tasteNotesLabel: "Дескрипторы вкуса",
+      energyTitle: "Энергетическая ценность",
+      perServing: "на порцию",
+      unitWeight: "г/мл",
+      unitG: "г",
+      unitCal: "ккал",
+      protLabel: "Белки",
+      fatLabel: "Жиры",
+      carbsLabel: "Углеводы",
+      whereToOrder: "Где заказать в Иркутске:",
+      closeBtn: "Закрыть",
+    },
+    en: {
+      priceCurrency: "RUB",
+      tagVegan: "Plant-based / Vegan",
+      tagSugarFree: "Sugar-Free",
+      tagSpecialty: "100% Specialty Arabica",
+      tagChefPick: "Chef's Pick",
+      tagNoAllergens: "Allergen Free",
+      tasteNotesLabel: "Flavor Descriptors",
+      energyTitle: "Nutritional Value",
+      perServing: "per serving",
+      unitWeight: "g/ml",
+      unitG: "g",
+      unitCal: "kcal",
+      protLabel: "Protein",
+      fatLabel: "Fat",
+      carbsLabel: "Carbs",
+      whereToOrder: "Available in Irkutsk spaces:",
+      closeBtn: "Close",
+    },
+    zh: {
+      priceCurrency: "₽",
+      tagVegan: "纯素 / 植物基",
+      tagSugarFree: "无添加糖",
+      tagSpecialty: "100% 精品阿拉比卡",
+      tagChefPick: "主厨推荐",
+      tagNoAllergens: "低敏配方",
+      tasteNotesLabel: "风味特征与风味轮",
+      energyTitle: "能量与宏观营养指标",
+      perServing: "每份含量",
+      unitWeight: "克/毫升",
+      unitG: "克",
+      unitCal: "千卡",
+      protLabel: "蛋白质",
+      fatLabel: "脂肪",
+      carbsLabel: "碳水化合物",
+      whereToOrder: "伊尔库茨克供应门店：",
+      closeBtn: "关闭",
+    },
+  }[language];
 
   return (
     <AnimatePresence>
@@ -77,7 +136,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                 {item.name[language]}
               </h3>
               <div style={{ color: "var(--theme-primary)" }} className="text-xl font-bold">
-                {item.price} ₽
+                {item.price} {t.priceCurrency}
               </div>
             </div>
 
@@ -104,27 +163,27 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                       {tg === "vegan" ? (
                         <>
                           <Leaf className="h-3 w-3 text-emerald-500" />
-                          <span>Vegan / Растительное</span>
+                          <span>{t.tagVegan}</span>
                         </>
                       ) : tg === "sugar_free" ? (
                         <>
                           <ShieldCheck className="h-3 w-3 text-sky-500" />
-                          <span>Без сахара</span>
+                          <span>{t.tagSugarFree}</span>
                         </>
                       ) : tg === "specialty" ? (
                         <>
                           <Award className="h-3 w-3 text-amber-500" />
-                          <span>Спешелти 100%</span>
+                          <span>{t.tagSpecialty}</span>
                         </>
                       ) : tg === "chef_pick" ? (
                         <>
                           <ChefHat className="h-3 w-3 text-rose-500" />
-                          <span>Выбор шефа</span>
+                          <span>{t.tagChefPick}</span>
                         </>
                       ) : (
                         <>
                           <ShieldCheck className="h-3 w-3 text-indigo-500" />
-                          <span>Без аллергенов</span>
+                          <span>{t.tagNoAllergens}</span>
                         </>
                       )}
                     </span>
@@ -138,7 +197,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                     style={{ color: "var(--theme-primary)" }}
                     className="text-xs font-bold uppercase tracking-wider"
                   >
-                    Дескрипторы вкуса
+                    {t.tasteNotesLabel}
                   </span>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {item.tasteNotes.map((note, idx) => (
@@ -150,7 +209,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                         }}
                         className="rounded-lg px-2.5 py-1 text-xs font-medium"
                       >
-                        {note}
+                        {getLocalizedTasteNote(note, language)}
                       </span>
                     ))}
                   </div>
@@ -169,9 +228,9 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider">
                   <Flame style={{ color: "var(--theme-primary)" }} className="h-4 w-4" />
-                  Энергетическая ценность
+                  {t.energyTitle}
                 </span>
-                <span style={{ color: "var(--theme-muted)" }} className="text-xs">на порцию ({item.nutrition.weightG} г/мл)</span>
+                <span style={{ color: "var(--theme-muted)" }} className="text-xs">{t.perServing} ({item.nutrition.weightG} {t.unitWeight})</span>
               </div>
 
               <div className="mt-3 grid grid-cols-4 gap-2 text-center">
@@ -180,28 +239,28 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                   className="rounded-xl p-2.5 shadow-xs border border-black/5 dark:border-white/5"
                 >
                   <div style={{ color: "var(--theme-primary)" }} className="text-base font-bold">{item.nutrition.calories}</div>
-                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">ккал</div>
+                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{t.unitCal}</div>
                 </div>
                 <div
                   style={{ backgroundColor: "var(--theme-surface)" }}
                   className="rounded-xl p-2.5 shadow-xs border border-black/5 dark:border-white/5"
                 >
-                  <div className="text-base font-bold">{item.nutrition.protein} г</div>
-                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">Белки</div>
+                  <div className="text-base font-bold">{item.nutrition.protein} {t.unitG}</div>
+                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{t.protLabel}</div>
                 </div>
                 <div
                   style={{ backgroundColor: "var(--theme-surface)" }}
                   className="rounded-xl p-2.5 shadow-xs border border-black/5 dark:border-white/5"
                 >
-                  <div className="text-base font-bold">{item.nutrition.fat} г</div>
-                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">Жиры</div>
+                  <div className="text-base font-bold">{item.nutrition.fat} {t.unitG}</div>
+                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{t.fatLabel}</div>
                 </div>
                 <div
                   style={{ backgroundColor: "var(--theme-surface)" }}
                   className="rounded-xl p-2.5 shadow-xs border border-black/5 dark:border-white/5"
                 >
-                  <div className="text-base font-bold">{item.nutrition.carbs} г</div>
-                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">Углеводы</div>
+                  <div className="text-base font-bold">{item.nutrition.carbs} {t.unitG}</div>
+                  <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{t.carbsLabel}</div>
                 </div>
               </div>
             </div>
@@ -209,11 +268,12 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
             {/* Available in locations */}
             <div className="mt-5">
               <span style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                Где заказать в Иркутске:
+                {t.whereToOrder}
               </span>
               <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
                 {LOCATIONS.map((loc) => {
                   const isAvailable = item.availableLocations.includes(loc.id as any);
+                  const locShort = loc.shortNameI18n?.[language] || loc.shortName;
                   return (
                     <div
                       key={loc.id}
@@ -227,7 +287,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                       }`}
                     >
                       <Check className={`h-3.5 w-3.5 ${isAvailable ? "text-[var(--theme-primary)]" : "opacity-0"}`} />
-                      <span className="truncate">{loc.shortName}</span>
+                      <span className="truncate">{locShort}</span>
                     </div>
                   );
                 })}
@@ -244,7 +304,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
                 }}
                 className="rounded-xl px-5 py-2 text-xs font-bold hover:scale-105 shadow-md transition-transform"
               >
-                Закрыть
+                {t.closeBtn}
               </button>
             </div>
           </div>

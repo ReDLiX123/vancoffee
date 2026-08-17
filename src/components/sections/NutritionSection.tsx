@@ -31,10 +31,10 @@ export const NutritionSection: React.FC = () => {
   ];
 
   const quickFilters = [
-    { id: "low_cal", label: "До 150 ккал", icon: Flame, check: (i: MenuItem) => i.nutrition.calories <= 150 },
-    { id: "high_protein", label: "Высокий белок (>15г)", icon: Zap, check: (i: MenuItem) => i.nutrition.protein >= 15 },
-    { id: "sugar_free", label: "Без сахара", icon: ShieldCheck, check: (i: MenuItem) => i.tags.includes("sugar_free") },
-    { id: "vegan", label: "Vegan", icon: Leaf, check: (i: MenuItem) => i.tags.includes("vegan") },
+    { id: "low_cal", label: { ru: "До 150 ккал", en: "Under 150 kcal", zh: "150 大卡以下" }, icon: Flame, check: (i: MenuItem) => i.nutrition.calories <= 150 },
+    { id: "high_protein", label: { ru: "Высокий белок (>15г)", en: "High Protein (>15g)", zh: "高蛋白质 (>15g)" }, icon: Zap, check: (i: MenuItem) => i.nutrition.protein >= 15 },
+    { id: "sugar_free", label: { ru: "Без сахара", en: "Sugar-Free", zh: "无添加糖" }, icon: ShieldCheck, check: (i: MenuItem) => i.tags.includes("sugar_free") },
+    { id: "vegan", label: { ru: "Vegan", en: "Vegan", zh: "植物基" }, icon: Leaf, check: (i: MenuItem) => i.tags.includes("vegan") },
   ];
 
   const [activeQuickFilter, setActiveQuickFilter] = useState<string | null>(null);
@@ -51,7 +51,9 @@ export const NutritionSection: React.FC = () => {
         const matchesName =
           item.name.ru.toLowerCase().includes(q) ||
           item.name.en.toLowerCase().includes(q) ||
-          item.description.ru.toLowerCase().includes(q);
+          item.name.zh.toLowerCase().includes(q) ||
+          item.description.ru.toLowerCase().includes(q) ||
+          item.description.en.toLowerCase().includes(q);
         if (!matchesName) return false;
       }
       // Quick filter
@@ -94,25 +96,47 @@ export const NutritionSection: React.FC = () => {
       colCarbs: "Углеводы",
       colTags: "Особенности",
       noResults: "Позиции не найдены. Попробуйте изменить параметры поиска.",
+      unitWeight: "г/мл",
+      unitG: "г",
+      unitCal: "ккал",
+      tagVegan: "Vegan",
+      tagSugarFree: "Без сахара",
+      tagSpecialty: "Спешелти",
+      tagChefPick: "Шеф-выбор",
+      macroProt: "Белки",
+      macroFat: "Жиры",
+      macroCarbs: "Углев.",
+      quickFilterLabel: "Быстрый выбор:",
     },
     en: {
       tag: "Transparency & Nutrition",
       title: "Nutritional Values & Macro Breakdown",
-      desc: "Interactive nutrition guide with filtering and search.",
-      searchPlaceholder: "Search item (e.g., 'Raf', 'Matcha', 'Croissant')...",
+      desc: "Interactive nutrition guide with filtering and search across all menu items.",
+      searchPlaceholder: "Search by item (e.g., 'Raf', 'Matcha', 'Croissant')...",
       colName: "Item",
-      colVolume: "Size",
+      colVolume: "Size / Weight",
       colCal: "Calories",
       colProt: "Protein",
       colFat: "Fat",
       colCarbs: "Carbs",
       colTags: "Features",
       noResults: "No items found matching your filter.",
+      unitWeight: "g/ml",
+      unitG: "g",
+      unitCal: "kcal",
+      tagVegan: "Vegan",
+      tagSugarFree: "Sugar-Free",
+      tagSpecialty: "Specialty",
+      tagChefPick: "Chef's Pick",
+      macroProt: "Protein",
+      macroFat: "Fat",
+      macroCarbs: "Carbs",
+      quickFilterLabel: "Quick filters:",
     },
     zh: {
       tag: "营养与热量透明公开",
       title: "能量与宏观营养素表 (КБЖУ)",
-      desc: "便捷的营养成分查询与健康筛选工具。",
+      desc: "便捷的营养成分查询与健康筛选工具，轻松掌握每份单品的热量与营养。",
       searchPlaceholder: "搜索单品（例如：拉夫、抹茶、可颂）...",
       colName: "出品名称",
       colVolume: "分量",
@@ -122,13 +146,23 @@ export const NutritionSection: React.FC = () => {
       colCarbs: "碳水",
       colTags: "特色标签",
       noResults: "未找到符合条件的单品，请尝试其他关键词。",
+      unitWeight: "克/毫升",
+      unitG: "克",
+      unitCal: "千卡",
+      tagVegan: "植物基",
+      tagSugarFree: "无添加糖",
+      tagSpecialty: "精品豆",
+      tagChefPick: "主厨推荐",
+      macroProt: "蛋白质",
+      macroFat: "脂肪",
+      macroCarbs: "碳水",
+      quickFilterLabel: "快捷筛选:",
     },
   }[language];
 
   return (
     <section id="nutrition" className="relative py-24 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
           <div
             style={{
@@ -149,54 +183,55 @@ export const NutritionSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Search & Filter Bar */}
         <div
           style={{
             backgroundColor: "var(--theme-surface)",
             borderColor: "var(--theme-surface-border)",
           }}
-          className="mt-10 flex flex-col gap-4 rounded-2xl border p-4 sm:p-6 shadow-md backdrop-blur-xl transition-all duration-500"
+          className="mt-12 rounded-3xl border p-4 sm:p-6 shadow-lg backdrop-blur-xl transition-all duration-500"
         >
-          {/* Search Input */}
-          <div className="relative">
-            <Search style={{ color: "var(--theme-muted)" }} className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t.searchPlaceholder}
-              style={{
-                backgroundColor: "var(--theme-surface-elevated)",
-                borderColor: "var(--theme-surface-border)",
-                color: "var(--theme-text)",
-              }}
-              className="w-full rounded-xl border pl-11 pr-4 py-3 text-sm outline-none transition-colors focus:border-[var(--theme-primary)]"
-            />
-          </div>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="relative flex-1 max-w-md">
+              <Search style={{ color: "var(--theme-muted)" }} className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder={t.searchPlaceholder}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  backgroundColor: "var(--theme-surface-elevated)",
+                  borderColor: "var(--theme-surface-border)",
+                  color: "var(--theme-text)",
+                }}
+                className="w-full rounded-xl border pl-10 pr-4 py-2.5 text-xs outline-none transition-colors focus:border-[var(--theme-primary)]"
+              />
+            </div>
 
-          {/* Categories & Quick Filters */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-            {/* Category tabs */}
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
               {categories.map((cat) => {
-                const isActive = cat.id === selectedCategory;
+                const isCatActive = selectedCategory === cat.id;
                 return (
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
                     style={{
-                      backgroundColor: isActive ? "var(--theme-primary)" : "var(--theme-surface-elevated)",
-                      color: isActive ? "#FFFFFF" : "var(--theme-muted)",
+                      backgroundColor: isCatActive ? "var(--theme-primary)" : "var(--theme-surface-elevated)",
+                      color: isCatActive ? "#FFFFFF" : "var(--theme-muted)",
+                      borderColor: isCatActive ? "var(--theme-primary)" : "var(--theme-surface-border)",
                     }}
-                    className="rounded-lg px-3 py-1.5 text-xs font-medium transition-all"
+                    className="whitespace-nowrap rounded-xl border px-3 py-2 text-xs font-semibold transition-all"
                   >
                     {cat.label[language]}
                   </button>
                 );
               })}
             </div>
+          </div>
 
-            {/* Quick tag chips */}
+          <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex flex-wrap items-center gap-2">
+            <span style={{ color: "var(--theme-muted)" }} className="text-xs font-semibold mr-1">
+              {t.quickFilterLabel}
+            </span>
             <div className="flex flex-wrap gap-1.5">
               {quickFilters.map((qf) => {
                 const isChipActive = activeQuickFilter === qf.id;
@@ -213,7 +248,7 @@ export const NutritionSection: React.FC = () => {
                     className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs transition-all font-medium"
                   >
                     <QfIcon className="h-3 w-3" />
-                    <span>{qf.label}</span>
+                    <span>{qf.label[language]}</span>
                   </button>
                 );
               })}
@@ -221,7 +256,6 @@ export const NutritionSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Desktop Table View */}
         <div
           style={{
             backgroundColor: "var(--theme-surface)",
@@ -301,13 +335,13 @@ export const NutritionSection: React.FC = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.weightG} г/мл</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.weightG} {t.unitWeight}</td>
                     <td className="px-4 py-4 font-mono font-bold text-[var(--theme-primary)]">
                       {item.nutrition.calories}
                     </td>
-                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.protein} г</td>
-                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.fat} г</td>
-                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.carbs} г</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.protein} {t.unitG}</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.fat} {t.unitG}</td>
+                    <td className="px-4 py-4 font-mono font-medium">{item.nutrition.carbs} {t.unitG}</td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1.5">
                         {item.tags.map((tg, i) => (
@@ -322,22 +356,22 @@ export const NutritionSection: React.FC = () => {
                             {tg === "vegan" ? (
                               <>
                                 <Leaf className="h-2.5 w-2.5 text-emerald-500" />
-                                <span>Vegan</span>
+                                <span>{t.tagVegan}</span>
                               </>
                             ) : tg === "sugar_free" ? (
                               <>
                                 <ShieldCheck className="h-2.5 w-2.5 text-sky-500" />
-                                <span>Без сахара</span>
+                                <span>{t.tagSugarFree}</span>
                               </>
                             ) : tg === "specialty" ? (
                               <>
                                 <Award className="h-2.5 w-2.5 text-amber-500" />
-                                <span>Спешелти</span>
+                                <span>{t.tagSpecialty}</span>
                               </>
                             ) : (
                               <>
                                 <ChefHat className="h-2.5 w-2.5 text-rose-500" />
-                                <span>Шеф-выбор</span>
+                                <span>{t.tagChefPick}</span>
                               </>
                             )}
                           </span>
@@ -357,7 +391,6 @@ export const NutritionSection: React.FC = () => {
           </table>
         </div>
 
-        {/* Mobile Cards View */}
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
           {filteredAndSortedItems.length > 0 ? (
             filteredAndSortedItems.map((item) => (
@@ -392,19 +425,19 @@ export const NutritionSection: React.FC = () => {
                 >
                   <div>
                     <div style={{ color: "var(--theme-primary)" }} className="font-bold">{item.nutrition.calories}</div>
-                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">ккал</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">{t.unitCal}</div>
                   </div>
                   <div>
-                    <div className="font-bold">{item.nutrition.protein}г</div>
-                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">Белки</div>
+                    <div className="font-bold">{item.nutrition.protein}{t.unitG}</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">{t.macroProt}</div>
                   </div>
                   <div>
-                    <div className="font-bold">{item.nutrition.fat}г</div>
-                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">Жиры</div>
+                    <div className="font-bold">{item.nutrition.fat}{t.unitG}</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">{t.macroFat}</div>
                   </div>
                   <div>
-                    <div className="font-bold">{item.nutrition.carbs}г</div>
-                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">Углев.</div>
+                    <div className="font-bold">{item.nutrition.carbs}{t.unitG}</div>
+                    <div style={{ color: "var(--theme-muted)" }} className="text-[9px]">{t.macroCarbs}</div>
                   </div>
                 </div>
 
@@ -422,22 +455,22 @@ export const NutritionSection: React.FC = () => {
                         {tg === "vegan" ? (
                           <>
                             <Leaf className="h-2 w-2 text-emerald-500" />
-                            <span>Vegan</span>
+                            <span>{t.tagVegan}</span>
                           </>
                         ) : tg === "sugar_free" ? (
                           <>
                             <ShieldCheck className="h-2 w-2 text-sky-500" />
-                            <span>Без сахара</span>
+                            <span>{t.tagSugarFree}</span>
                           </>
                         ) : tg === "specialty" ? (
                           <>
                             <Award className="h-2 w-2 text-amber-500" />
-                            <span>Спешелти</span>
+                            <span>{t.tagSpecialty}</span>
                           </>
                         ) : (
                           <>
                             <ChefHat className="h-2 w-2 text-rose-500" />
-                            <span>Шеф-выбор</span>
+                            <span>{t.tagChefPick}</span>
                           </>
                         )}
                       </span>

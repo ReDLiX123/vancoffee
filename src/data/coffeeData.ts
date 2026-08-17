@@ -1,8 +1,17 @@
+export interface LocalizedString {
+  ru: string;
+  en: string;
+  zh: string;
+}
+
 export interface LocationThemeInfo {
   themeId: "kievskaya" | "silver" | "noviy" | "madyar";
   styleName: string;
+  styleNameI18n?: LocalizedString;
   subTitle: string;
+  subTitleI18n?: LocalizedString;
   paletteDescription: string;
+  paletteDescriptionI18n?: LocalizedString;
   primaryColor: string;
   accentColor: string;
   accentColor2?: string;
@@ -14,10 +23,15 @@ export interface LocationThemeInfo {
 export interface LocationItem {
   id: "kievskaya" | "silver" | "noviy" | "madyar";
   name: string;
+  nameI18n?: LocalizedString;
   shortName: string;
+  shortNameI18n?: LocalizedString;
   mall?: string;
+  mallI18n?: LocalizedString;
   address: string;
+  addressI18n?: LocalizedString;
   landmark: string;
+  landmarkI18n?: LocalizedString;
   coordinates: [number, number]; // [lat, lng]
   hours: {
     weekdays: string;
@@ -26,7 +40,13 @@ export interface LocationItem {
   phone: string;
   phoneNote?: string;
   atmosphere: string;
+  atmosphereI18n?: LocalizedString;
   features: string[];
+  featuresI18n?: {
+    ru: string[];
+    en: string[];
+    zh: string[];
+  };
   image: string;
   sbtipsUrl: string;
   yandexMapUrl: string;
@@ -34,6 +54,7 @@ export interface LocationItem {
   hasKitchen: boolean;
   hasFullSeating: boolean;
   popularDrink: string;
+  popularDrinkI18n?: LocalizedString;
   theme: LocationThemeInfo;
 }
 
@@ -73,11 +94,16 @@ export interface MenuItem {
 export interface ReviewItem {
   id: string;
   author: string;
+  authorI18n?: LocalizedString;
   role: string;
+  roleI18n?: LocalizedString;
   rating: number;
   text: string;
+  textI18n?: LocalizedString;
   location: string;
+  locationI18n?: LocalizedString;
   date: string;
+  dateI18n?: LocalizedString;
   avatarBg: string;
   isDemo?: boolean;
 }
@@ -85,9 +111,12 @@ export interface ReviewItem {
 export interface NewsItem {
   id: string;
   title: string;
+  titleI18n?: LocalizedString;
   summary: string;
+  summaryI18n?: LocalizedString;
   date: string;
-  category: "Сезонное меню" | "События" | "Обжарка" | "Спешелти";
+  dateI18n?: LocalizedString;
+  category: "Сезонное меню" | "События" | "Обжарка" | "Спешелти" | string;
   readTime: string;
   image: string;
   linkText: string;
@@ -97,9 +126,29 @@ export const LOCATIONS: LocationItem[] = [
   {
     id: "kievskaya",
     name: "Флагманское кафе на Киевской",
+    nameI18n: {
+      ru: "Флагманское кафе на Киевской",
+      en: "Flagship Café on Kievskaya",
+      zh: "基辅街旗舰咖啡馆",
+    },
     shortName: "Киевская",
+    shortNameI18n: {
+      ru: "Киевская",
+      en: "Kievskaya",
+      zh: "基辅街",
+    },
     address: "Иркутск, угол ул. Карла Маркса и Киевской (ул. Киевская, 1)",
+    addressI18n: {
+      ru: "Иркутск, угол ул. Карла Маркса и Киевской (ул. Киевская, 1)",
+      en: "Irkutsk, corner of Karl Marx & Kievskaya (1 Kievskaya St)",
+      zh: "伊尔库茨克，卡尔马克思街与基辅街交叉口（基辅街 1 号）",
+    },
     landmark: "Исторический центр, 2 минуты от сквера Кирова",
+    landmarkI18n: {
+      ru: "Исторический центр, 2 минуты от сквера Кирова",
+      en: "Historic center, 2 mins from Kirov Square",
+      zh: "历史文化核心区，距基洛夫广场 2 分钟",
+    },
     coordinates: [52.2858, 104.2831],
     hours: {
       weekdays: "08:00 – 22:00",
@@ -108,7 +157,17 @@ export const LOCATIONS: LocationItem[] = [
     phone: "+7 (902) 510-44-13",
     phoneNote: "Контактный номер кофейни",
     atmosphere: "Открытая кирпичная кладка, оливковый бархат, латунные элементы, обилие дневного света, винил и книжные полки. Уютный арт-хаус в историческом центре.",
+    atmosphereI18n: {
+      ru: "Открытая кирпичная кладка, оливковый бархат, латунные элементы, обилие дневного света, винил и книжные полки. Уютный арт-хаус в историческом центре.",
+      en: "Exposed brickwork, olive velvet, brass accents, abundance of daylight, vinyl records, and curated bookshelves. An artful sanctuary in the historic downtown.",
+      zh: "裸露红砖墙、橄榄绿天鹅绒、黄铜质感与充沛自然光线，黑胶唱片与艺术书架，历史街区里的复古艺术沙龙。",
+    },
     features: ["Завтраки весь день", "Фильтр-бар", "Dog-friendly", "Wi-Fi & Розетки", "Виниловый уголок"],
+    featuresI18n: {
+      ru: ["Завтраки весь день", "Фильтр-бар", "Dog-friendly", "Wi-Fi & Розетки", "Виниловый уголок"],
+      en: ["All-Day Breakfast", "Filter Bar", "Dog-friendly", "Wi-Fi & Power Sockets", "Vinyl Music Lounge"],
+      zh: ["全天候早午餐", "精品手冲手冲吧", "宠物友好 (Dog-friendly)", "高速 Wi-Fi 与充电插座", "复古黑胶音乐角"],
+    },
     image: "/images/locations/kievskaya.webp",
     sbtipsUrl: "https://pay.sbtips.ru/9882",
     yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Киевская+Vincent+Van+Coffee",
@@ -116,11 +175,31 @@ export const LOCATIONS: LocationItem[] = [
     hasKitchen: true,
     hasFullSeating: true,
     popularDrink: "Раф «Подсолнухи» с карамелью и цедрой",
+    popularDrinkI18n: {
+      ru: "Раф «Подсолнухи» с карамелью и цедрой",
+      en: "“Sunflowers” Raf with caramel & orange zest",
+      zh: "「向日葵」特调热咖啡（焦糖与橙皮香）",
+    },
     theme: {
       themeId: "kievskaya",
       styleName: "Loft & Terracotta Brick",
+      styleNameI18n: {
+        ru: "Loft & Terracotta Brick",
+        en: "Loft & Terracotta Brick",
+        zh: "经典 Loft 砖红复古",
+      },
       subTitle: "Дневной свет, лофт, винил и оливковый бархат",
+      subTitleI18n: {
+        ru: "Дневной свет, лофт, винил и оливковый бархат",
+        en: "Natural daylight, loft brick, vinyl and olive velvet",
+        zh: "充沛采光、Loft 砖石、黑胶唱片与橄榄绿天鹅绒",
+      },
       paletteDescription: "Тёплый терракотово-бежевый, оливковый бархат, латунь и медь",
+      paletteDescriptionI18n: {
+        ru: "Тёплый терракотово-бежевый, оливковый бархат, латунь и медь",
+        en: "Warm terracotta beige, olive velvet, brass and copper",
+        zh: "暖调陶土砖红、橄榄天鹅绒、黄铜与复古铜金",
+      },
       primaryColor: "#A84B2C",
       accentColor: "#606C38",
       accentColor2: "#DDA15E",
@@ -132,10 +211,35 @@ export const LOCATIONS: LocationItem[] = [
   {
     id: "silver",
     name: "Островок в ТРЦ «Сильвермолл»",
+    nameI18n: {
+      ru: "Островок в ТРЦ «Сильвермолл»",
+      en: "Coffee Bar at Silver Mall",
+      zh: "Silver Mall 银座购物中心精致咖啡吧",
+    },
     shortName: "Сильвермолл",
+    shortNameI18n: {
+      ru: "Сильвермолл",
+      en: "Silver Mall",
+      zh: "Silver Mall",
+    },
     mall: "ТРЦ «Сильвермолл»",
+    mallI18n: {
+      ru: "ТРЦ «Сильвермолл»",
+      en: "Silver Mall",
+      zh: "Silver Mall 购物中心",
+    },
     address: "Иркутск, ул. Сергеева, 3/5, 1 этаж",
+    addressI18n: {
+      ru: "Иркутск, ул. Сергеева, 3/5, 1 этаж",
+      en: "Irkutsk, 3/5 Sergeeva St, 1st floor",
+      zh: "伊尔库茨克，谢尔盖耶夫街 3/5 号 1 层",
+    },
     landmark: "1 этаж, прямо напротив магазина Befree",
+    landmarkI18n: {
+      ru: "1 этаж, прямо напротив магазина Befree",
+      en: "1st floor, right in front of Befree store",
+      zh: "1 层，正对 Befree 专卖店",
+    },
     coordinates: [52.2595, 104.2372],
     hours: {
       weekdays: "10:00 – 22:00",
@@ -144,7 +248,17 @@ export const LOCATIONS: LocationItem[] = [
     phone: "+7 (902) 510-44-11",
     phoneNote: "Островок ТРЦ «Сильвермолл»",
     atmosphere: "Светлое натуральное дерево, белые кубы-столики, сочная зелень и чистый скандинавский свет. Пространство для быстрого и эстетичного to-go.",
+    atmosphereI18n: {
+      ru: "Светлое натуральное дерево, белые кубы-столики, сочная зелень и чистый скандинавский свет. Пространство для быстрого и эстетичного to-go.",
+      en: "Light natural oak, clean white minimalist cubes, fresh botanical greenery, and crisp Nordic light. Designed for swift and aesthetic coffee to-go.",
+      zh: "北欧极简浅木、纯白立方咖啡吧台、鲜活绿植与纯净明亮光影。专为快捷且赏心悦目的 To-Go 打造。",
+    },
     features: ["Быстрый сервис To-Go", "Сезонные авторские коллаборации", "Эко-стаканчики", "Свежие тарты и макаронс"],
+    featuresI18n: {
+      ru: ["Быстрый сервис To-Go", "Сезонные авторские коллаборации", "Эко-стаканчики", "Свежие тарты и макаронс"],
+      en: ["Fast To-Go Service", "Seasonal Collaborations", "Eco-friendly Cups", "Fresh Tarts & Macarons"],
+      zh: ["极速外带服务 (To-Go)", "季节性联名限定出品", "环保生物降解咖啡杯", "新鲜手作法式挞与马卡龙"],
+    },
     image: "/images/locations/silver.webp",
     sbtipsUrl: "https://pay.sbtips.ru/9880",
     yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Сильвермолл+Vincent+Van+Coffee",
@@ -152,11 +266,31 @@ export const LOCATIONS: LocationItem[] = [
     hasKitchen: false,
     hasFullSeating: false,
     popularDrink: "Бамбл «Цветущий миндаль» на свежем фреше",
+    popularDrinkI18n: {
+      ru: "Бамбл «Цветущий миндаль» на свежем фреше",
+      en: "“Almond Blossom” Bumble with fresh orange juice",
+      zh: "「杏仁花开」鲜榨橙汁咖啡特调 (Bumble)",
+    },
     theme: {
       themeId: "silver",
       styleName: "Scandi Light & Fresh Wood",
+      styleNameI18n: {
+        ru: "Scandi Light & Fresh Wood",
+        en: "Scandi Light & Fresh Wood",
+        zh: "北欧极简原木生机",
+      },
       subTitle: "Скандинавский минимализм, светлое дерево и шалфей",
+      subTitleI18n: {
+        ru: "Скандинавский минимализм, светлое дерево и шалфей",
+        en: "Scandinavian minimalism, light wood and sage green",
+        zh: "斯堪的纳维亚极简主义、浅色橡木与鼠尾草绿",
+      },
       paletteDescription: "Кремовый березовый фон, шалфейно-зеленый, светлый дуб",
+      paletteDescriptionI18n: {
+        ru: "Кремовый березовый фон, шалфейно-зеленый, светлый дуб",
+        en: "Creamy birch backdrop, sage green, light oak",
+        zh: "奶油白桦背景、鼠尾草绿与温润浅橡木色",
+      },
       primaryColor: "#3A5A40",
       accentColor: "#588157",
       accentColor2: "#D4A373",
@@ -168,10 +302,35 @@ export const LOCATIONS: LocationItem[] = [
   {
     id: "noviy",
     name: "Островок в МТЦ «Новый»",
+    nameI18n: {
+      ru: "Островок в МТЦ «Новый»",
+      en: "Coffee Bar at Noviy Mall",
+      zh: "Noviy 潮流中心都市咖啡吧",
+    },
     shortName: "МТЦ «Новый»",
+    shortNameI18n: {
+      ru: "МТЦ «Новый»",
+      en: "Noviy Mall",
+      zh: "Noviy 商场",
+    },
     mall: "МТЦ «Новый»",
+    mallI18n: {
+      ru: "МТЦ «Новый»",
+      en: "Noviy Mall",
+      zh: "Noviy 购物中心",
+    },
     address: "Иркутск, ул. Советская, 58/1, 1 этаж",
+    addressI18n: {
+      ru: "Иркутск, ул. Советская, 58/1, 1 этаж",
+      en: "Irkutsk, 58/1 Sovetskaya St, 1st floor",
+      zh: "伊尔库茨克，苏维埃街 58/1 号 1 层",
+    },
     landmark: "1 этаж, прямо под эскалатором",
+    landmarkI18n: {
+      ru: "1 этаж, прямо под эскалатором",
+      en: "1st floor, directly beneath the escalator",
+      zh: "1 层，中央手扶梯正下方",
+    },
     coordinates: [52.2816, 104.3168],
     hours: {
       weekdays: "10:00 – 22:00",
@@ -180,7 +339,17 @@ export const LOCATIONS: LocationItem[] = [
     phone: "+7 (902) 510-44-12",
     phoneNote: "Островок МТЦ «Новый»",
     atmosphere: "Графитовый потолок, золотое свечение гирлянд, стекло и зелень под эскалатором. Вечерний урбан-уют посреди торгового ритма.",
+    atmosphereI18n: {
+      ru: "Графитовый потолок, золотое свечение гирлянд, стекло и зелень под эскалатором. Вечерний урбан-уют посреди торгового ритма.",
+      en: "Graphite ceiling, warm golden garland glow, sleek glass and emerald flora under the escalator. Urban evening coziness amidst the shopping rhythm.",
+      zh: "高级石墨黑顶、温润暖金流光、通透玻璃与扶梯绿意。在繁华商场节奏中沉浸于都市静谧之美。",
+    },
     features: ["To-Go формат", "Спешелти фильтр дня", "Протеиновые десерты без сахара", "Безналичная оплата за 5 секунд"],
+    featuresI18n: {
+      ru: ["To-Go формат", "Спешелти фильтр дня", "Протеиновые десерты без сахара", "Безналичная оплата за 5 секунд"],
+      en: ["Express To-Go Bar", "Specialty Batch Brew of the Day", "Sugar-Free Protein Desserts", "Instant Contactless Pay"],
+      zh: ["高效外带吧台", "每日单品精选手冲", "无糖高蛋白健康甜点", "极速闪付无需等待"],
+    },
     image: "/images/locations/noviymtc.webp",
     sbtipsUrl: "https://pay.sbtips.ru/9881",
     yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Советская+58+Новый+Vincent+Van+Coffee",
@@ -188,11 +357,31 @@ export const LOCATIONS: LocationItem[] = [
     hasKitchen: false,
     hasFullSeating: false,
     popularDrink: "Флэт Уайт на зерне Эфиопия Иргачеффе",
+    popularDrinkI18n: {
+      ru: "Флэт Уайт на зерне Эфиопия Иргачеффе",
+      en: "Flat White with Ethiopia Yirgacheffe beans",
+      zh: "埃塞俄比亚耶加雪菲 精品澳白 (Flat White)",
+    },
     theme: {
       themeId: "noviy",
       styleName: "Urban Night & Garland Glow",
+      styleNameI18n: {
+        ru: "Urban Night & Garland Glow",
+        en: "Urban Night & Garland Glow",
+        zh: "都市夜幕暖金流光",
+      },
       subTitle: "Графитовый урбан, тёплый золотой свет гирлянд",
+      subTitleI18n: {
+        ru: "Графитовый урбан, тёплый золотой свет гирлянд",
+        en: "Graphite urban aesthetic, warm golden garland light",
+        zh: "石墨灰都市质感、温暖金色串灯微光",
+      },
       paletteDescription: "Графитовый темный холст, янтарное теплое свечение, легкий неон",
+      paletteDescriptionI18n: {
+        ru: "Графитовый темный холст, янтарное теплое свечение, легкий неон",
+        en: "Graphite dark canvas, warm amber glow, subtle neon",
+        zh: "石墨黑深色画布、暖调琥珀流光与精致霓虹",
+      },
       primaryColor: "#C87010",
       accentColor: "#E67E22",
       accentColor2: "#F39C12",
@@ -204,9 +393,29 @@ export const LOCATIONS: LocationItem[] = [
   {
     id: "madyar",
     name: "Арт-кафе на Красных Мадьяр",
+    nameI18n: {
+      ru: "Арт-кафе на Красных Мадьяр",
+      en: "Art Café on Krasnykh Madyar",
+      zh: "红马扎尔艺术主题咖啡馆",
+    },
     shortName: "Красных Мадьяр",
+    shortNameI18n: {
+      ru: "Красных Мадьяр",
+      en: "Krasnykh Madyar",
+      zh: "红马扎尔街",
+    },
     address: "Иркутск, ул. Красных Мадьяр, 41",
+    addressI18n: {
+      ru: "Иркутск, ул. Красных Мадьяр, 41",
+      en: "Irkutsk, 41 Krasnykh Madyar St",
+      zh: "伊尔库茨克，红马扎尔街 41 号",
+    },
     landmark: "Рядом с арт-ателье «Lasso Picasso»",
+    landmarkI18n: {
+      ru: "Рядом с арт-ателье «Lasso Picasso»",
+      en: "Next to “Lasso Picasso” art studio",
+      zh: "毗邻 Lasso Picasso 艺术工作室",
+    },
     coordinates: [52.2741, 104.3015],
     hours: {
       weekdays: "08:30 – 22:00",
@@ -215,7 +424,17 @@ export const LOCATIONS: LocationItem[] = [
     phone: "+7 (902) 510-44-14",
     phoneNote: "Кафе на Красных Мадьяр",
     atmosphere: "Глубокий синий бархат, бирюзовый и розовый акрил, абстрактный line-art на стенах. Самое смелое арт-пространство сети рядом с творческим ателье.",
+    atmosphereI18n: {
+      ru: "Глубокий синий бархат, бирюзовый и розовый акрил, абстрактный line-art на стенах. Самое смелое арт-пространство сети рядом с творческим ателье.",
+      en: "Deep midnight blue velvet, turquoise and magenta acrylics, abstract line art on the walls. The boldest avant-garde art space in the chain, neighboring a local studio.",
+      zh: "深邃午夜蓝天鹅绒、青碧与洋红亚克力光影、墙面抽象线条艺术。紧邻艺术画室，最具先锋气息的艺术咖啡空间。",
+    },
     features: ["Арт-экспозиции", "Кухня и выпечка", "Летняя терраса", "Каппинги зерна", "Уютные столики у окна"],
+    featuresI18n: {
+      ru: ["Арт-экспозиции", "Кухня и выпечка", "Летняя терраса", "Каппинги зерна", "Уютные столики у окна"],
+      en: ["Art Gallery Exhibitions", "Kitchen & Pastries", "Summer Terrace", "Coffee Cupping Sessions", "Window Seating"],
+      zh: ["定期当代艺术展", "全餐厨房与手作烘焙", "夏季阳光露台", "精品咖啡杯测品鉴会", "绝美沿窗观景座"],
+    },
     image: "/images/locations/krasnix_madyar.webp",
     sbtipsUrl: "https://pay.sbtips.ru/9883",
     yandexMapUrl: "https://yandex.ru/maps/?text=Иркутск+Красных+Мадьяр+41+Vincent+Van+Coffee",
@@ -223,11 +442,31 @@ export const LOCATIONS: LocationItem[] = [
     hasKitchen: true,
     hasFullSeating: true,
     popularDrink: "Латте «Звёздная ночь» с черникой и лавандой",
+    popularDrinkI18n: {
+      ru: "Латте «Звёздная ночь» с черникой и лавандой",
+      en: "“Starry Night” Latte with blueberry & lavender",
+      zh: "「星夜」特调拿铁（高山薰衣草与野生蓝莓）",
+    },
     theme: {
       themeId: "madyar",
       styleName: "Art Pop & Ink Velvet",
+      styleNameI18n: {
+        ru: "Art Pop & Ink Velvet",
+        en: "Art Pop & Ink Velvet",
+        zh: "波普艺术与墨蓝天鹅绒",
+      },
       subTitle: "Тёмно-синий бархат, бирюзовый и розовый полупрозрачный акрил",
+      subTitleI18n: {
+        ru: "Тёмно-синий бархат, бирюзовый и розовый полупрозрачный акрил",
+        en: "Midnight blue velvet, turquoise and magenta translucent acrylic",
+        zh: "深蓝天鹅绒、青碧与洋红半透亚克力",
+      },
       paletteDescription: "Чернильно-синий фон, неоновый циан, сочная фуксия",
+      paletteDescriptionI18n: {
+        ru: "Чернильно-синий фон, неоновый циан, сочная фуксия",
+        en: "Ink-blue canvas, luminous cyan, vivid fuchsia",
+        zh: "墨蓝色艺术画布、明亮青碧与馥郁品红",
+      },
       primaryColor: "#0284C7",
       accentColor: "#FF4081",
       accentColor2: "#7C4DFF",
@@ -736,55 +975,180 @@ export const REVIEWS: ReviewItem[] = [
   {
     id: "rev-1",
     author: "Гость кофейни на Киевской",
+    authorI18n: {
+      ru: "Гость кофейни на Киевской",
+      en: "Regular Guest at Kievskaya",
+      zh: "基辅街店常客",
+    },
     role: "Постоянный гость (2ГИС)",
+    roleI18n: {
+      ru: "Постоянный гость (2ГИС)",
+      en: "Verified 2GIS Review",
+      zh: "2GIS 认证常客评价",
+    },
     rating: 5,
     text: "Кофейня на Киевской — моё любимое место в центре. Здесь потрясающий естественный свет, запах дерева и великолепный фильтр-кофе. Спасибо бариста за заботу каждое утро!",
+    textI18n: {
+      ru: "Кофейня на Киевской — моё любимое место в центре. Здесь потрясающий естественный свет, запах дерева и великолепный фильтр-кофе. Спасибо бариста за заботу каждое утро!",
+      en: "The café on Kievskaya is my favorite place downtown. Stunning daylight, warm scent of natural wood, and magnificent filter coffee. Thanks to the baristas for morning care!",
+      zh: "基辅街店是我在市中心最爱的地方。绝美采光、原木清香与上乘手冲咖啡，感谢咖啡师每天清晨的用心照料！",
+    },
     location: "Кафе на Киевской",
+    locationI18n: {
+      ru: "Кафе на Киевской",
+      en: "Café on Kievskaya",
+      zh: "基辅街店",
+    },
     date: "14 мая 2026",
+    dateI18n: {
+      ru: "14 мая 2026",
+      en: "May 14, 2026",
+      zh: "2026年5月14日",
+    },
     avatarBg: "from-amber-600 to-yellow-500",
     isDemo: true,
   },
   {
     id: "rev-2",
     author: "Ценитель спешелти кофе",
+    authorI18n: {
+      ru: "Ценитель спешелти кофе",
+      en: "Specialty Coffee Aficionado",
+      zh: "精品咖啡爱好者",
+    },
     role: "Отзыв с Яндекс.Карт",
+    roleI18n: {
+      ru: "Отзыв с Яндекс.Карт",
+      en: "Yandex Maps Review",
+      zh: "Yandex 地图评价",
+    },
     rating: 5,
     text: "Очень тонкий баланс сладости и цитруса в авторских рафах. На Красных Мадьяр классная арт-атмосфера и свежая выпечка.",
+    textI18n: {
+      ru: "Очень тонкий баланс сладости и цитруса в авторских рафах. На Красных Мадьяр классная арт-атмосфера и свежая выпечка.",
+      en: "Exquisite balance of sweetness and citrus in signature rafs. Krasnykh Madyar has an inspiring art vibe and wonderful pastries.",
+      zh: "独家特调热咖啡里的甜香与柑橘风味平衡极佳。红马扎尔店的艺术氛围与新鲜烘焙非常惊艳。",
+    },
     location: "Кафе на Красных Мадьяр",
+    locationI18n: {
+      ru: "Кафе на Красных Мадьяр",
+      en: "Café on Krasnykh Madyar",
+      zh: "红马扎尔店",
+    },
     date: "28 апреля 2026",
+    dateI18n: {
+      ru: "28 апреля 2026",
+      en: "April 28, 2026",
+      zh: "2026年4月28日",
+    },
     avatarBg: "from-orange-600 to-amber-700",
     isDemo: true,
   },
   {
     id: "rev-3",
     author: "Elena (Tourist Guest)",
+    authorI18n: {
+      ru: "Elena (Турист)",
+      en: "Elena (Tourist Guest)",
+      zh: "Elena（旅行游客）",
+    },
     role: "Отзыв из ТРЦ «Сильвермолл»",
+    roleI18n: {
+      ru: "Отзыв из ТРЦ «Сильвермолл»",
+      en: "Silver Mall Guest Review",
+      zh: "Silver Mall 门店评价",
+    },
     rating: 5,
     text: "Very warm and aesthetic coffee bar in Silver Mall! Exceptional matcha latte and delicious fresh tart. Friendly service.",
+    textI18n: {
+      ru: "Очень тёплый и эстетичный кофе-бар в Сильвермолле! Исключительный матча латте и свежайший тарт. Очень дружелюбный сервис.",
+      en: "Very warm and aesthetic coffee bar in Silver Mall! Exceptional matcha latte and delicious fresh tart. Friendly service.",
+      zh: "Silver Mall 里非常温馨有艺术感的咖啡吧！抹茶拿铁口感细腻，法式挞十分新鲜，服务也很亲切。",
+    },
     location: "Островок в «Сильвере»",
+    locationI18n: {
+      ru: "Островок в «Сильвере»",
+      en: "Silver Mall Bar",
+      zh: "Silver Mall 店",
+    },
     date: "10 мая 2026",
+    dateI18n: {
+      ru: "10 мая 2026",
+      en: "May 10, 2026",
+      zh: "2026年5月10日",
+    },
     avatarBg: "from-blue-600 to-indigo-800",
     isDemo: true,
   },
   {
     id: "rev-4",
     author: "Гость МТЦ «Новый»",
+    authorI18n: {
+      ru: "Гость МТЦ «Новый»",
+      en: "Guest at Noviy Mall",
+      zh: "Noviy 商场常客",
+    },
     role: "Отзыв из 2ГИС",
+    roleI18n: {
+      ru: "Отзыв из 2ГИС",
+      en: "2GIS Review",
+      zh: "2GIS 评价",
+    },
     rating: 5,
     text: "Часто забегаю в МТЦ «Новый» за двойным эспрессо. Готовят быстро, зерно всегда настроено идеально — плотное тело и никакой горечи.",
+    textI18n: {
+      ru: "Часто забегаю в МТЦ «Новый» за двойным эспрессо. Готовят быстро, зерно всегда настроено идеально — плотное тело и никакой горечи.",
+      en: "I frequently stop by Noviy Mall for a double espresso. Fast service and dial-in extraction is consistently on point — rich body and zero bitterness.",
+      zh: "经常在 Noviy 商场点双份意式浓缩。出杯迅速，萃取调校稳定，口感醇厚且无杂苦味。",
+    },
     location: "Островок в «Новом»",
+    locationI18n: {
+      ru: "Островок в «Новом»",
+      en: "Noviy Mall Bar",
+      zh: "Noviy 商场店",
+    },
     date: "2 мая 2026",
+    dateI18n: {
+      ru: "2 мая 2026",
+      en: "May 2, 2026",
+      zh: "2026年5月2日",
+    },
     avatarBg: "from-amber-700 to-stone-800",
     isDemo: true,
   },
   {
     id: "rev-5",
     author: "Арт-сообщество Иркутска",
+    authorI18n: {
+      ru: "Арт-сообщество Иркутска",
+      en: "Irkutsk Art Community",
+      zh: "伊尔库茨克艺术社群",
+    },
     role: "Отзыв с Красных Мадьяр",
+    roleI18n: {
+      ru: "Отзыв с Красных Мадьяр",
+      en: "Krasnykh Madyar Review",
+      zh: "红马扎尔店评价",
+    },
     rating: 5,
     text: "Атмосфера на Красных Мадьяр вдохновляет творить. Сидишь у окна с блокнотом, играет винил, на столе латте «Звёздная ночь»...",
+    textI18n: {
+      ru: "Атмосфера на Красных Мадьяр вдохновляет творить. Сидишь у окна с блокнотом, играет винил, на столе латте «Звёздная ночь»...",
+      en: "The ambience at Krasnykh Madyar inspires creativity. Sketching by the panoramic window, listening to vinyl, sipping “Starry Night” latte...",
+      zh: "红马扎尔店的氛围让人灵感涌现。坐在沿窗位带着速写本，听着黑胶唱片，品尝「星夜」特调拿铁...",
+    },
     location: "Кафе на Красных Мадьяр",
+    locationI18n: {
+      ru: "Кафе на Красных Мадьяр",
+      en: "Café on Krasnykh Madyar",
+      zh: "红马扎尔店",
+    },
     date: "19 апреля 2026",
+    dateI18n: {
+      ru: "19 апреля 2026",
+      en: "April 19, 2026",
+      zh: "2026年4月19日",
+    },
     avatarBg: "from-indigo-600 to-purple-800",
     isDemo: true,
   },
@@ -794,8 +1158,23 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "news-1",
     title: "Весенняя арт-коллекция напитков: «Пробуждение в Провансе»",
+    titleI18n: {
+      ru: "Весенняя арт-коллекция напитков: «Пробуждение в Провансе»",
+      en: "Spring Art Drink Collection: “Awakening in Provence”",
+      zh: "春季艺术饮品系列：「普罗旺斯的苏醒」",
+    },
     summary: "Встречайте новые авторские напитки, вдохновленные весенними этюдами: лавандово-черничный флэт, цитрусовый бамбл с розмарином и холодный крем-матча.",
+    summaryI18n: {
+      ru: "Встречайте новые авторские напитки, вдохновленные весенними этюдами: лавандово-черничный флэт, цитрусовый бамбл с розмарином и холодный крем-матча.",
+      en: "Discover our seasonal specialty creations: Lavender-Blueberry Flat White, Rosemary Citrus Bumble, and Iced Coconut Cream Matcha.",
+      zh: "探索春日艺术特调：薰衣草蓝莓澳白、迷迭香柑橘特调咖啡与生椰冰抹茶。",
+    },
     date: "12 мая 2026",
+    dateI18n: {
+      ru: "12 мая 2026",
+      en: "May 12, 2026",
+      zh: "2026年5月12日",
+    },
     category: "Сезонное меню",
     readTime: "2 мин чтения",
     image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
@@ -804,8 +1183,23 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "news-2",
     title: "Спешелти микролот свежего урожая: Эфиопия Гуджи",
+    titleI18n: {
+      ru: "Спешелти микролот свежего урожая: Эфиопия Гуджи",
+      en: "Fresh Specialty Microlot: Ethiopia Guji Natural",
+      zh: "最新产季精品微批次生豆：埃塞俄比亚 古吉日晒",
+    },
     summary: "Партия свежего урожая спешелти кофе. Во вкусе: спелое манго, темный ром, маракуйя и жасмин. Доступен в фильтр-баре.",
+    summaryI18n: {
+      ru: "Партия свежего урожая спешелти кофе. Во вкусе: спелое манго, темный ром, маракуйя и жасмин. Доступен в фильтр-баре.",
+      en: "Direct single-origin harvest with vibrant notes of ripe mango, aged rum, passion fruit, and delicate jasmine. Brewed on the filter bar.",
+      zh: "新鲜产季直采微批次，风味展现成熟芒果、陈酿朗姆、百香果与茉莉花香。全门店手冲吧台供应。",
+    },
     date: "25 апреля 2026",
+    dateI18n: {
+      ru: "25 апреля 2026",
+      en: "April 25, 2026",
+      zh: "2026年4月25日",
+    },
     category: "Спешелти",
     readTime: "3 мин чтения",
     image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80",
@@ -814,8 +1208,23 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "news-3",
     title: "Открытый каппинг и арт-вечер на Красных Мадьяр",
+    titleI18n: {
+      ru: "Открытый каппинг и арт-вечер на Красных Мадьяр",
+      en: "Open Cupping Session & Art Evening on Krasnykh Madyar",
+      zh: "红马扎尔店公开杯测品鉴会与水彩艺术之夜",
+    },
     summary: "Учимся различать дескрипторы спешелти кофе вместе с шеф-бариста и создаем кофейную графику акварелью. Вход свободный по регистрации.",
+    summaryI18n: {
+      ru: "Учимся различать дескрипторы спешелти кофе вместе с шеф-бариста и создаем кофейную графику акварелью. Вход свободный по регистрации.",
+      en: "Learn sensory coffee descriptors with our head barista and paint coffee watercolor sketches. Free admission with registration.",
+      zh: "与主理咖啡师一同探索精品咖啡风味轮，并用水彩与浓缩液创作咖啡艺术画作。预约免费入场。",
+    },
     date: "18 апреля 2026",
+    dateI18n: {
+      ru: "18 апреля 2026",
+      en: "April 18, 2026",
+      zh: "2026年4月18日",
+    },
     category: "События",
     readTime: "1 мин чтения",
     image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
@@ -827,39 +1236,109 @@ export const LOYALTY_TIERS = [
   {
     id: "aquarelle",
     name: "Акварель",
+    nameI18n: {
+      ru: "Акварель",
+      en: "Aquarelle / Watercolor",
+      zh: "水彩卡 (Aquarelle)",
+    },
     cashback: 5,
     spendThreshold: 0,
     tagline: "Первый шаг в мир арт-кофе",
+    taglineI18n: {
+      ru: "Первый шаг в мир арт-кофе",
+      en: "First step into the world of artful coffee",
+      zh: "开启艺术咖啡生活的第一步",
+    },
     perks: [
       "5% кэшбэк бонусами с каждой покупки",
       "Приветственные 100 бонусов при регистрации",
       "Подарок и +500 бонусов в день рождения",
       "Электронная карта в Apple / Google Wallet",
     ],
+    perksI18n: {
+      ru: [
+        "5% кэшбэк бонусами с каждой покупки",
+        "Приветственные 100 бонусов при регистрации",
+        "Подарок и +500 бонусов в день рождения",
+        "Электронная карта в Apple / Google Wallet",
+      ],
+      en: [
+        "5% cashback points on every purchase",
+        "Welcome bonus of 100 points upon signup",
+        "Birthday drink gift + 500 bonus points",
+        "Digital card in Apple / Google Wallet",
+      ],
+      zh: [
+        "每笔消费享 5% 积分返现",
+        "注册即送 100 点迎新积分",
+        "生日专属免费特饮与 +500 积分奖励",
+        "支持添加至 Apple / Google 钱包",
+      ],
+    },
     cardGradient: "from-[#2A211B] via-[#1C1613] to-[#120F0D]",
     badgeBorder: "border-amber-700/40 text-amber-300",
   },
   {
     id: "pastel",
     name: "Пастель",
+    nameI18n: {
+      ru: "Пастель",
+      en: "Pastel",
+      zh: "粉彩卡 (Pastel)",
+    },
     cashback: 7,
     spendThreshold: 5000,
     tagline: "Для ценителей ежедневных ритуалов",
+    taglineI18n: {
+      ru: "Для ценителей ежедневных ритуалов",
+      en: "For connoisseurs of daily coffee rituals",
+      zh: "献给每日咖啡生活鉴赏家",
+    },
     perks: [
       "7% кэшбэк на все напитки и десерты",
       "Бесплатная замена молока на растительное (кокос, миндаль, овсяное)",
       "Приоритетный предзаказ To-Go без очереди",
       "Приглашения на закрытые сезонные дегустации",
     ],
+    perksI18n: {
+      ru: [
+        "7% кэшбэк на все напитки и десерты",
+        "Бесплатная замена молока на растительное (кокос, миндаль, овсяное)",
+        "Приоритетный предзаказ To-Go без очереди",
+        "Приглашения на закрытые сезонные дегустации",
+      ],
+      en: [
+        "7% cashback on all drinks and desserts",
+        "Free plant-based milk upgrades (coconut, almond, oat)",
+        "Priority queue-free To-Go pre-ordering",
+        "Exclusive invitations to private tastings",
+      ],
+      zh: [
+        "全品类饮品与甜点享 7% 积分返现",
+        "免费升级植物奶（燕麦奶、椰奶、杏仁奶）",
+        "享优先极速外带无须排队",
+        "独家受邀参与私享季度新品品鉴会",
+      ],
+    },
     cardGradient: "from-[#3D2C1E] via-[#2A1D13] to-[#1A120B]",
     badgeBorder: "border-amber-500/60 text-amber-200",
   },
   {
     id: "oil",
     name: "Масло / Gold",
+    nameI18n: {
+      ru: "Масло / Gold",
+      en: "Oil Painting / Gold",
+      zh: "油画金卡 (Oil / Gold)",
+    },
     cashback: 10,
     spendThreshold: 15000,
     tagline: "Высший клуб ценителей искусства",
+    taglineI18n: {
+      ru: "Высший клуб ценителей искусства",
+      en: "Premier circle of true art & coffee patrons",
+      zh: "凡高艺术咖啡至尊俱乐部",
+    },
     perks: [
       "10% максимальный кэшбэк на весь чек",
       "Каждый 7-й утренний кофе в подарок",
@@ -867,7 +1346,109 @@ export const LOYALTY_TIERS = [
       "Бесплатный вход на каппинги и арт-мастерклассы",
       "Эксклюзивный фирменный мерч ко дню рождения",
     ],
+    perksI18n: {
+      ru: [
+        "10% максимальный кэшбэк на весь чек",
+        "Каждый 7-й утренний кофе в подарок",
+        "Персональный доступ к редким спешелти микролотам зерна",
+        "Бесплатный вход на каппинги и арт-мастерклассы",
+        "Эксклюзивный фирменный мерч ко дню рождения",
+      ],
+      en: [
+        "10% maximum cashback across the entire bill",
+        "Every 7th morning coffee complimentary",
+        "Exclusive reserve access to rare single-origin microlots",
+        "Free admission to cuppings and watercolor masterclasses",
+        "Signature custom merchandise on your birthday",
+      ],
+      zh: [
+        "全单享最高 10% 顶格积分返现",
+        "每第 7 杯晨间咖啡尊享免单礼遇",
+        "优先品鉴限量珍稀庄园单品微批次生豆",
+        "免费参加专业杯测会与水彩艺术大师班",
+        "生日尊享定制品牌限量艺术周边礼盒",
+      ],
+    },
     cardGradient: "from-[#593E1F] via-[#352514] to-[#1F150B]",
     badgeBorder: "border-yellow-400 text-yellow-300 shadow-[0_0_15px_rgba(234,179,8,0.25)]",
   },
 ];
+
+export const TASTE_NOTES_I18N: Record<string, { en: string; zh: string }> = {
+  "Карамель": { en: "Caramel", zh: "焦糖" },
+  "Цедра апельсина": { en: "Orange zest", zh: "橙皮" },
+  "Сливки": { en: "Cream", zh: "奶油" },
+  "Свежий апельсиновый фреш": { en: "Fresh orange juice", zh: "鲜榨橙汁" },
+  "Миндальный сироп": { en: "Almond syrup", zh: "杏仁糖浆" },
+  "Двойной эспрессо": { en: "Double espresso", zh: "双份浓缩" },
+  "Черничное пюре": { en: "Blueberry puree", zh: "蓝莓果茸" },
+  "Горная лаванда": { en: "Mountain lavender", zh: "高山薰衣草" },
+  "Мягкий эспрессо": { en: "Smooth espresso", zh: "柔顺浓缩" },
+  "Кедровые орехи": { en: "Pine nuts", zh: "松子" },
+  "Смола": { en: "Cedar resin", zh: "雪松香" },
+  "Таежный мед": { en: "Taiga honey", zh: "针叶林野蜜" },
+  "Японская матча": { en: "Uji matcha", zh: "宇治抹茶" },
+  "Кокосовые сливки": { en: "Coconut cream", zh: "椰浆" },
+  "Ваниль": { en: "Vanilla", zh: "香草" },
+  "Эфиопия Иргачеффе": { en: "Ethiopia Yirgacheffe", zh: "耶加雪菲" },
+  "Жасмин": { en: "Jasmine", zh: "茉莉" },
+  "Бергамот": { en: "Bergamot", zh: "佛手柑" },
+  "Спелый персик": { en: "Ripe peach", zh: "成熟水蜜桃" },
+  "Колумбия Супремо": { en: "Colombia Supremo", zh: "哥伦比亚慧兰" },
+  "Тёмный шоколад": { en: "Dark chocolate", zh: "黑巧克力" },
+  "Фундук": { en: "Hazelnut", zh: "榛子" },
+  "Тростниковый сахар": { en: "Cane sugar", zh: "蔗糖" },
+  "Шелковистая пена": { en: "Silky foam", zh: "丝滑奶泡" },
+  "Сладкая выпечка": { en: "Sweet pastry", zh: "烘焙甜香" },
+  "Какао": { en: "Cocoa", zh: "可可" },
+  "Плотное тело": { en: "Full body", zh: "醇厚体感" },
+  "Грецкий орех": { en: "Walnut", zh: "核桃" },
+  "Сливочная текстура": { en: "Creamy texture", zh: "奶油般丝滑" },
+  "Двойной ристретто": { en: "Double ristretto", zh: "双份精粹" },
+  "Сливочное масло": { en: "Butter", zh: "天然黄油" },
+  "Французская мука": { en: "French flour", zh: "法式小麦粉" },
+  "Хрустящая корочка": { en: "Crispy crust", zh: "酥脆外层" },
+  "Миндальный крем франжипан": { en: "Frangipane almond cream", zh: "杏仁奶油馅" },
+  "Лепестки миндаля": { en: "Flaked almonds", zh: "杏仁片" },
+  "Золотистая корочка": { en: "Golden crust", zh: "金黄外壳" },
+  "Лосось слабой соли": { en: "Cured salmon", zh: "轻腌三文鱼" },
+  "Сливочный крем-чиз": { en: "Cream cheese", zh: "乳酪奶油芝士" },
+  "Свежий огурец": { en: "Fresh cucumber", zh: "清脆黄瓜" },
+  "Фермерский творог": { en: "Farm cottage cheese", zh: "农场高质奶酪" },
+  "Домашняя сметана": { en: "Homemade sour cream", zh: "自制酸奶油" },
+  "Малиновый конфитюр": { en: "Raspberry jam", zh: "覆盆子果酱" },
+  "Церемониальная матча": { en: "Ceremonial matcha", zh: "特级仪式抹茶" },
+  "Овсяное молоко": { en: "Oat milk", zh: "燕麦奶" },
+  "Травянистая свежесть": { en: "Fresh botanical notes", zh: "清新草本甘甜" },
+  "Байкальские травы": { en: "Baikal herbs", zh: "贝加尔草本" },
+  "Саган-дайля": { en: "Sagan Dalya", zh: "香青兰草本" },
+  "Чабрец": { en: "Thyme", zh: "百里香" },
+  "Мята": { en: "Mint", zh: "薄荷" },
+  "Свежая обжарка": { en: "Fresh roast", zh: "新鲜自烘" },
+  "Жёлтая слива": { en: "Yellow plum", zh: "黄李" },
+  "Манго": { en: "Mango", zh: "芒果" },
+  "Тропические фрукты": { en: "Tropical fruits", zh: "热带水果" },
+  "Нежный творог": { en: "Tender cottage cheese", zh: "细腻奶酪" },
+  "Соленая карамель": { en: "Salted caramel", zh: "海盐焦糖" },
+  "Лесные ягоды": { en: "Wild berries", zh: "野生浆果" },
+  "Сливочная бриошь": { en: "Buttery brioche", zh: "黄油布里欧修" },
+  "Жидкий желток": { en: "Runny yolk", zh: "流心蛋黄" },
+  "Хрустящий бекон": { en: "Crispy bacon", zh: "香脆培根" },
+  "Лимонный соус": { en: "Lemon hollandaise", zh: "柠檬荷兰汁" },
+  "Яркий лимон": { en: "Zesty lemon", zh: "鲜柠檬" },
+  "Пряный базилик": { en: "Aromatic basil", zh: "芳香罗勒" },
+  "Хрустящее тесто": { en: "Crispy pastry", zh: "酥脆挞皮" },
+  "Сладкая меренга": { en: "Sweet meringue", zh: "甜美蛋白霜" },
+  "Жареная фисташка": { en: "Roasted pistachio", zh: "烘烤开心果" },
+  "Ягодная кислинка": { en: "Berry tanginess", zh: "浆果微酸" },
+  "Заварное тесто": { en: "Choux pastry", zh: "法式泡芙" },
+  "Тёмное какао": { en: "Dark raw cocoa", zh: "生黑可可" },
+  "Лесной орех": { en: "Hazelnut", zh: "榛子" },
+  "Бархатистая текстура": { en: "Velvety texture", zh: "丝绒般口感" },
+};
+
+export const getLocalizedTasteNote = (note: string, lang: "ru" | "en" | "zh"): string => {
+  if (lang === "ru") return note;
+  return TASTE_NOTES_I18N[note]?.[lang] || note;
+};
+

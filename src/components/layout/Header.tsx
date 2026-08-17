@@ -79,7 +79,35 @@ export const Header: React.FC = () => {
     };
   }, []);
 
+  const t = {
+    ru: {
+      city: "Иркутск",
+      spacesDropdown: "Локации и стили оформления",
+      tipsBtn: "Чаевые",
+      openMenu: "Открыть меню",
+      closeMenu: "Закрыть меню",
+      mobileThemeLabel: "Стиль атмосферы и локация:",
+    },
+    en: {
+      city: "Irkutsk",
+      spacesDropdown: "Locations & Aesthetics",
+      tipsBtn: "Tip Barista",
+      openMenu: "Open Menu",
+      closeMenu: "Close Menu",
+      mobileThemeLabel: "Atmosphere Style & Location:",
+    },
+    zh: {
+      city: "伊尔库茨克",
+      spacesDropdown: "空间与设计美学",
+      tipsBtn: "打赏咖啡师",
+      openMenu: "打开菜单",
+      closeMenu: "关闭菜单",
+      mobileThemeLabel: "空间美学与门店选择：",
+    },
+  }[language];
+
   const strokeColor = selectedLocation.theme.primaryColor;
+  const currentShortName = selectedLocation.shortNameI18n?.[language] || selectedLocation.shortName;
 
   return (
     <>
@@ -119,7 +147,7 @@ export const Header: React.FC = () => {
                 style={{ color: "var(--theme-primary)" }}
                 className="text-[10px] tracking-widest uppercase font-semibold whitespace-nowrap transition-colors duration-500"
               >
-                Иркутск • {selectedLocation.shortName}
+                {t.city} • {currentShortName}
               </span>
             </div>
           </a>
@@ -177,7 +205,7 @@ export const Header: React.FC = () => {
                   style={{ backgroundColor: selectedLocation.theme.primaryColor }}
                   className="h-2 w-2 rounded-full animate-pulse shrink-0 transition-colors duration-500"
                 />
-                <span className="max-w-[130px] truncate font-semibold">{selectedLocation.shortName}</span>
+                <span className="max-w-[130px] truncate font-semibold">{currentShortName}</span>
                 <ChevronDown className="h-3 w-3 opacity-60 shrink-0" />
               </button>
 
@@ -193,11 +221,13 @@ export const Header: React.FC = () => {
                     style={{ color: "var(--theme-muted)" }}
                     className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider flex items-center justify-between"
                   >
-                    <span>Локации и стили оформления</span>
+                    <span>{t.spacesDropdown}</span>
                     <Palette className="h-3 w-3" />
                   </div>
                   {LOCATIONS.map((loc) => {
                     const isSelected = loc.id === selectedLocationId;
+                    const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+                    const locStyle = loc.theme.styleNameI18n?.[language] || loc.theme.styleName;
                     return (
                       <button
                         key={loc.id}
@@ -212,13 +242,13 @@ export const Header: React.FC = () => {
                         className="flex w-full flex-col rounded-xl px-3 py-2 text-left text-xs transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-bold">{loc.shortName}</span>
+                          <span className="font-bold">{locShort}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
                             className="h-2 w-2 rounded-full"
                           />
                         </div>
-                        <span className="text-[10px] opacity-70 truncate">{loc.theme.styleName}</span>
+                        <span className="text-[10px] opacity-70 truncate">{locStyle}</span>
                       </button>
                     );
                   })}
@@ -284,7 +314,7 @@ export const Header: React.FC = () => {
             >
               <div className="flex items-center gap-1.5">
                 <Heart className="h-3.5 w-3.5 fill-current" />
-                <span className="font-semibold">Чаевые</span>
+                <span className="font-semibold">{t.tipsBtn}</span>
               </div>
             </ShimmerButton>
           </div>
@@ -299,7 +329,7 @@ export const Header: React.FC = () => {
                 color: "var(--theme-text)",
               }}
               className="flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm transition-transform active:scale-95"
-              aria-label="Открыть меню"
+              aria-label={t.openMenu}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
             </button>
@@ -337,7 +367,7 @@ export const Header: React.FC = () => {
                 <div>
                   <div className="font-serif font-bold text-base leading-tight">Vincent Van Coffee</div>
                   <div style={{ color: "var(--theme-primary)" }} className="text-[10px] uppercase tracking-wider font-semibold">
-                    {selectedLocation.shortName}
+                    {currentShortName}
                   </div>
                 </div>
               </div>
@@ -349,7 +379,7 @@ export const Header: React.FC = () => {
                   borderColor: "var(--theme-surface-border)",
                 }}
                 className="flex h-10 w-10 items-center justify-center rounded-xl border"
-                aria-label="Закрыть меню"
+                aria-label={t.closeMenu}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -409,11 +439,13 @@ export const Header: React.FC = () => {
               {/* Location Picker */}
               <div>
                 <div style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider mb-2">
-                  Стиль атмосферы и локация:
+                  {t.mobileThemeLabel}
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {LOCATIONS.map((loc) => {
                     const isSelected = loc.id === selectedLocationId;
+                    const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+                    const locStyle = loc.theme.styleNameI18n?.[language] || loc.theme.styleName;
                     return (
                       <button
                         key={loc.id}
@@ -425,14 +457,14 @@ export const Header: React.FC = () => {
                         className="rounded-xl border p-2 text-left text-xs transition-all"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-bold truncate">{loc.shortName}</span>
+                          <span className="font-bold truncate">{locShort}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
                             className="h-2 w-2 rounded-full shrink-0 ml-1"
                           />
                         </div>
                         <div style={{ color: "var(--theme-muted)" }} className="text-[10px] truncate mt-0.5">
-                          {loc.theme.styleName.split("&")[0]}
+                          {locStyle.split("&")[0]}
                         </div>
                       </button>
                     );
@@ -467,7 +499,7 @@ export const Header: React.FC = () => {
                 >
                   <div className="flex items-center gap-1.5">
                     <Heart className="h-3.5 w-3.5 fill-current" />
-                    <span>Чаевые</span>
+                    <span>{t.tipsBtn}</span>
                   </div>
                 </ShimmerButton>
               </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MENU_ITEMS, MenuItem, LOCATIONS } from "@/data/coffeeData";
+import { MENU_ITEMS, MenuItem, LOCATIONS, getLocalizedTasteNote } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { DrinkDetailModal } from "@/components/modals/DrinkDetailModal";
 import {
@@ -35,7 +35,7 @@ export const MenuSection: React.FC = () => {
   ];
 
   const tags = [
-    { id: "all", label: { ru: "Все вкусы", en: "All", zh: "全部" }, icon: Layers },
+    { id: "all", label: { ru: "Все вкусы", en: "All Flavors", zh: "全部风味" }, icon: Layers },
     { id: "specialty", label: { ru: "Спешелти 100%", en: "Specialty", zh: "精品豆" }, icon: Award },
     { id: "vegan", label: { ru: "Vegan / Растительное", en: "Plant-based", zh: "植物基" }, icon: Leaf },
     { id: "sugar_free", label: { ru: "Без сахара", en: "Sugar-Free", zh: "无添加糖" }, icon: ShieldCheck },
@@ -61,8 +61,11 @@ export const MenuSection: React.FC = () => {
       viewingFor: "Меню адаптировано для точки:",
       switchLoc: "Сменить локацию",
       priceCurrency: "₽",
+      calUnit: "ккал",
       detailsBtn: "Состав и КБЖУ",
       notInLocation: "Только в кафе с кухней",
+      sugarFree: "Без сахара",
+      viewTableBtn: "Смотреть полную таблицу КБЖУ",
     },
     en: {
       tag: "Bar & Culinary Menu",
@@ -71,8 +74,11 @@ export const MenuSection: React.FC = () => {
       viewingFor: "Showing menu for location:",
       switchLoc: "Change location",
       priceCurrency: "RUB",
+      calUnit: "kcal",
       detailsBtn: "Nutrition & Details",
       notInLocation: "Available at full café only",
+      sugarFree: "Sugar-Free",
+      viewTableBtn: "View Full Nutrition Table",
     },
     zh: {
       tag: "精品咖啡与烘焙菜单",
@@ -80,13 +86,17 @@ export const MenuSection: React.FC = () => {
       desc: "每一款出品皆是温度、奶沫微质感与原产地新鲜烘焙咖啡豆的精妙融合。",
       viewingFor: "当前显示门店菜单：",
       switchLoc: "切换门店",
-      priceCurrency: "卢布",
+      priceCurrency: "₽",
+      calUnit: "千卡",
       detailsBtn: "配方与营养成分",
       notInLocation: "仅限带厨房全日餐厅供应",
+      sugarFree: "无添加糖",
+      viewTableBtn: "查看完整热量营养表",
     },
   };
 
   const t = sectionText[language];
+  const currentLocName = selectedLocation.nameI18n?.[language] || selectedLocation.name;
 
   return (
     <section id="menu" className="relative py-24 transition-colors duration-500">
@@ -120,7 +130,7 @@ export const MenuSection: React.FC = () => {
             className="mt-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border px-4 py-2 text-xs shadow-sm"
           >
             <span style={{ color: "var(--theme-muted)" }}>{t.viewingFor}</span>
-            <span style={{ color: "var(--theme-primary)" }} className="font-bold">{selectedLocation.name}</span>
+            <span style={{ color: "var(--theme-primary)" }} className="font-bold">{currentLocName}</span>
             <span className="opacity-40">|</span>
             <a href="#locations" style={{ color: "var(--theme-primary)" }} className="text-xs hover:underline font-semibold">
               {t.switchLoc}
@@ -257,7 +267,7 @@ export const MenuSection: React.FC = () => {
                         {item.tags.includes("sugar_free") && (
                           <span className="inline-flex items-center gap-1 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 px-1.5 py-0.5 text-[10px] font-medium">
                             <ShieldCheck className="h-2.5 w-2.5" />
-                            Без сахара
+                            {t.sugarFree}
                           </span>
                         )}
                         {item.tasteNotes &&
@@ -270,7 +280,7 @@ export const MenuSection: React.FC = () => {
                               }}
                               className="rounded-md px-2 py-0.5 text-[10px] font-medium"
                             >
-                              {note}
+                              {getLocalizedTasteNote(note, language)}
                             </span>
                           ))}
                       </div>
@@ -280,10 +290,10 @@ export const MenuSection: React.FC = () => {
                   {/* Card Footer: Price & Calories */}
                   <div className="flex items-center justify-between border-t border-black/5 dark:border-white/5 px-5 py-3.5">
                     <div>
-                      <span style={{ color: "var(--theme-primary)" }} className="text-base font-bold">{item.price} ₽</span>
+                      <span style={{ color: "var(--theme-primary)" }} className="text-base font-bold">{item.price} {t.priceCurrency}</span>
                     </div>
                     <div style={{ color: "var(--theme-muted)" }} className="flex items-center gap-1.5 text-xs group-hover:text-[var(--theme-text)] transition-colors">
-                      <span>{item.nutrition.calories} ккал</span>
+                      <span>{item.nutrition.calories} {t.calUnit}</span>
                       <ChevronRight className="h-3.5 w-3.5 text-[var(--theme-primary)]" />
                     </div>
                   </div>
@@ -305,7 +315,7 @@ export const MenuSection: React.FC = () => {
             className="inline-flex items-center gap-2 rounded-xl border px-6 py-3 text-xs font-bold transition-all hover:scale-105 shadow-sm"
           >
             <Flame className="h-4 w-4" />
-            <span>Смотреть полную таблицу КБЖУ</span>
+            <span>{t.viewTableBtn}</span>
           </a>
         </div>
       </div>

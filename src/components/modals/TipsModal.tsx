@@ -9,7 +9,7 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import confetti from "canvas-confetti";
 
 export const TipsModal: React.FC = () => {
-  const { isTipsModalOpen, closeTipsModal, selectedLocationId, setSelectedLocationId } = useApp();
+  const { isTipsModalOpen, closeTipsModal, selectedLocationId, setSelectedLocationId, language } = useApp();
   const [selectedAmount, setSelectedAmount] = useState<number>(200);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [isSent, setIsSent] = useState<boolean>(false);
@@ -18,6 +18,56 @@ export const TipsModal: React.FC = () => {
 
   const activeLoc = LOCATIONS.find((l) => l.id === selectedLocationId) || LOCATIONS[0];
   const amounts = [100, 200, 300, 500];
+
+  const t = {
+    ru: {
+      tag: "Благодарность бариста",
+      title: "Чаевые смене",
+      desc: "Поблагодарите бариста за идеальную чашку и улыбку.",
+      locLabel: "Кофейня",
+      amtLabel: "Сумма благодарности",
+      customPlaceholder: "Или введите свою сумму (₽)",
+      sendBtnPrefix: "Отправить",
+      gatewayNotice: "Перевод осуществляется через СБП / sbtips.ru (Точка:",
+      thankTitle: "Спасибо за теплоту!",
+      thankDesc: "Перенаправляем вас на защищенную страницу оплаты sbtips.ru для точки",
+      proceedToPay: "Перейти к оплате",
+      closeBtn: "Закрыть",
+      currency: "₽",
+    },
+    en: {
+      tag: "Barista Appreciation",
+      title: "Tip the Shift",
+      desc: "Show appreciation to the baristas for your perfect cup and warm smile.",
+      locLabel: "Space Location",
+      amtLabel: "Appreciation Amount",
+      customPlaceholder: "Or enter custom amount...",
+      sendBtnPrefix: "Send",
+      gatewayNotice: "Processed securely via sbtips (Location:",
+      thankTitle: "Thank you for your warmth!",
+      thankDesc: "Redirecting to the secure sbtips payment gateway for",
+      proceedToPay: "Proceed to Payment",
+      closeBtn: "Close",
+      currency: "RUB",
+    },
+    zh: {
+      tag: "致谢咖啡师",
+      title: "打赏当班团队",
+      desc: "为咖啡师的用心调制与温暖微笑送上一份心意。",
+      locLabel: "选择门店",
+      amtLabel: "打赏金额",
+      customPlaceholder: "或输入自定义金额...",
+      sendBtnPrefix: "确认打赏",
+      gatewayNotice: "通过安全通道直接转付当班团队（门店：",
+      thankTitle: "感谢您的温暖与支持！",
+      thankDesc: "正在为您跳转至安全支付页面（门店：",
+      proceedToPay: "前往支付",
+      closeBtn: "关闭",
+      currency: "₽",
+    },
+  }[language];
+
+  const activeLocShort = activeLoc.shortNameI18n?.[language] || activeLoc.shortName;
 
   const handleSendTip = () => {
     const finalAmount = customAmount ? parseInt(customAmount, 10) : selectedAmount;
@@ -89,25 +139,28 @@ export const TipsModal: React.FC = () => {
                   <Heart className="h-5 w-5 fill-current" />
                 </div>
                 <span style={{ color: "var(--theme-primary)" }} className="text-xs font-bold tracking-wider uppercase">
-                  Благодарность бариста
+                  {t.tag}
                 </span>
               </div>
 
               <h3 className="mt-3 font-serif text-2xl sm:text-3xl font-bold">
-                Чаевые смене
+                {t.title}
               </h3>
               <p style={{ color: "var(--theme-muted)" }} className="mt-1.5 text-sm">
-                Поблагодарите бариста за идеальную чашку и улыбку.
+                {t.desc}
               </p>
 
               {/* Location Select with strict min-w-0 and truncation */}
               <div className="mt-5">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Кофейня
+                  {t.locLabel}
                 </label>
                 <div className="mt-2 grid grid-cols-2 gap-2.5">
                   {LOCATIONS.map((loc) => {
                     const isSelected = loc.id === selectedLocationId;
+                    const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+                    const locLandmark = loc.landmarkI18n?.[language] || loc.landmark;
+
                     return (
                       <button
                         key={loc.id}
@@ -120,14 +173,14 @@ export const TipsModal: React.FC = () => {
                         className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all min-w-0 w-full overflow-hidden"
                       >
                         <div className="flex items-center justify-between w-full min-w-0">
-                          <span className="font-bold truncate">{loc.shortName}</span>
+                          <span className="font-bold truncate">{locShort}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
                             className="h-2 w-2 rounded-full shrink-0 ml-1.5"
                           />
                         </div>
                         <span style={{ color: "var(--theme-muted)" }} className="block w-full truncate text-[10px] mt-0.5">
-                          {loc.landmark}
+                          {locLandmark}
                         </span>
                       </button>
                     );
@@ -138,7 +191,7 @@ export const TipsModal: React.FC = () => {
               {/* Amount buttons */}
               <div className="mt-5">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Сумма благодарности
+                  {t.amtLabel}
                 </label>
                 <div className="mt-2 grid grid-cols-4 gap-2">
                   {amounts.map((amt) => {
@@ -158,7 +211,7 @@ export const TipsModal: React.FC = () => {
                         }}
                         className="rounded-xl border py-2.5 text-sm font-bold transition-all"
                       >
-                        {amt} ₽
+                        {amt} {t.currency}
                       </button>
                     );
                   })}
@@ -167,7 +220,7 @@ export const TipsModal: React.FC = () => {
                 <div className="mt-2.5">
                   <input
                     type="number"
-                    placeholder="Или введите свою сумму (₽)"
+                    placeholder={t.customPlaceholder}
                     value={customAmount}
                     onChange={(e) => setCustomAmount(e.target.value)}
                     style={{
@@ -188,13 +241,13 @@ export const TipsModal: React.FC = () => {
                 >
                   <div className="flex items-center justify-center gap-2">
                     <Heart className="h-4 w-4 fill-current" />
-                    <span>Отправить {customAmount ? `${customAmount} ₽` : `${selectedAmount} ₽`}</span>
+                    <span>{t.sendBtnPrefix} {customAmount ? `${customAmount} ${t.currency}` : `${selectedAmount} ${t.currency}`}</span>
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </ShimmerButton>
 
                 <p style={{ color: "var(--theme-muted)" }} className="text-center text-[11px]">
-                  Перевод осуществляется через СБП / sbtips.ru (Точка: «{activeLoc.shortName}»)
+                  {t.gatewayNotice} «{activeLocShort}»)
                 </p>
               </div>
             </div>
@@ -210,10 +263,10 @@ export const TipsModal: React.FC = () => {
                 <CheckCircle2 className="h-8 w-8" />
               </div>
               <h3 className="mt-4 font-serif text-2xl font-bold">
-                Спасибо за теплоту!
+                {t.thankTitle}
               </h3>
               <p style={{ color: "var(--theme-muted)" }} className="mt-2 text-sm">
-                Перенаправляем вас на защищенную страницу оплаты sbtips.ru для точки «{activeLoc.shortName}».
+                {t.thankDesc} «{activeLocShort}».
               </p>
 
               <div className="mt-6 flex justify-center gap-3">
@@ -227,7 +280,7 @@ export const TipsModal: React.FC = () => {
                   }}
                   className="inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 text-xs font-bold transition-transform hover:scale-105"
                 >
-                  <span>Перейти к оплате</span>
+                  <span>{t.proceedToPay}</span>
                   <ExternalLink className="h-3.5 w-3.5" />
                 </a>
                 <button
@@ -238,7 +291,7 @@ export const TipsModal: React.FC = () => {
                   }}
                   className="rounded-xl border px-5 py-2.5 text-xs font-semibold"
                 >
-                  Закрыть
+                  {t.closeBtn}
                 </button>
               </div>
             </div>

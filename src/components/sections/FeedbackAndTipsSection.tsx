@@ -53,6 +53,15 @@ export const FeedbackAndTipsSection: React.FC = () => {
       tipsSub: "Выберите точку и сумму. Перевод поступит смене бариста через СБП / sbtips.",
       btnSendTip: "Поблагодарить",
       leaveReviewBtn: "Написать отзыв о кофейне",
+      selectLocLabel: "Выберите точку в Иркутске",
+      tipAmountLabel: "Сумма чаевых",
+      customTipPlaceholder: "Или другая сумма (₽)...",
+      transferNotice: "Перевод напрямую через СБП / sbtips.ru (Точка:",
+      ratingGuests: "Рейтинг гостей",
+      basedOn: "На основе отзывов в",
+      mapsPrompt: "Оставить отзыв на картах точки",
+      reviewsTitle: "Отзывы наших гостей",
+      currency: "₽",
     },
     en: {
       tag: "You Make Us Better",
@@ -62,6 +71,15 @@ export const FeedbackAndTipsSection: React.FC = () => {
       tipsSub: "Select location and amount. Direct cashless transfer via sbtips gateway.",
       btnSendTip: "Send Appreciation",
       leaveReviewBtn: "Write a Guest Review",
+      selectLocLabel: "Select space in Irkutsk",
+      tipAmountLabel: "Tip Amount",
+      customTipPlaceholder: "Or enter custom amount...",
+      transferNotice: "Direct cashless transfer via sbtips (Location:",
+      ratingGuests: "Guest Rating",
+      basedOn: "Based on verified reviews in",
+      mapsPrompt: "Leave a review on maps for",
+      reviewsTitle: "What Our Guests Say",
+      currency: "RUB",
     },
     zh: {
       tag: "因你而更美好",
@@ -71,8 +89,19 @@ export const FeedbackAndTipsSection: React.FC = () => {
       tipsSub: "选择对应门店与金额，打赏将直接通过安全支付通道转付当班咖啡师。",
       btnSendTip: "致谢咖啡师",
       leaveReviewBtn: "留下您的品饮体验与评价",
+      selectLocLabel: "选择伊尔库茨克门店",
+      tipAmountLabel: "打赏金额",
+      customTipPlaceholder: "或输入自定义金额...",
+      transferNotice: "通过安全通道直接转付当班团队（门店：",
+      ratingGuests: "宾客综合好评",
+      basedOn: "来自地图真实点评",
+      mapsPrompt: "在地图上评价此门店",
+      reviewsTitle: "常客心声与评价",
+      currency: "₽",
     },
   }[language];
+
+  const activeLocShort = activeLoc.shortNameI18n?.[language] || activeLoc.shortName;
 
   return (
     <section id="feedback" className="relative py-24 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
@@ -130,11 +159,13 @@ export const FeedbackAndTipsSection: React.FC = () => {
               {/* Location Select Grid */}
               <div className="mt-6">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Выберите точку в Иркутске
+                  {t.selectLocLabel}
                 </label>
                 <div className="mt-2 grid grid-cols-2 gap-2.5">
                   {LOCATIONS.map((loc) => {
                     const isSelected = loc.id === selectedLocationId;
+                    const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+                    const locLandmark = loc.landmarkI18n?.[language] || loc.landmark;
                     return (
                       <button
                         key={loc.id}
@@ -146,14 +177,14 @@ export const FeedbackAndTipsSection: React.FC = () => {
                         className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all min-w-0 w-full overflow-hidden"
                       >
                         <div className="flex items-center justify-between w-full min-w-0">
-                          <span className="font-bold truncate">{loc.shortName}</span>
+                          <span className="font-bold truncate">{locShort}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
                             className="h-2 w-2 rounded-full shrink-0 ml-1.5"
                           />
                         </div>
                         <span style={{ color: "var(--theme-muted)" }} className="block w-full truncate text-[10px] mt-0.5">
-                          {loc.landmark}
+                          {locLandmark}
                         </span>
                       </button>
                     );
@@ -164,7 +195,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
               {/* Preset Amounts */}
               <div className="mt-6">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Сумма чаевых
+                  {t.tipAmountLabel}
                 </label>
                 <div className="mt-2 grid grid-cols-4 gap-2">
                   {presetAmounts.map((amt) => {
@@ -183,7 +214,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                         }}
                         className="rounded-xl border py-3 text-sm font-bold transition-all shadow-xs"
                       >
-                        {amt} ₽
+                        {amt} {t.currency}
                       </button>
                     );
                   })}
@@ -192,7 +223,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                 <div className="mt-2.5">
                   <input
                     type="number"
-                    placeholder="Или другая сумма (₽)..."
+                    placeholder={t.customTipPlaceholder}
                     value={customTip}
                     onChange={(e) => setCustomTip(e.target.value)}
                     style={{
@@ -214,13 +245,13 @@ export const FeedbackAndTipsSection: React.FC = () => {
               >
                 <div className="flex items-center justify-center gap-2">
                   <Heart className="h-4 w-4 fill-current" />
-                  <span>{t.btnSendTip} ({customTip ? `${customTip} ₽` : `${tipAmount} ₽`})</span>
+                  <span>{t.btnSendTip} ({customTip ? `${customTip} ${t.currency}` : `${tipAmount} ${t.currency}`})</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </ShimmerButton>
 
               <div style={{ color: "var(--theme-muted)" }} className="mt-2.5 text-center text-[11px]">
-                Перевод напрямую через СБП / sbtips.ru (Точка: «{activeLoc.shortName}»)
+                {t.transferNotice} «{activeLocShort}»)
               </div>
             </div>
           </div>
@@ -240,7 +271,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                     style={{ color: "var(--theme-primary)" }}
                     className="text-xs font-bold uppercase tracking-wider"
                   >
-                    Рейтинг гостей
+                    {t.ratingGuests}
                   </span>
                   <div className="mt-1 flex items-baseline gap-2">
                     <span className="font-serif text-4xl sm:text-5xl font-bold">
@@ -255,7 +286,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                 </div>
 
                 <div className="text-right">
-                  <span style={{ color: "var(--theme-muted)" }} className="text-xs">На основе отзывов в</span>
+                  <span style={{ color: "var(--theme-muted)" }} className="text-xs">{t.basedOn}</span>
                   <div className="mt-1 flex items-center justify-end gap-1.5 font-bold text-xs">
                     <span>2ГИС & Яндекс</span>
                   </div>
@@ -265,7 +296,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
               {/* Direct Maps Links */}
               <div className="mt-6 space-y-3">
                 <div style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Оставить отзыв на картах точки «{activeLoc.shortName}»:
+                  {t.mapsPrompt} «{activeLocShort}»:
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -331,46 +362,54 @@ export const FeedbackAndTipsSection: React.FC = () => {
         {/* Marquee with guest quotes */}
         <div className="mt-14">
           <div style={{ color: "var(--theme-muted)" }} className="mb-4 text-center text-xs font-bold uppercase tracking-wider">
-            Отзывы наших гостей
+            {t.reviewsTitle}
           </div>
 
           <Marquee duration="40s" pauseOnHover={true}>
-            {REVIEWS.map((rev) => (
-              <div
-                key={rev.id}
-                style={{
-                  backgroundColor: "var(--theme-surface)",
-                  borderColor: "var(--theme-surface-border)",
-                }}
-                className="w-80 sm:w-96 shrink-0 rounded-2xl border p-5 shadow-sm"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr ${rev.avatarBg} text-xs font-bold text-white`}>
-                      {rev.author.charAt(0)}
+            {REVIEWS.map((rev) => {
+              const author = rev.authorI18n?.[language] || rev.author;
+              const role = rev.roleI18n?.[language] || rev.role;
+              const text = rev.textI18n?.[language] || rev.text;
+              const loc = rev.locationI18n?.[language] || rev.location;
+              const date = rev.dateI18n?.[language] || rev.date;
+
+              return (
+                <div
+                  key={rev.id}
+                  style={{
+                    backgroundColor: "var(--theme-surface)",
+                    borderColor: "var(--theme-surface-border)",
+                  }}
+                  className="w-80 sm:w-96 shrink-0 rounded-2xl border p-5 shadow-sm"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr ${rev.avatarBg} text-xs font-bold text-white`}>
+                        {author.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-bold text-xs">{author}</div>
+                        <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{role}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-bold text-xs">{rev.author}</div>
-                      <div style={{ color: "var(--theme-muted)" }} className="text-[10px]">{rev.role}</div>
+                    <div className="flex text-[var(--theme-primary)]">
+                      {[...Array(rev.rating)].map((_, i) => (
+                        <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                      ))}
                     </div>
                   </div>
-                  <div className="flex text-[var(--theme-primary)]">
-                    {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-current" />
-                    ))}
+
+                  <p style={{ color: "var(--theme-muted)" }} className="mt-3 text-xs leading-relaxed italic">
+                    "{text}"
+                  </p>
+
+                  <div className="mt-3 flex items-center justify-between border-t border-black/5 dark:border-white/5 pt-2 text-[10px] opacity-70">
+                    <span>{loc}</span>
+                    <span>{date}</span>
                   </div>
                 </div>
-
-                <p style={{ color: "var(--theme-muted)" }} className="mt-3 text-xs leading-relaxed italic">
-                  "{rev.text}"
-                </p>
-
-                <div className="mt-3 flex items-center justify-between border-t border-black/5 dark:border-white/5 pt-2 text-[10px] opacity-70">
-                  <span>{rev.location}</span>
-                  <span>{rev.date}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </Marquee>
         </div>
       </div>

@@ -9,10 +9,10 @@ import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import confetti from "canvas-confetti";
 
 export const FeedbackModal: React.FC = () => {
-  const { isFeedbackModalOpen, closeFeedbackModal, selectedLocationId, setSelectedLocationId } = useApp();
+  const { isFeedbackModalOpen, closeFeedbackModal, selectedLocationId, setSelectedLocationId, language } = useApp();
   const [rating, setRating] = useState<number>(5);
   const [hoverRating, setHoverRating] = useState<number>(0);
-  const [selectedTags, setSelectedTags] = useState<string[]>(["Вкусный кофе"]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [authorName, setAuthorName] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -20,17 +20,106 @@ export const FeedbackModal: React.FC = () => {
   if (!isFeedbackModalOpen) return null;
 
   const activeLoc = LOCATIONS.find((l) => l.id === selectedLocationId) || LOCATIONS[0];
+  const activeLocShort = activeLoc.shortNameI18n?.[language] || activeLoc.shortName;
 
-  const availableTags = [
-    "Вкусный кофе",
-    "Улыбка бариста",
-    "Уютная атмосфера",
-    "Любимая музыка",
-    "Быстрая отдача",
-    "Свежая выпечка",
-    "Красивая подача",
-    "Чистота и свет",
-  ];
+  const availableTags = {
+    ru: [
+      "Вкусный кофе",
+      "Улыбка бариста",
+      "Уютная атмосфера",
+      "Любимая музыка",
+      "Быстрая отдача",
+      "Свежая выпечка",
+      "Красивая подача",
+      "Чистота и свет",
+    ],
+    en: [
+      "Delicious Coffee",
+      "Barista Smile",
+      "Cozy Atmosphere",
+      "Great Playlist",
+      "Fast Service",
+      "Fresh Pastries",
+      "Beautiful Presentation",
+      "Clean & Bright",
+    ],
+    zh: [
+      "咖啡风味纯正",
+      "咖啡师笑容亲切",
+      "艺术氛围舒适",
+      "背景音乐治愈",
+      "出餐迅速高效",
+      "现烤烘焙新鲜",
+      "出品摆盘精致",
+      "明亮干净整洁",
+    ],
+  }[language];
+
+  const t = {
+    ru: {
+      tag: "Вы делаете нас лучше",
+      title: "Оставить отзыв",
+      desc: "Поделитесь впечатлением от посещения «Vincent Van Coffee».",
+      locLabel: "Кофейня",
+      ratingLabel: "Ваша оценка",
+      rating5: "Превосходно!",
+      rating4: "Очень хорошо",
+      ratingOutOf: "из 5",
+      tagsLabel: "Что вам особенно понравилось?",
+      nameLabel: "Ваше имя",
+      namePlaceholder: "Например, Анна",
+      textLabel: "Отзыв или пожелание",
+      textPlaceholder: "Расскажите о вашем впечатлении...",
+      submitBtn: "Отправить отзыв",
+      thankPrefix: "Благодарим вас,",
+      thankGuest: "дорогой гость",
+      thankSub: "Ваш отзыв передан управляющему точки",
+      thankEnd: "Вы действительно делаете нас лучше!",
+      backBtn: "Вернуться на сайт",
+    },
+    en: {
+      tag: "You Make Us Better",
+      title: "Leave a Review",
+      desc: "Share your experience visiting Vincent Van Coffee.",
+      locLabel: "Space Location",
+      ratingLabel: "Your Rating",
+      rating5: "Outstanding!",
+      rating4: "Very Good",
+      ratingOutOf: "out of 5",
+      tagsLabel: "What stood out during your visit?",
+      nameLabel: "Your Name",
+      namePlaceholder: "e.g. Anna",
+      textLabel: "Review or Feedback",
+      textPlaceholder: "Tell us about your impression...",
+      submitBtn: "Submit Review",
+      thankPrefix: "Thank you,",
+      thankGuest: "dear guest",
+      thankSub: "Your feedback has been forwarded to the manager of",
+      thankEnd: "You help us grow every day!",
+      backBtn: "Back to Site",
+    },
+    zh: {
+      tag: "因你而更美好",
+      title: "留下您的评价",
+      desc: "分享您在凡高咖啡空间的美好体验与建议。",
+      locLabel: "选择门店",
+      ratingLabel: "您的评分",
+      rating5: "绝佳体验！",
+      rating4: "非常棒",
+      ratingOutOf: "分",
+      tagsLabel: "您最满意的亮点有哪些？",
+      nameLabel: "您的称呼",
+      namePlaceholder: "例如：安娜",
+      textLabel: "评价与心声",
+      textPlaceholder: "与我们分享您的品饮体验...",
+      submitBtn: "提交真实评价",
+      thankPrefix: "衷心感谢您，",
+      thankGuest: "尊敬的贵宾",
+      thankSub: "您的反馈已实时转交至门店经理（门店：",
+      thankEnd: "您的每一条建议都让我们更进一步！",
+      backBtn: "返回主页",
+    },
+  }[language];
 
   const toggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
@@ -104,25 +193,28 @@ export const FeedbackModal: React.FC = () => {
                   <MessageSquare className="h-5 w-5" />
                 </div>
                 <span style={{ color: "var(--theme-primary)" }} className="text-xs font-bold tracking-wider uppercase">
-                  Вы делаете нас лучше
+                  {t.tag}
                 </span>
               </div>
 
               <h3 className="mt-3 font-serif text-2xl sm:text-3xl font-bold">
-                Оставить отзыв
+                {t.title}
               </h3>
               <p style={{ color: "var(--theme-muted)" }} className="mt-1.5 text-sm">
-                Поделитесь впечатлением от посещения «Vincent Van Coffee».
+                {t.desc}
               </p>
 
               {/* Location Select */}
               <div className="mt-5">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Кофейня
+                  {t.locLabel}
                 </label>
                 <div className="mt-2 grid grid-cols-2 gap-2.5">
                   {LOCATIONS.map((loc) => {
                     const isSelected = loc.id === selectedLocationId;
+                    const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+                    const locLandmark = loc.landmarkI18n?.[language] || loc.landmark;
+
                     return (
                       <button
                         key={loc.id}
@@ -135,14 +227,14 @@ export const FeedbackModal: React.FC = () => {
                         className="flex flex-col items-start rounded-xl border p-2.5 text-left text-xs transition-all min-w-0 w-full overflow-hidden"
                       >
                         <div className="flex items-center justify-between w-full min-w-0">
-                          <span className="font-bold truncate">{loc.shortName}</span>
+                          <span className="font-bold truncate">{locShort}</span>
                           <span
                             style={{ backgroundColor: loc.theme.primaryColor }}
                             className="h-2 w-2 rounded-full shrink-0 ml-1.5"
                           />
                         </div>
                         <span style={{ color: "var(--theme-muted)" }} className="block w-full truncate text-[10px] mt-0.5">
-                          {loc.landmark}
+                          {locLandmark}
                         </span>
                       </button>
                     );
@@ -153,7 +245,7 @@ export const FeedbackModal: React.FC = () => {
               {/* Star Rating */}
               <div className="mt-5">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Ваша оценка
+                  {t.ratingLabel}
                 </label>
                 <div className="mt-2 flex items-center gap-2">
                   {[1, 2, 3, 4, 5].map((star) => {
@@ -178,7 +270,7 @@ export const FeedbackModal: React.FC = () => {
                     );
                   })}
                   <span style={{ color: "var(--theme-primary)" }} className="ml-2 text-xs font-bold">
-                    {rating === 5 ? "Превосходно!" : rating === 4 ? "Очень хорошо" : `${rating} из 5`}
+                    {rating === 5 ? t.rating5 : rating === 4 ? t.rating4 : `${rating} ${t.ratingOutOf}`}
                   </span>
                 </div>
               </div>
@@ -186,7 +278,7 @@ export const FeedbackModal: React.FC = () => {
               {/* Tags */}
               <div className="mt-4">
                 <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                  Что вам особенно понравилось?
+                  {t.tagsLabel}
                 </label>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {availableTags.map((tag) => {
@@ -214,12 +306,12 @@ export const FeedbackModal: React.FC = () => {
               <div className="mt-4 space-y-3">
                 <div>
                   <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                    Ваше имя
+                    {t.nameLabel}
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Например, Анна"
+                    placeholder={t.namePlaceholder}
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
                     style={{
@@ -232,11 +324,11 @@ export const FeedbackModal: React.FC = () => {
                 </div>
                 <div>
                   <label style={{ color: "var(--theme-muted)" }} className="text-xs font-bold uppercase tracking-wider">
-                    Отзыв или пожелание
+                    {t.textLabel}
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Расскажите о вашем впечатлении..."
+                    placeholder={t.textPlaceholder}
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     style={{
@@ -253,7 +345,7 @@ export const FeedbackModal: React.FC = () => {
               <div className="mt-6">
                 <ShimmerButton type="submit" className="w-full py-3.5 text-base font-bold">
                   <div className="flex items-center justify-center gap-2">
-                    <span>Отправить отзыв</span>
+                    <span>{t.submitBtn}</span>
                     <Send className="h-4 w-4" />
                   </div>
                 </ShimmerButton>
@@ -271,10 +363,10 @@ export const FeedbackModal: React.FC = () => {
                 <CheckCircle2 className="h-8 w-8" />
               </div>
               <h3 className="mt-4 font-serif text-2xl font-bold">
-                Благодарим вас, {authorName || "дорогой гость"}!
+                {t.thankPrefix} {authorName || t.thankGuest}!
               </h3>
               <p style={{ color: "var(--theme-muted)" }} className="mt-2 text-sm">
-                Ваш отзыв передан управляющему точки «{activeLoc.shortName}». Вы действительно делаете нас лучше!
+                {t.thankSub} «{activeLocShort}». {t.thankEnd}
               </p>
 
               <div className="mt-6">
@@ -286,7 +378,7 @@ export const FeedbackModal: React.FC = () => {
                   }}
                   className="rounded-xl px-6 py-2.5 text-xs font-bold transition-transform hover:scale-105"
                 >
-                  Вернуться на сайт
+                  {t.backBtn}
                 </button>
               </div>
             </div>

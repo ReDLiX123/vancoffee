@@ -30,10 +30,22 @@ export const LoyaltySection: React.FC = () => {
   const presets = [10, 20, 30, 45, 60];
 
   const getConsumptionStatus = (cups: number) => {
-    if (cups <= 12) return "Редкий гость (~1-2 чашки в неделю)";
-    if (cups <= 24) return "Стандартный ритм (~1 чашка в день)";
-    if (cups <= 39) return "Любитель кофе (~1-2 чашки в день)";
-    return "Кофейный гурман (2+ чашки каждый день)";
+    if (language === "ru") {
+      if (cups <= 12) return "Редкий гость (~1-2 чашки в неделю)";
+      if (cups <= 24) return "Стандартный ритм (~1 чашка в день)";
+      if (cups <= 39) return "Любитель кофе (~1-2 чашки в день)";
+      return "Кофейный гурман (2+ чашки каждый день)";
+    }
+    if (language === "en") {
+      if (cups <= 12) return "Occasional Visitor (~1-2 cups / week)";
+      if (cups <= 24) return "Daily Habit (~1 cup / day)";
+      if (cups <= 39) return "Coffee Enthusiast (~1-2 cups / day)";
+      return "True Connoisseur (2+ cups every day)";
+    }
+    if (cups <= 12) return "偶尔品饮（约每周 1-2 杯）";
+    if (cups <= 24) return "日常习惯（约每日 1 杯）";
+    if (cups <= 39) return "咖啡爱好者（约每日 1-2 杯）";
+    return "重度咖啡达人（每日 2 杯以上）";
   };
 
   const handleJoinClub = (e: React.FormEvent) => {
@@ -55,6 +67,12 @@ export const LoyaltySection: React.FC = () => {
       tag: "Программа лояльности",
       title: "Vincent Van Club",
       desc: "Цифровая карта привилегий для гостей сети кофеен Vincent Van Coffee в Иркутске.",
+      tierPrefix: "Уровень",
+      cashbackSuffix: "Кэшбэк",
+      immediatelyAfterReg: "Сразу после регистрации",
+      spendThresholdPrefix: "Порог покупок от",
+      selectedForCalc: "Выбран для расчета",
+      clickToSelect: "Нажмите для выбора",
       calcTitle: "Калькулятор прогнозируемой выгоды",
       calcCups: "Сколько чашек кофе вы выпиваете в месяц?",
       calcResultYear: "Прогнозируемая экономия в год:",
@@ -65,11 +83,21 @@ export const LoyaltySection: React.FC = () => {
       joinBtn: "Оформить карту",
       congrats: "Карта успешно выпущена!",
       congratsSub: "Электронная карта активирована. Приятных визитов в Vincent Van Coffee!",
+      presetsLabel: "Пресеты:",
+      cupsSuffix: "чашек",
+      cupsMonthSuffix: "чашек/мес",
+      currencySymbol: "₽",
     },
     en: {
       tag: "Loyalty Program",
       title: "Vincent Van Club",
       desc: "Digital guest pass and rewards framework for coffee lovers in Irkutsk.",
+      tierPrefix: "Tier",
+      cashbackSuffix: "Cashback",
+      immediatelyAfterReg: "Immediately upon registration",
+      spendThresholdPrefix: "Spend threshold from",
+      selectedForCalc: "Selected for calculation",
+      clickToSelect: "Click to select",
       calcTitle: "Calculate Your Annual Perks",
       calcCups: "How many cups of coffee do you enjoy monthly?",
       calcResultYear: "Projected annual value:",
@@ -80,11 +108,21 @@ export const LoyaltySection: React.FC = () => {
       joinBtn: "Get Digital Pass",
       congrats: "Pass Successfully Issued!",
       congratsSub: "Your digital pass is active. Enjoy your visits to Vincent Van Coffee!",
+      presetsLabel: "Presets:",
+      cupsSuffix: "cups",
+      cupsMonthSuffix: "cups/mo",
+      currencySymbol: "RUB",
     },
     zh: {
       tag: "会员俱乐部",
       title: "凡高艺术咖啡俱乐部",
       desc: "为伊尔库茨克咖啡常客量身打造的专属数字化会员特权体系。",
+      tierPrefix: "等级",
+      cashbackSuffix: "返现",
+      immediatelyAfterReg: "注册即可直接享有",
+      spendThresholdPrefix: "累计消费达",
+      selectedForCalc: "已选定测算",
+      clickToSelect: "点击选择此级别",
       calcTitle: "会员收益模拟测算",
       calcCups: "您每月大约品饮多少杯咖啡？",
       calcResultYear: "预计全年为您节省：",
@@ -95,8 +133,14 @@ export const LoyaltySection: React.FC = () => {
       joinBtn: "立即开通会员",
       congrats: "会员卡领取成功！",
       congratsSub: "您的电子会员卡已激活，欢迎常来品味艺术咖啡！",
+      presetsLabel: "快捷预设:",
+      cupsSuffix: "杯",
+      cupsMonthSuffix: "杯/月",
+      currencySymbol: "₽",
     },
   }[language];
+
+  const currentTierName = currentTier.nameI18n?.[language] || currentTier.name;
 
   return (
     <section id="loyalty" className="relative py-24 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
@@ -126,6 +170,10 @@ export const LoyaltySection: React.FC = () => {
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {LOYALTY_TIERS.map((tier, idx) => {
             const isSelected = idx === activeTier;
+            const tierName = tier.nameI18n?.[language] || tier.name;
+            const tierTagline = tier.taglineI18n?.[language] || tier.tagline;
+            const tierPerks = tier.perksI18n?.[language] || tier.perks;
+
             return (
               <div
                 key={tier.id}
@@ -145,7 +193,7 @@ export const LoyaltySection: React.FC = () => {
                       style={{ color: "var(--theme-primary)" }}
                       className="text-xs font-bold uppercase tracking-widest"
                     >
-                      Уровень {idx + 1}
+                      {t.tierPrefix} {idx + 1}
                     </span>
                     <div
                       style={{
@@ -155,14 +203,14 @@ export const LoyaltySection: React.FC = () => {
                       }}
                       className="rounded-full border px-3 py-1 text-xs font-bold"
                     >
-                      {tier.cashback}% Кэшбэк
+                      {tier.cashback}% {t.cashbackSuffix}
                     </div>
                   </div>
 
                   <h3 className="mt-4 font-serif text-2xl font-bold">
-                    {tier.name}
+                    {tierName}
                   </h3>
-                  <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs">{tier.tagline}</p>
+                  <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs">{tierTagline}</p>
 
                   {/* Spend condition */}
                   <div
@@ -173,15 +221,15 @@ export const LoyaltySection: React.FC = () => {
                     className="mt-4 rounded-xl p-3 text-xs border"
                   >
                     {tier.spendThreshold === 0 ? (
-                      <span>Сразу после регистрации</span>
+                      <span>{t.immediatelyAfterReg}</span>
                     ) : (
-                      <span>Порог покупок от <strong>{tier.spendThreshold.toLocaleString()} ₽</strong></span>
+                      <span>{t.spendThresholdPrefix} <strong>{tier.spendThreshold.toLocaleString()} {t.currencySymbol}</strong></span>
                     )}
                   </div>
 
                   {/* Perks list */}
                   <div className="mt-6 space-y-2.5 text-xs">
-                    {tier.perks.map((perk, pIdx) => (
+                    {tierPerks.map((perk, pIdx) => (
                       <div key={pIdx} className="flex items-start gap-2.5">
                         <CheckCircle2 style={{ color: "var(--theme-primary)" }} className="h-4 w-4 shrink-0 mt-0.5" />
                         <span>{perk}</span>
@@ -192,7 +240,7 @@ export const LoyaltySection: React.FC = () => {
 
                 <div className="mt-8 pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
                   <span style={{ color: "var(--theme-muted)" }} className="text-[11px]">
-                    {isSelected ? "Выбран для расчета" : "Нажмите для выбора"}
+                    {isSelected ? t.selectedForCalc : t.clickToSelect}
                   </span>
                   <div
                     style={{ backgroundColor: isSelected ? "var(--theme-primary)" : "var(--theme-surface-border)" }}
@@ -228,7 +276,7 @@ export const LoyaltySection: React.FC = () => {
                 <div className="flex justify-between items-baseline">
                   <span style={{ color: "var(--theme-muted)" }} className="text-xs sm:text-sm">{t.calcCups}</span>
                   <span style={{ color: "var(--theme-primary)" }} className="font-serif text-3xl font-bold">
-                    {monthlyCups} <span style={{ color: "var(--theme-text)" }} className="text-sm font-normal">чашек/мес</span>
+                    {monthlyCups} <span style={{ color: "var(--theme-text)" }} className="text-sm font-normal">{t.cupsMonthSuffix}</span>
                   </span>
                 </div>
 
@@ -248,7 +296,7 @@ export const LoyaltySection: React.FC = () => {
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <span style={{ color: "var(--theme-muted)" }} className="text-[11px] font-semibold mr-1">
-                      Пресеты:
+                      {t.presetsLabel}
                     </span>
                     {presets.map((count) => {
                       const isPresetActive = monthlyCups === count;
@@ -264,7 +312,7 @@ export const LoyaltySection: React.FC = () => {
                           }}
                           className="rounded-lg border px-2.5 py-1 text-xs font-semibold transition-all hover:scale-105"
                         >
-                          {count} чашек
+                          {count} {t.cupsSuffix}
                         </button>
                       );
                     })}
@@ -329,14 +377,14 @@ export const LoyaltySection: React.FC = () => {
                 style={{ color: "var(--theme-primary)" }}
                 className="text-xs font-bold uppercase tracking-wider"
               >
-                Уровень «{currentTier.name}» ({currentTier.cashback}%)
+                {t.tierPrefix} «{currentTierName}» ({currentTier.cashback}%)
               </div>
 
               <div
                 style={{ color: "var(--theme-primary)" }}
                 className="mt-4 font-serif text-4xl sm:text-5xl font-bold"
               >
-                ~{yearlyCashback.toLocaleString()} ₽
+                ~{yearlyCashback.toLocaleString()} {t.currencySymbol}
               </div>
               <div style={{ color: "var(--theme-muted)" }} className="text-xs mt-1">{t.calcResultYear}</div>
 
@@ -354,7 +402,7 @@ export const LoyaltySection: React.FC = () => {
                 </div>
                 <div className="text-left">
                   <div className="font-serif text-2xl font-bold">
-                    + {freeCupsYear} чашек
+                    + {freeCupsYear} {t.cupsSuffix}
                   </div>
                   <div style={{ color: "var(--theme-muted)" }} className="text-[11px]">{t.calcFreeCups}</div>
                 </div>

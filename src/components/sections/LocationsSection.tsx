@@ -87,6 +87,13 @@ export const LocationsSection: React.FC = () => {
       btnYandex: "Яндекс.Карты",
       popular: "Фирменный напиток локации:",
       paletteLabel: "Палитра интерьера:",
+      styleLabel: "Стиль:",
+      addressLabel: "Точный адрес",
+      hoursLabel: "Режим работы",
+      weekdaysLabel: "Будние дни:",
+      weekendsLabel: "Выходные:",
+      phoneLabel: "Телефон локации",
+      featuresLabel: "Особенности пространства",
     },
     en: {
       tag: "Spaces in Irkutsk",
@@ -99,6 +106,13 @@ export const LocationsSection: React.FC = () => {
       btnYandex: "Yandex Maps",
       popular: "Signature Location Drink:",
       paletteLabel: "Interior Palette:",
+      styleLabel: "Style:",
+      addressLabel: "Exact Address",
+      hoursLabel: "Opening Hours",
+      weekdaysLabel: "Weekdays:",
+      weekendsLabel: "Weekends:",
+      phoneLabel: "Location Phone",
+      featuresLabel: "Space Features & Amenities",
     },
     zh: {
       tag: "伊尔库茨克空间",
@@ -111,10 +125,26 @@ export const LocationsSection: React.FC = () => {
       btnYandex: "Yandex 地图",
       popular: "本店特色招牌推荐：",
       paletteLabel: "空间配色：",
+      styleLabel: "风格：",
+      addressLabel: "详细地址",
+      hoursLabel: "营业时间",
+      weekdaysLabel: "工作日：",
+      weekendsLabel: "周末：",
+      phoneLabel: "门店电话",
+      featuresLabel: "空间特色与设施",
     },
   };
 
   const t = sectionHeadings[language];
+
+  const activeLocName = activeLoc.nameI18n?.[language] || activeLoc.name;
+  const activeLocLandmark = activeLoc.landmarkI18n?.[language] || activeLoc.landmark;
+  const activeLocAtmosphere = activeLoc.atmosphereI18n?.[language] || activeLoc.atmosphere;
+  const activeLocAddress = activeLoc.addressI18n?.[language] || activeLoc.address;
+  const activeLocPopular = activeLoc.popularDrinkI18n?.[language] || activeLoc.popularDrink;
+  const activeLocFeatures = activeLoc.featuresI18n?.[language] || activeLoc.features;
+  const activeLocStyle = activeLoc.theme.styleNameI18n?.[language] || activeLoc.theme.styleName;
+  const activeLocPalette = activeLoc.theme.paletteDescriptionI18n?.[language] || activeLoc.theme.paletteDescription;
 
   return (
     <section id="locations" className="relative py-24 canvas-texture transition-colors duration-500">
@@ -144,6 +174,8 @@ export const LocationsSection: React.FC = () => {
         <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {LOCATIONS.map((loc) => {
             const isActive = loc.id === selectedLocationId;
+            const locShort = loc.shortNameI18n?.[language] || loc.shortName;
+            const locStyle = loc.theme.styleNameI18n?.[language] || loc.theme.styleName;
             return (
               <button
                 key={loc.id}
@@ -162,9 +194,9 @@ export const LocationsSection: React.FC = () => {
                     style={{ backgroundColor: loc.theme.primaryColor }}
                     className={`h-2.5 w-2.5 rounded-full ring-2 ring-white/30 ${isActive ? "scale-125" : ""}`}
                   />
-                  <span>{loc.shortName}</span>
+                  <span>{locShort}</span>
                   <span className="text-[10px] opacity-60 font-normal hidden md:inline">
-                    ({loc.theme.styleName.split("&")[0]})
+                    ({locStyle.split("&")[0]})
                   </span>
                 </div>
               </button>
@@ -182,7 +214,7 @@ export const LocationsSection: React.FC = () => {
                 <img
                   key={activeLoc.id}
                   src={getAssetPath(activeLoc.image)}
-                  alt={activeLoc.name}
+                  alt={activeLocName}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 {/* Subtle vignette scrim */}
@@ -203,7 +235,7 @@ export const LocationsSection: React.FC = () => {
                       style={{ backgroundColor: activeLoc.theme.primaryColor }}
                       className="h-2 w-2 rounded-full ring-2 ring-white/30"
                     />
-                    <span>{activeLoc.theme.styleName}</span>
+                    <span>{activeLocStyle}</span>
                   </div>
                 </div>
 
@@ -211,7 +243,7 @@ export const LocationsSection: React.FC = () => {
                 <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300 drop-shadow-md">
                   <div className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/65 px-3 py-1 backdrop-blur-md text-white">
                     <Compass className="h-3.5 w-3.5 text-amber-300" />
-                    <span className="truncate">{activeLoc.landmark}</span>
+                    <span className="truncate">{activeLocLandmark}</span>
                   </div>
                 </div>
               </div>
@@ -226,11 +258,11 @@ export const LocationsSection: React.FC = () => {
               >
                 <div>
                   <h3 className="font-serif text-2xl sm:text-3xl font-bold leading-tight group-hover:text-[var(--theme-primary)] transition-colors">
-                    {activeLoc.name}
+                    {activeLocName}
                   </h3>
 
                   <p style={{ color: "var(--theme-muted)" }} className="mt-2.5 text-xs sm:text-sm leading-relaxed">
-                    {activeLoc.atmosphere}
+                    {activeLocAtmosphere}
                   </p>
                 </div>
 
@@ -242,7 +274,7 @@ export const LocationsSection: React.FC = () => {
                         {t.paletteLabel}
                       </span>
                       <span style={{ color: "var(--theme-muted)" }} className="text-xs">
-                        {activeLoc.theme.paletteDescription}
+                        {activeLocPalette}
                       </span>
                     </div>
 
@@ -289,7 +321,7 @@ export const LocationsSection: React.FC = () => {
                         {t.popular}
                       </div>
                       <div style={{ color: "var(--theme-text)" }} className="text-xs font-bold truncate mt-0.5">
-                        {activeLoc.popularDrink}
+                        {activeLocPopular}
                       </div>
                     </div>
                   </div>
@@ -320,13 +352,13 @@ export const LocationsSection: React.FC = () => {
                   style={{ color: "var(--theme-primary)" }}
                   className="text-[11px] font-bold uppercase tracking-wider"
                 >
-                  Точный адрес
+                  {t.addressLabel}
                 </span>
                 <div className="mt-2 flex items-start gap-3">
                   <MapPin style={{ color: "var(--theme-primary)" }} className="h-5 w-5 shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold text-base">{activeLoc.address}</p>
-                    <p style={{ color: "var(--theme-muted)" }} className="text-xs mt-0.5">{activeLoc.landmark}</p>
+                    <p className="font-bold text-base">{activeLocAddress}</p>
+                    <p style={{ color: "var(--theme-muted)" }} className="text-xs mt-0.5">{activeLocLandmark}</p>
                   </div>
                 </div>
               </div>
@@ -337,17 +369,17 @@ export const LocationsSection: React.FC = () => {
                   style={{ color: "var(--theme-primary)" }}
                   className="text-[11px] font-bold uppercase tracking-wider"
                 >
-                  Режим работы
+                  {t.hoursLabel}
                 </span>
                 <div className="mt-2 flex items-start gap-3">
                   <Clock style={{ color: "var(--theme-primary)" }} className="h-5 w-5 shrink-0 mt-0.5" />
                   <div className="text-xs sm:text-sm space-y-1 w-full">
                     <div className="flex justify-between gap-4">
-                      <span style={{ color: "var(--theme-muted)" }}>Будние дни:</span>
+                      <span style={{ color: "var(--theme-muted)" }}>{t.weekdaysLabel}</span>
                       <span className="font-semibold">{activeLoc.hours.weekdays}</span>
                     </div>
                     <div className="flex justify-between gap-4">
-                      <span style={{ color: "var(--theme-muted)" }}>Выходные:</span>
+                      <span style={{ color: "var(--theme-muted)" }}>{t.weekendsLabel}</span>
                       <span className="font-semibold">{activeLoc.hours.weekends}</span>
                     </div>
                   </div>
@@ -360,7 +392,7 @@ export const LocationsSection: React.FC = () => {
                   style={{ color: "var(--theme-primary)" }}
                   className="text-[11px] font-bold uppercase tracking-wider"
                 >
-                  Телефон локации
+                  {t.phoneLabel}
                 </span>
                 <div className="mt-2 flex items-center gap-3">
                   <Phone style={{ color: "var(--theme-primary)" }} className="h-5 w-5" />
@@ -376,10 +408,10 @@ export const LocationsSection: React.FC = () => {
               {/* Feature Tags */}
               <div className="border-t border-black/5 dark:border-white/5 pt-5">
                 <span style={{ color: "var(--theme-muted)" }} className="text-[11px] font-bold uppercase tracking-wider">
-                  Особенности пространства
+                  {t.featuresLabel}
                 </span>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {activeLoc.features.map((feature, i) => (
+                  {activeLocFeatures.map((feature, i) => (
                     <span
                       key={i}
                       style={{

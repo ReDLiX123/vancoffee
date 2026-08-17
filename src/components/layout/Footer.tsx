@@ -13,6 +13,57 @@ import {
 export const Footer: React.FC = () => {
   const { language, selectedLocation, openTipsModal, openFeedbackModal } = useApp();
 
+  const t = {
+    ru: {
+      slogan: "Живописный спешелти кофе и 4 пространства в Иркутске. Каждая точка оформлена в своей авторской палитре.",
+      locationsTitle: "Локации в Иркутске",
+      navTitle: "Разделы",
+      navLocations: "Локации и визуальные темы",
+      navMenu: "Барная карта & Меню",
+      navNutrition: "Таблица КБЖУ",
+      navClub: "Vincent Van Club",
+      navFeedback: "Оставить отзыв",
+      navTips: "Чаевые бариста",
+      contactsTitle: "Контакты",
+      address: "г. Иркутск, ул. Киевская, 1",
+      rights: "Все права защищены.",
+      chainDesc: "Сеть авторских кофеен",
+      gisLink: "Профиль в 2ГИС",
+    },
+    en: {
+      slogan: "Artistic specialty coffee and 4 distinct spaces in Irkutsk. Each venue designed in its signature color palette.",
+      locationsTitle: "Spaces in Irkutsk",
+      navTitle: "Navigation",
+      navLocations: "Locations & Themes",
+      navMenu: "Bar Menu & Food",
+      navNutrition: "Nutrition & Macros",
+      navClub: "Vincent Van Club",
+      navFeedback: "Leave a Review",
+      navTips: "Tip Barista",
+      contactsTitle: "Contacts",
+      address: "Irkutsk, 1 Kievskaya St",
+      rights: "All rights reserved.",
+      chainDesc: "Specialty Coffee Chain",
+      gisLink: "2GIS Profile",
+    },
+    zh: {
+      slogan: "伊尔库茨克 4 家艺术空间与精品手冲咖啡，每家门店均拥有专属调色盘与空间美学。",
+      locationsTitle: "伊尔库茨克门店",
+      navTitle: "网站导航",
+      navLocations: "空间与设计美学",
+      navMenu: "咖啡与手作菜单",
+      navNutrition: "热量与营养指标",
+      navClub: "凡高艺术俱乐部",
+      navFeedback: "留下您的评价",
+      navTips: "打赏咖啡师",
+      contactsTitle: "联系我们",
+      address: "伊尔库茨克市 基辅街 1 号",
+      rights: "版权所有。",
+      chainDesc: "精品艺术咖啡连锁",
+      gisLink: "2GIS 地图主页",
+    },
+  }[language];
+
   return (
     <footer
       style={{
@@ -42,7 +93,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p style={{ color: "var(--theme-muted)" }} className="text-xs leading-relaxed max-w-sm">
-              Живописный спешелти кофе и 4 пространства в Иркутске. Каждая точка оформлена в своей авторской палитре.
+              {t.slogan}
             </p>
 
             <div className="flex items-center gap-2 pt-2">
@@ -82,43 +133,46 @@ export const Footer: React.FC = () => {
           {/* Locations */}
           <div className="space-y-3">
             <h4 className="font-serif text-sm font-bold uppercase tracking-wider">
-              Локации в Иркутске
+              {t.locationsTitle}
             </h4>
             <ul style={{ color: "var(--theme-muted)" }} className="space-y-2 text-xs">
-              {LOCATIONS.map((loc) => (
-                <li key={loc.id}>
-                  <a href="#locations" className="hover:text-[var(--theme-text)] transition-colors">
-                    {loc.name}
-                  </a>
-                </li>
-              ))}
+              {LOCATIONS.map((loc) => {
+                const locName = loc.nameI18n?.[language] || loc.name;
+                return (
+                  <li key={loc.id}>
+                    <a href="#locations" className="hover:text-[var(--theme-text)] transition-colors">
+                      {locName}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* Quick links */}
           <div className="space-y-3">
             <h4 className="font-serif text-sm font-bold uppercase tracking-wider">
-              Разделы
+              {t.navTitle}
             </h4>
             <ul style={{ color: "var(--theme-muted)" }} className="space-y-2 text-xs">
               <li>
                 <a href="#locations" className="hover:text-[var(--theme-text)] transition-colors">
-                  Локации и визуальные темы
+                  {t.navLocations}
                 </a>
               </li>
               <li>
                 <a href="#menu" className="hover:text-[var(--theme-text)] transition-colors">
-                  Барная карта & Меню
+                  {t.navMenu}
                 </a>
               </li>
               <li>
                 <a href="#nutrition" className="hover:text-[var(--theme-text)] transition-colors">
-                  Таблица КБЖУ
+                  {t.navNutrition}
                 </a>
               </li>
               <li>
                 <a href="#loyalty" className="hover:text-[var(--theme-text)] transition-colors">
-                  Vincent Van Club
+                  {t.navClub}
                 </a>
               </li>
               <li>
@@ -126,7 +180,7 @@ export const Footer: React.FC = () => {
                   onClick={() => openFeedbackModal()}
                   className="hover:text-[var(--theme-text)] transition-colors text-left"
                 >
-                  Оставить отзыв
+                  {t.navFeedback}
                 </button>
               </li>
               <li>
@@ -136,7 +190,7 @@ export const Footer: React.FC = () => {
                   className="hover:underline transition-colors text-left flex items-center gap-1 font-bold"
                 >
                   <Heart className="h-3 w-3 fill-current" />
-                  <span>Чаевые бариста</span>
+                  <span>{t.navTips}</span>
                 </button>
               </li>
             </ul>
@@ -145,7 +199,7 @@ export const Footer: React.FC = () => {
           {/* Contacts */}
           <div className="space-y-3">
             <h4 className="font-serif text-sm font-bold uppercase tracking-wider">
-              Контакты
+              {t.contactsTitle}
             </h4>
             <div style={{ color: "var(--theme-muted)" }} className="space-y-2 text-xs">
               <div className="flex items-center gap-2">
@@ -162,7 +216,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-start gap-2 pt-1 text-[11px]">
                 <MapPin style={{ color: "var(--theme-primary)" }} className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                <span>г. Иркутск, ул. Киевская, 1</span>
+                <span>{t.address}</span>
               </div>
             </div>
           </div>
@@ -171,13 +225,13 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright */}
         <div style={{ color: "var(--theme-muted)" }} className="mt-12 border-t border-black/5 dark:border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
           <div>
-            © {new Date().getFullYear()} Vincent Van Coffee (Иркутск). Все права защищены.
+            © {new Date().getFullYear()} Vincent Van Coffee ({t.address.includes("Irkutsk") ? "Irkutsk" : t.address.includes("伊尔库茨克") ? "伊尔库茨克" : "Иркутск"}). {t.rights}
           </div>
           <div className="flex items-center gap-3">
-            <span>Сеть авторских кофеен</span>
+            <span>{t.chainDesc}</span>
             <span>•</span>
             <a href="https://2gis.ru/irkutsk/firm/70000001034459238" target="_blank" rel="noreferrer" className="hover:underline">
-              Профиль в 2ГИС
+              {t.gisLink}
             </a>
           </div>
         </div>
