@@ -64,8 +64,12 @@ export default function RootLayout({
     <html
       lang="ru"
       className={`${cormorant.variable} ${jakarta.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="font-sans antialiased min-h-screen relative transition-colors duration-500">
+      <body
+        className="font-sans antialiased min-h-screen relative transition-colors duration-500"
+        suppressHydrationWarning
+      >
         <AppProvider>
           {children}
         </AppProvider>
