@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { MENU_ITEMS, MenuItem } from "@/data/coffeeData";
+import { MENU_ITEMS, MenuItem, formatVolume } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import {
   Flame,
@@ -99,6 +99,7 @@ export const NutritionSection: React.FC = () => {
       unitWeight: "г/мл",
       unitG: "г",
       unitCal: "ккал",
+      priceCurrency: "₽",
       tagVegan: "Vegan",
       tagSugarFree: "Без сахара",
       tagSpecialty: "Спешелти",
@@ -124,6 +125,7 @@ export const NutritionSection: React.FC = () => {
       unitWeight: "g/ml",
       unitG: "g",
       unitCal: "kcal",
+      priceCurrency: "RUB",
       tagVegan: "Vegan",
       tagSugarFree: "Sugar-Free",
       tagSpecialty: "Specialty",
@@ -149,6 +151,7 @@ export const NutritionSection: React.FC = () => {
       unitWeight: "克/毫升",
       unitG: "克",
       unitCal: "千卡",
+      priceCurrency: "₽",
       tagVegan: "植物基",
       tagSugarFree: "无添加糖",
       tagSpecialty: "精品豆",
@@ -330,7 +333,7 @@ export const NutritionSection: React.FC = () => {
                         <div>
                           <div className="font-bold text-sm">{item.name[language]}</div>
                           <div style={{ color: "var(--theme-muted)" }} className="text-[11px]">
-                            {item.volume}
+                            {formatVolume(item.volume, language)}
                           </div>
                         </div>
                       </div>
@@ -413,8 +416,8 @@ export const NutritionSection: React.FC = () => {
                       {item.name[language]}
                     </div>
                     <div style={{ color: "var(--theme-muted)" }} className="flex justify-between items-center text-[11px] mt-0.5">
-                      <span>{item.volume}</span>
-                      <span style={{ color: "var(--theme-primary)" }} className="font-bold">{item.price} ₽</span>
+                      <span>{formatVolume(item.volume, language)}</span>
+                      <span style={{ color: "var(--theme-primary)" }} className="font-bold">{item.price} {t.priceCurrency}</span>
                     </div>
                   </div>
                 </div>

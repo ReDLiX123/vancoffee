@@ -30,37 +30,37 @@ import {
 
 export const getFeatureIcon = (feature: string) => {
   const f = feature.toLowerCase();
-  if (f.includes("wi-fi") || f.includes("wifi") || f.includes("розетк")) {
+  if (f.includes("wi-fi") || f.includes("wifi") || f.includes("розетк") || f.includes("socket") || f.includes("充电")) {
     return <Wifi className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("dog") || f.includes("собак") || f.includes("питомц") || f.includes("животн")) {
+  if (f.includes("dog") || f.includes("собак") || f.includes("питомц") || f.includes("животн") || f.includes("pet") || f.includes("宠物")) {
     return <PawPrint className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("vegan") || f.includes("эко") || f.includes("растительн") || f.includes("сахар")) {
+  if (f.includes("vegan") || f.includes("эко") || f.includes("растительн") || f.includes("сахар") || f.includes("eco") || f.includes("环保") || f.includes("无糖") || f.includes("植物")) {
     return <Leaf className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("завтрак") || f.includes("кухн") || f.includes("еда")) {
+  if (f.includes("завтрак") || f.includes("кухн") || f.includes("еда") || f.includes("breakfast") || f.includes("kitchen") || f.includes("早午餐") || f.includes("厨房")) {
     return <Utensils className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("выпечк") || f.includes("тарт") || f.includes("макарон") || f.includes("десерт")) {
+  if (f.includes("выпечк") || f.includes("тарт") || f.includes("макарон") || f.includes("десерт") || f.includes("pastr") || f.includes("tart") || f.includes("macaron") || f.includes("dessert") || f.includes("烘焙") || f.includes("甜点") || f.includes("马卡龙")) {
     return <Croissant className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("винил") || f.includes("музык")) {
+  if (f.includes("винил") || f.includes("музык") || f.includes("vinyl") || f.includes("music") || f.includes("黑胶") || f.includes("音乐")) {
     return <Disc className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("to-go") || f.includes("быстр")) {
+  if (f.includes("to-go") || f.includes("быстр") || f.includes("express") || f.includes("fast") || f.includes("外带") || f.includes("极速")) {
     return <Zap className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("оплат") || f.includes("карт") || f.includes("безналич")) {
+  if (f.includes("оплат") || f.includes("карт") || f.includes("безналич") || f.includes("pay") || f.includes("card") || f.includes("支付") || f.includes("闪付")) {
     return <CreditCard className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("арт") || f.includes("экспозиц") || f.includes("коллаборац")) {
+  if (f.includes("арт") || f.includes("экспозиц") || f.includes("коллаборац") || f.includes("art") || f.includes("collab") || f.includes("gallery") || f.includes("艺术") || f.includes("联名") || f.includes("展")) {
     return <Palette className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("террас") || f.includes("окн") || f.includes("столик")) {
+  if (f.includes("террас") || f.includes("окн") || f.includes("столик") || f.includes("terrace") || f.includes("window") || f.includes("seating") || f.includes("露台") || f.includes("沿窗")) {
     return <Sun className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
-  if (f.includes("фильтр") || f.includes("каппинг") || f.includes("кофе") || f.includes("зерн")) {
+  if (f.includes("фильтр") || f.includes("каппинг") || f.includes("кофе") || f.includes("зерн") || f.includes("filter") || f.includes("cupping") || f.includes("coffee") || f.includes("brew") || f.includes("手冲") || f.includes("杯测") || f.includes("咖啡")) {
     return <Coffee className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;
   }
   return <Check className="h-3.5 w-3.5 text-[var(--theme-primary)] shrink-0" />;

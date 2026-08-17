@@ -36,6 +36,9 @@ export const NewsSection: React.FC = () => {
     if (cat.includes("Сезон") || cat.includes("Season")) {
       return { ru: "Сезонное меню", en: "Seasonal Menu", zh: "季候限定菜单" }[language];
     }
+    if (cat.includes("Спешелти") || cat.includes("Specialty")) {
+      return { ru: "Спешелти зерно", en: "Specialty Origin", zh: "单品微批次" }[language];
+    }
     return { ru: "События & Арт", en: "Events & Art", zh: "艺术与体验活动" }[language];
   };
 
@@ -69,6 +72,7 @@ export const NewsSection: React.FC = () => {
             const title = item.titleI18n?.[language] || item.title;
             const summary = item.summaryI18n?.[language] || item.summary;
             const date = item.dateI18n?.[language] || item.date;
+            const readTime = item.readTimeI18n?.[language] || item.readTime;
             const cat = getCategoryName(item.category);
 
             return (
@@ -105,7 +109,7 @@ export const NewsSection: React.FC = () => {
                       <span>•</span>
                       <div className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5" />
-                        <span>{item.readTime}</span>
+                        <span>{readTime}</span>
                       </div>
                     </div>
 

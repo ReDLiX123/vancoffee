@@ -118,8 +118,10 @@ export interface NewsItem {
   dateI18n?: LocalizedString;
   category: "Сезонное меню" | "События" | "Обжарка" | "Спешелти" | string;
   readTime: string;
+  readTimeI18n?: LocalizedString;
   image: string;
   linkText: string;
+  linkTextI18n?: LocalizedString;
 }
 
 export const LOCATIONS: LocationItem[] = [
@@ -1177,8 +1179,18 @@ export const NEWS_ITEMS: NewsItem[] = [
     },
     category: "Сезонное меню",
     readTime: "2 мин чтения",
+    readTimeI18n: {
+      ru: "2 мин чтения",
+      en: "2 min read",
+      zh: "2 分钟阅读",
+    },
     image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
     linkText: "Попробовать в кофейнях",
+    linkTextI18n: {
+      ru: "Попробовать в кофейнях",
+      en: "Try at our cafés",
+      zh: "前往门店品鉴",
+    },
   },
   {
     id: "news-2",
@@ -1202,8 +1214,18 @@ export const NEWS_ITEMS: NewsItem[] = [
     },
     category: "Спешелти",
     readTime: "3 мин чтения",
+    readTimeI18n: {
+      ru: "3 мин чтения",
+      en: "3 min read",
+      zh: "3 分钟阅读",
+    },
     image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80",
     linkText: "Подробнее о зерне",
+    linkTextI18n: {
+      ru: "Подробнее о зерне",
+      en: "More about origin beans",
+      zh: "了解咖啡豆详情",
+    },
   },
   {
     id: "news-3",
@@ -1227,8 +1249,18 @@ export const NEWS_ITEMS: NewsItem[] = [
     },
     category: "События",
     readTime: "1 мин чтения",
+    readTimeI18n: {
+      ru: "1 мин чтения",
+      en: "1 min read",
+      zh: "1 分钟阅读",
+    },
     image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
     linkText: "Записаться на встречу",
+    linkTextI18n: {
+      ru: "Записаться на встречу",
+      en: "Register for event",
+      zh: "预约活动名额",
+    },
   },
 ];
 
@@ -1375,80 +1407,124 @@ export const LOYALTY_TIERS = [
 ];
 
 export const TASTE_NOTES_I18N: Record<string, { en: string; zh: string }> = {
+  // Signature drinks descriptors
+  "Сливочная нуга": { en: "Creamy nougat", zh: "奶油牛轧糖" },
+  "Теплая цедра": { en: "Warm citrus zest", zh: "温润柑橘皮" },
+  "Обжаренные семечки": { en: "Toasted sunflower seeds", zh: "烘烤葵花籽" },
   "Карамель": { en: "Caramel", zh: "焦糖" },
-  "Цедра апельсина": { en: "Orange zest", zh: "橙皮" },
-  "Сливки": { en: "Cream", zh: "奶油" },
-  "Свежий апельсиновый фреш": { en: "Fresh orange juice", zh: "鲜榨橙汁" },
-  "Миндальный сироп": { en: "Almond syrup", zh: "杏仁糖浆" },
-  "Двойной эспрессо": { en: "Double espresso", zh: "双份浓缩" },
-  "Черничное пюре": { en: "Blueberry puree", zh: "蓝莓果茸" },
+  "Лесные ягоды": { en: "Wild forest berries", zh: "野生浆果" },
+  "Лаванда": { en: "Lavender", zh: "高山薰衣草" },
   "Горная лаванда": { en: "Mountain lavender", zh: "高山薰衣草" },
-  "Мягкий эспрессо": { en: "Smooth espresso", zh: "柔顺浓缩" },
-  "Кедровые орехи": { en: "Pine nuts", zh: "松子" },
-  "Смола": { en: "Cedar resin", zh: "雪松香" },
-  "Таежный мед": { en: "Taiga honey", zh: "针叶林野蜜" },
-  "Японская матча": { en: "Uji matcha", zh: "宇治抹茶" },
-  "Кокосовые сливки": { en: "Coconut cream", zh: "椰浆" },
-  "Ваниль": { en: "Vanilla", zh: "香草" },
-  "Эфиопия Иргачеффе": { en: "Ethiopia Yirgacheffe", zh: "耶加雪菲" },
-  "Жасмин": { en: "Jasmine", zh: "茉莉" },
+  "Горький шоколад": { en: "Dark cocoa", zh: "醇黑巧克力" },
+  "Черничный конфитюр": { en: "Blueberry confiture", zh: "蓝莓果酱" },
+  "Черничное пюре": { en: "Blueberry puree", zh: "蓝莓果茸" },
+  "Тёмный шоколад 72%": { en: "72% Dark chocolate", zh: "72% 黑巧克力" },
+  "Пряный кардамон": { en: "Spiced cardamom", zh: "芳香豆蔻" },
+  "Миндаль": { en: "Almond", zh: "杏仁" },
+  "Морская соль": { en: "Sea salt", zh: "海盐" },
+  "Марципан": { en: "Marzipan", zh: "杏仁膏" },
+  "Флёрдоранж": { en: "Orange blossom", zh: "橙花香" },
+  "Нежная пена": { en: "Silky microfoam", zh: "细腻微奶泡" },
+  "Спелое яблоко": { en: "Ripe apple", zh: "成熟苹果" },
+  
+  // Classic coffee descriptors
+  "Жасмин": { en: "Jasmine", zh: "茉莉花" },
+  "Красный персик": { en: "Red peach", zh: "红桃" },
   "Бергамот": { en: "Bergamot", zh: "佛手柑" },
-  "Спелый персик": { en: "Ripe peach", zh: "成熟水蜜桃" },
-  "Колумбия Супремо": { en: "Colombia Supremo", zh: "哥伦比亚慧兰" },
-  "Тёмный шоколад": { en: "Dark chocolate", zh: "黑巧克力" },
+  "Мёд": { en: "Raw honey", zh: "纯蜂蜜" },
+  "Таежный мед": { en: "Taiga honey", zh: "针叶林野蜜" },
+  "Красная смородина": { en: "Red currant", zh: "红醋栗" },
+  "Грецкий орех": { en: "Walnut", zh: "核桃" },
+  "Молочный шоколад": { en: "Milk chocolate", zh: "牛奶巧克力" },
   "Фундук": { en: "Hazelnut", zh: "榛子" },
   "Тростниковый сахар": { en: "Cane sugar", zh: "蔗糖" },
-  "Шелковистая пена": { en: "Silky foam", zh: "丝滑奶泡" },
-  "Сладкая выпечка": { en: "Sweet pastry", zh: "烘焙甜香" },
-  "Какао": { en: "Cocoa", zh: "可可" },
+  "Темный трюфель": { en: "Dark truffle", zh: "黑松露风味" },
+  "Сушеная вишня": { en: "Dried cherry", zh: "樱桃干" },
+  "Какао": { en: "Cocoa", zh: "天然可可" },
+  "Тёмное какао": { en: "Dark raw cocoa", zh: "生黑可可" },
   "Плотное тело": { en: "Full body", zh: "醇厚体感" },
-  "Грецкий орех": { en: "Walnut", zh: "核桃" },
   "Сливочная текстура": { en: "Creamy texture", zh: "奶油般丝滑" },
   "Двойной ристретто": { en: "Double ristretto", zh: "双份精粹" },
-  "Сливочное масло": { en: "Butter", zh: "天然黄油" },
+  "Двойной эспрессо": { en: "Double espresso", zh: "双份浓缩" },
+  "Мягкий эспрессо": { en: "Smooth espresso", zh: "柔顺浓缩" },
+  "Свежая обжарка": { en: "Fresh roast", zh: "新鲜自烘" },
+  "Эфиопия Иргачеффе": { en: "Ethiopia Yirgacheffe", zh: "耶加雪菲" },
+  "Колумбия Супремо": { en: "Colombia Supremo", zh: "哥伦比亚慧兰" },
+  
+  // Tea & Matcha descriptors
+  "Свежая зелень": { en: "Fresh botanical greenery", zh: "清新茶绿" },
+  "Умами": { en: "Umami", zh: "鲜美回甘 (Umami)" },
+  "Сладкие сливки": { en: "Sweet cream", zh: "甜奶油" },
+  "Фисташка": { en: "Pistachio", zh: "开心果" },
+  "Жареная фисташка": { en: "Roasted pistachio", zh: "烘烤开心果" },
+  "Хвоя и можжевельник": { en: "Pine needle & juniper", zh: "松针与杜松" },
+  "Сочная облепиха": { en: "Juicy sea buckthorn", zh: "鲜美沙棘" },
+  "Травяная свежесть": { en: "Herbal freshness", zh: "草本清新" },
+  "Травянистая свежесть": { en: "Fresh botanical notes", zh: "草本清新甘甜" },
+  "Байкальские травы": { en: "Baikal herbs", zh: "贝加尔草本" },
+  "Саган-дайля": { en: "Sagan Dalya", zh: "香青兰草本" },
+  "Чабрец": { en: "Thyme", zh: "百里香" },
+  "Мята": { en: "Mint", zh: "薄荷" },
+  "Японская матча": { en: "Uji matcha", zh: "宇治抹茶" },
+  "Церемониальная матча": { en: "Ceremonial matcha", zh: "特级仪式抹茶" },
+  "Кокосовые сливки": { en: "Coconut cream", zh: "椰浆" },
+  "Овсяное молоко": { en: "Oat milk", zh: "燕麦奶" },
+
+  // Kitchen & Breakfast descriptors
+  "Сливочное масло": { en: "Creamy butter", zh: "天然黄油" },
+  "Нежный лосось": { en: "Tender salmon", zh: "鲜嫩三文鱼" },
+  "Лосось слабой соли": { en: "Cured salmon", zh: "轻腌三文鱼" },
+  "Свежий огурец": { en: "Crisp cucumber", zh: "清脆黄瓜" },
+  "Крем-чиз": { en: "Cream cheese", zh: "奶油奶酪" },
+  "Сливочный крем-чиз": { en: "Cream cheese", zh: "乳酪奶油芝士" },
+  "Нежный творог": { en: "Tender cottage cheese", zh: "细腻农场奶酪" },
+  "Фермерский творог": { en: "Farm cottage cheese", zh: "农场高质奶酪" },
+  "Домашняя сметана": { en: "Homemade sour cream", zh: "自制酸奶油" },
+  "Малиновый конфитюр": { en: "Raspberry jam", zh: "覆盆子果酱" },
+  "Соленая карамель": { en: "Salted caramel", zh: "海盐焦糖" },
+  "Ваниль": { en: "Madagascar vanilla", zh: "香草" },
+  "Сливочная бриошь": { en: "Buttery brioche", zh: "黄油布里欧修" },
+  "Жидкий желток": { en: "Runny yolk", zh: "流心蛋黄" },
+  "Хрустящий бекон": { en: "Crispy bacon", zh: "香脆培根" },
+  "Лимонный соус": { en: "Lemon hollandaise", zh: "柠檬荷兰汁" },
+  
+  // Desserts descriptors
+  "Яркий лимон": { en: "Zesty lemon", zh: "鲜爽柠檬" },
+  "Пряный базилик": { en: "Aromatic basil", zh: "芳香罗勒" },
+  "Хрустящее тесто": { en: "Crispy tart pastry", zh: "酥脆挞皮" },
+  "Сладкая меренга": { en: "Sweet meringue", zh: "甜美蛋白霜" },
+  "Ягодная кислинка": { en: "Berry tanginess", zh: "浆果微酸" },
+  "Заварное тесто": { en: "Choux pastry", zh: "法式泡芙" },
+  "Лесной орех": { en: "Hazelnut", zh: "森林榛果" },
+  "Бархатистая текстура": { en: "Velvety texture", zh: "丝绒质感" },
   "Французская мука": { en: "French flour", zh: "法式小麦粉" },
   "Хрустящая корочка": { en: "Crispy crust", zh: "酥脆外层" },
   "Миндальный крем франжипан": { en: "Frangipane almond cream", zh: "杏仁奶油馅" },
   "Лепестки миндаля": { en: "Flaked almonds", zh: "杏仁片" },
   "Золотистая корочка": { en: "Golden crust", zh: "金黄外壳" },
-  "Лосось слабой соли": { en: "Cured salmon", zh: "轻腌三文鱼" },
-  "Сливочный крем-чиз": { en: "Cream cheese", zh: "乳酪奶油芝士" },
-  "Свежий огурец": { en: "Fresh cucumber", zh: "清脆黄瓜" },
-  "Фермерский творог": { en: "Farm cottage cheese", zh: "农场高质奶酪" },
-  "Домашняя сметана": { en: "Homemade sour cream", zh: "自制酸奶油" },
-  "Малиновый конфитюр": { en: "Raspberry jam", zh: "覆盆子果酱" },
-  "Церемониальная матча": { en: "Ceremonial matcha", zh: "特级仪式抹茶" },
-  "Овсяное молоко": { en: "Oat milk", zh: "燕麦奶" },
-  "Травянистая свежесть": { en: "Fresh botanical notes", zh: "清新草本甘甜" },
-  "Байкальские травы": { en: "Baikal herbs", zh: "贝加尔草本" },
-  "Саган-дайля": { en: "Sagan Dalya", zh: "香青兰草本" },
-  "Чабрец": { en: "Thyme", zh: "百里香" },
-  "Мята": { en: "Mint", zh: "薄荷" },
-  "Свежая обжарка": { en: "Fresh roast", zh: "新鲜自烘" },
+  "Кедровые орехи": { en: "Pine nuts", zh: "松子" },
+  "Смола": { en: "Cedar resin", zh: "雪松香" },
+  "Свежий апельсиновый фреш": { en: "Fresh orange juice", zh: "鲜榨橙汁" },
+  "Миндальный сироп": { en: "Almond syrup", zh: "杏仁糖浆" },
   "Жёлтая слива": { en: "Yellow plum", zh: "黄李" },
   "Манго": { en: "Mango", zh: "芒果" },
   "Тропические фрукты": { en: "Tropical fruits", zh: "热带水果" },
-  "Нежный творог": { en: "Tender cottage cheese", zh: "细腻奶酪" },
-  "Соленая карамель": { en: "Salted caramel", zh: "海盐焦糖" },
-  "Лесные ягоды": { en: "Wild berries", zh: "野生浆果" },
-  "Сливочная бриошь": { en: "Buttery brioche", zh: "黄油布里欧修" },
-  "Жидкий желток": { en: "Runny yolk", zh: "流心蛋黄" },
-  "Хрустящий бекон": { en: "Crispy bacon", zh: "香脆培根" },
-  "Лимонный соус": { en: "Lemon hollandaise", zh: "柠檬荷兰汁" },
-  "Яркий лимон": { en: "Zesty lemon", zh: "鲜柠檬" },
-  "Пряный базилик": { en: "Aromatic basil", zh: "芳香罗勒" },
-  "Хрустящее тесто": { en: "Crispy pastry", zh: "酥脆挞皮" },
-  "Сладкая меренга": { en: "Sweet meringue", zh: "甜美蛋白霜" },
-  "Жареная фисташка": { en: "Roasted pistachio", zh: "烘烤开心果" },
-  "Ягодная кислинка": { en: "Berry tanginess", zh: "浆果微酸" },
-  "Заварное тесто": { en: "Choux pastry", zh: "法式泡芙" },
-  "Тёмное какао": { en: "Dark raw cocoa", zh: "生黑可可" },
-  "Лесной орех": { en: "Hazelnut", zh: "榛子" },
-  "Бархатистая текстура": { en: "Velvety texture", zh: "丝绒般口感" },
+  "Сладкая выпечка": { en: "Sweet pastry", zh: "烘焙甜香" },
+  "Шелковистая пена": { en: "Silky foam", zh: "丝滑奶泡" },
+  "Цедра апельсина": { en: "Orange zest", zh: "橙皮" },
+  "Сливки": { en: "Cream", zh: "奶油" },
 };
 
 export const getLocalizedTasteNote = (note: string, lang: "ru" | "en" | "zh"): string => {
   if (lang === "ru") return note;
   return TASTE_NOTES_I18N[note]?.[lang] || note;
+};
+
+export const formatVolume = (vol: string, lang: "ru" | "en" | "zh"): string => {
+  if (lang === "ru") return vol;
+  if (lang === "zh") {
+    return vol.replace(/мл/g, "毫升").replace(/г/g, "克");
+  }
+  return vol.replace(/мл/g, "ml").replace(/г/g, "g");
 };
 

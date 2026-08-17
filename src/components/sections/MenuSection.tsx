@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MENU_ITEMS, MenuItem, LOCATIONS, getLocalizedTasteNote } from "@/data/coffeeData";
+import { MENU_ITEMS, MenuItem, LOCATIONS, getLocalizedTasteNote, formatVolume } from "@/data/coffeeData";
 import { useApp } from "@/context/AppContext";
 import { DrinkDetailModal } from "@/components/modals/DrinkDetailModal";
 import {
@@ -231,7 +231,7 @@ export const MenuSection: React.FC = () => {
 
                       {/* Volume */}
                       <div className="absolute bottom-2 right-3 rounded-lg bg-black/70 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-md">
-                        {item.volume}
+                        {formatVolume(item.volume, language)}
                       </div>
 
                       {/* Not available in current location alert */}

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/ShimmerButton";
 import { BrushStroke } from "@/components/ui/BrushStroke";
+import { FlagIcon } from "@/components/ui/FlagIcon";
 
 export const Header: React.FC = () => {
   const {
@@ -256,7 +257,7 @@ export const Header: React.FC = () => {
               )}
             </div>
 
-            {/* Language Switcher */}
+            {/* Language Switcher with Flags */}
             <div className="relative">
               <button
                 onClick={() => {
@@ -268,10 +269,12 @@ export const Header: React.FC = () => {
                   borderColor: "var(--theme-surface-border)",
                   color: "var(--theme-text)",
                 }}
-                className="flex items-center gap-1 rounded-full border px-2.5 py-1.5 text-xs font-semibold backdrop-blur-md transition-colors"
+                className="flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-semibold backdrop-blur-md transition-colors hover:scale-105 shadow-xs"
+                aria-label="Change language"
               >
-                <Globe className="h-3.5 w-3.5 opacity-70" />
-                <span className="uppercase">{language}</span>
+                <FlagIcon language={language} className="h-3.5 w-4.5 rounded-xs" />
+                <span className="uppercase font-bold tracking-wider">{language}</span>
+                <ChevronDown className={`h-3 w-3 opacity-60 transition-transform ${isLangDropdownOpen ? "rotate-180" : ""}`} />
               </button>
 
               {isLangDropdownOpen && (
@@ -280,7 +283,7 @@ export const Header: React.FC = () => {
                     backgroundColor: "var(--theme-surface)",
                     borderColor: "var(--theme-surface-border)",
                   }}
-                  className="absolute right-0 top-full mt-2 w-28 rounded-2xl border p-1.5 shadow-2xl z-50 transition-colors duration-500"
+                  className="absolute right-0 top-full mt-2 w-36 rounded-2xl border p-1.5 shadow-2xl z-50 transition-colors duration-500"
                 >
                   {(
                     [
@@ -295,12 +298,15 @@ export const Header: React.FC = () => {
                         setLanguage(l.code);
                         setIsLangDropdownOpen(false);
                       }}
-                      className={`flex w-full items-center justify-between rounded-xl px-2.5 py-1.5 text-xs font-medium transition-colors ${
-                        language === l.code ? "font-bold text-[var(--theme-primary)]" : "hover:bg-black/5 dark:hover:bg-white/5"
+                      className={`flex w-full items-center justify-between rounded-xl px-2.5 py-2 text-xs font-medium transition-colors ${
+                        language === l.code ? "font-bold text-[var(--theme-primary)] bg-black/5 dark:bg-white/5" : "hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
                     >
-                      <span>{l.label}</span>
-                      <span className="text-[10px] uppercase opacity-60">{l.code}</span>
+                      <div className="flex items-center gap-2">
+                        <FlagIcon language={l.code} className="h-3.5 w-4.5 rounded-xs" />
+                        <span>{l.label}</span>
+                      </div>
+                      <span className="text-[10px] uppercase opacity-60 font-mono font-semibold">{l.code}</span>
                     </button>
                   ))}
                 </div>
@@ -474,7 +480,7 @@ export const Header: React.FC = () => {
 
               {/* Language + CTA */}
               <div className="flex items-center justify-between gap-3 pt-2">
-                <div className="flex gap-1">
+                <div className="flex gap-1.5">
                   {(["ru", "en", "zh"] as const).map((l) => (
                     <button
                       key={l}
@@ -482,10 +488,12 @@ export const Header: React.FC = () => {
                       style={{
                         backgroundColor: language === l ? "var(--theme-primary)" : "var(--theme-surface)",
                         color: language === l ? "#FFFFFF" : "var(--theme-text)",
+                        borderColor: language === l ? "var(--theme-primary)" : "var(--theme-surface-border)",
                       }}
-                      className="rounded-lg px-2.5 py-1 text-xs font-bold uppercase transition-colors"
+                      className="flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold uppercase transition-all shadow-xs"
                     >
-                      {l}
+                      <FlagIcon language={l} className="h-3 w-4 rounded-xs" />
+                      <span>{l}</span>
                     </button>
                   ))}
                 </div>

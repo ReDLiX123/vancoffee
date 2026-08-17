@@ -59,7 +59,10 @@ export const FeedbackAndTipsSection: React.FC = () => {
       transferNotice: "Перевод напрямую через СБП / sbtips.ru (Точка:",
       ratingGuests: "Рейтинг гостей",
       basedOn: "На основе отзывов в",
+      mapsSource: "2ГИС & Яндекс",
       mapsPrompt: "Оставить отзыв на картах точки",
+      gisLabel: "2ГИС Иркутск",
+      yandexLabel: "Яндекс.Карты",
       reviewsTitle: "Отзывы наших гостей",
       currency: "₽",
     },
@@ -77,7 +80,10 @@ export const FeedbackAndTipsSection: React.FC = () => {
       transferNotice: "Direct cashless transfer via sbtips (Location:",
       ratingGuests: "Guest Rating",
       basedOn: "Based on verified reviews in",
+      mapsSource: "2GIS & Yandex",
       mapsPrompt: "Leave a review on maps for",
+      gisLabel: "2GIS Irkutsk",
+      yandexLabel: "Yandex Maps",
       reviewsTitle: "What Our Guests Say",
       currency: "RUB",
     },
@@ -95,7 +101,10 @@ export const FeedbackAndTipsSection: React.FC = () => {
       transferNotice: "通过安全通道直接转付当班团队（门店：",
       ratingGuests: "宾客综合好评",
       basedOn: "来自地图真实点评",
+      mapsSource: "2GIS 与 Yandex",
       mapsPrompt: "在地图上评价此门店",
+      gisLabel: "2GIS 伊尔库茨克",
+      yandexLabel: "Yandex 地图",
       reviewsTitle: "常客心声与评价",
       currency: "₽",
     },
@@ -288,7 +297,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                 <div className="text-right">
                   <span style={{ color: "var(--theme-muted)" }} className="text-xs">{t.basedOn}</span>
                   <div className="mt-1 flex items-center justify-end gap-1.5 font-bold text-xs">
-                    <span>2ГИС & Яндекс</span>
+                    <span>{t.mapsSource}</span>
                   </div>
                 </div>
               </div>
@@ -314,7 +323,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                       <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-600 text-white font-bold text-xs">
                         2Г
                       </div>
-                      <div className="text-xs font-bold">2ГИС Иркутск</div>
+                      <div className="text-xs font-bold">{t.gisLabel}</div>
                     </div>
                     <ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100 transition-opacity" />
                   </a>
@@ -333,7 +342,7 @@ export const FeedbackAndTipsSection: React.FC = () => {
                       <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-red-600 text-white font-bold text-xs">
                         Я
                       </div>
-                      <div className="text-xs font-bold">Яндекс.Карты</div>
+                      <div className="text-xs font-bold">{t.yandexLabel}</div>
                     </div>
                     <ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100 transition-opacity" />
                   </a>

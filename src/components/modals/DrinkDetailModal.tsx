@@ -3,7 +3,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Flame, Check, Leaf, ShieldCheck, Award, ChefHat } from "lucide-react";
-import { MenuItem, LOCATIONS, getLocalizedTasteNote } from "@/data/coffeeData";
+import { MenuItem, LOCATIONS, getLocalizedTasteNote, formatVolume } from "@/data/coffeeData";
 import { Language } from "@/context/AppContext";
 
 interface DrinkDetailModalProps {
@@ -140,7 +140,7 @@ export const DrinkDetailModal: React.FC<DrinkDetailModalProps> = ({
               </div>
             </div>
 
-            <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs font-medium">{item.volume}</p>
+            <p style={{ color: "var(--theme-muted)" }} className="mt-1 text-xs font-medium">{formatVolume(item.volume, language)}</p>
 
             {/* Description */}
             <p style={{ color: "var(--theme-muted)" }} className="mt-4 text-sm leading-relaxed">
